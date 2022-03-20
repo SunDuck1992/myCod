@@ -4,27 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace homeWork7
+namespace homeStudy4
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int waitingTime = 10;
-            int peoples;
-            int qieueTime;
-            int hours;
-            int minutes;
-            int hoursTime;
-            int minutesTime;
-            Console.Write(" Какое кол-во человек перед вами в очереди: ");
-            peoples = Convert.ToInt32(Console.ReadLine());
-            qieueTime = peoples * waitingTime;
-            hoursTime = qieueTime / 60;
-            minutesTime = qieueTime % 60;
-            Console.WriteLine(" Ваше время ожидания составит: " + hoursTime +
-            " часа " + minutesTime + " минут ");
-            
+            int pictures = 52;
+            int numberOfPicturesInRow = 3;
+            int numberOfRows = pictures / numberOfPicturesInRow;
+            int remains = pictures % numberOfPicturesInRow;
+
+            Console.WriteLine(" Имея 52 картинки и выводя по 3 в ряд, мы в итоге получим: " +
+                numberOfRows + " рядов и " + remains + " картинка уйдет в остаток ");
+
         }
     }
 }
