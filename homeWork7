@@ -13,18 +13,15 @@ namespace homeWork7
             int waitingTime = 10;
             int peoples;
             int qieueTime;
-            int hours;
-            int minutes;
-            int hoursTime;
-            int minutesTime;
+            int waitingTimeInHours;
+            int waitingTimeInMinutes;
             Console.Write(" Какое кол-во человек перед вами в очереди: ");
             peoples = Convert.ToInt32(Console.ReadLine());
             qieueTime = peoples * waitingTime;
-            hoursTime = qieueTime / 60;
-            minutesTime = qieueTime % 60;
-            Console.WriteLine(" Ваше время ожидания составит: " + hoursTime +
-            " часа " + minutesTime + " минут ");
-            
-        }
+            waitingTimeInHours = qieueTime / 60;
+            waitingTimeInMinutes = qieueTime % 60;
+            Console.WriteLine(" Ваше время ожидания составит: " + waitingTimeInHours +
+            " часа " + waitingTimeInMinutes + " минут ");
+            }
     }
 }
