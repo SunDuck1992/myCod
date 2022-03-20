@@ -1,4 +1,4 @@
-using System;
+System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,13 +15,15 @@ namespace homeWork7
             int qieueTime;
             int waitingTimeInHours;
             int waitingTimeInMinutes;
+            int minutesInHour = 60;
             Console.Write(" Какое кол-во человек перед вами в очереди: ");
             peoples = Convert.ToInt32(Console.ReadLine());
             qieueTime = peoples * waitingTime;
-            waitingTimeInHours = qieueTime / 60;
-            waitingTimeInMinutes = qieueTime % 60;
+            waitingTimeInHours = qieueTime / minutesInHour;
+            waitingTimeInMinutes = qieueTime % minutesInHour;
             Console.WriteLine(" Ваше время ожидания составит: " + waitingTimeInHours +
             " часа " + waitingTimeInMinutes + " минут ");
             }
     }
 }
+
