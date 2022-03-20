@@ -1,0 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork7
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int waitingTime = 10;
+            int pioples;
+            int qieueTime;
+            Console.Write(" Какое кол-во человек перед вами в очереди: ");
+            pioples = Convert.ToInt32(Console.ReadLine());
+            qieueTime = pioples * waitingTime;
+            Console.WriteLine(" Ваше время ожидания составит: " + qieueTime +
+                " минут ");
+            
+        }
+    }
+}
