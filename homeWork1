@@ -12,15 +12,45 @@ namespace homeStydy
         {
             string firstName;
             string secondName;
+            string myFamily;
+            string myAdress;
+            string index;
+            string hospital;
+            string myParents;
+            string pets;
+            string brother;
+            string neighbors;
+            int tables;
+            int cars;
+            int monitors;
+            int gameJoysticks;
+            int pictures;
+            int hourses;
             int age;
             int time;
             int cups;
             int lumenLights;
             float health;
             float speed;
-            bool enoughMoney;
-            bool theIntergrityOfTheArmor;
+            float temperature;
+            float pressure;
+            float densityOfMetall;
+            float waterLevel;
+            float voltage;
+            float currentStrength;
+            float numberPi;
+            float currencyExchangeRate;
+            bool isEnoughMoney;
+            bool isTheIntergrityOfTheArmor;
+            bool isTheSwitchIsOn;
+            bool IsEnable;
+            bool IsYouHaveMana;
+            bool IsThisYourCat;
+            bool IsThereIsEnergy;
+            bool areYouHungry;
+            bool doYouHaveTheItem;
+            bool doYouHaveAmmo;
+
         }
     }
 }
-
