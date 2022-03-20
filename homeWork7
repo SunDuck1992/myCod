@@ -16,8 +16,8 @@ namespace homeWork7
             Console.Write(" Какое кол-во человек перед вами в очереди: ");
             pioples = Convert.ToInt32(Console.ReadLine());
             qieueTime = pioples * waitingTime;
-            Console.WriteLine(" Ваше время ожидания составит: " + qieueTime +
-                " минут ");
+            Console.WriteLine(" Ваше время ожидания составит: " + qieueTime / 60 +
+            " часа " + qieueTime % 60 + " минут ");
             
         }
     }
