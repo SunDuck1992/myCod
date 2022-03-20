@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name = " Nesterov ";
+            string family = " Danill ";
+            string dopName = name;
+            name = family;
+            family = dopName;
+            
+            Console.WriteLine(" Ваше имя: " + name + ", ваша фамилия: " + family);
+
+
+
+        }
+    }
+}
