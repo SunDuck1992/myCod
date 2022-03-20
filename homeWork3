@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeStudy33
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name;
+            string zodiac;
+            string work;
+            int age;
+            Console.Write("Как вас зовут:");
+            name = Console.ReadLine();
+            Console.Write("Какой ваш знак зодиака:");
+            zodiac = Console.ReadLine();
+            Console.Write("Где вы работаете:");
+            work = Console.ReadLine();
+            Console.Write("Ваш возраст:");
+            age = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Вас зовут - " + name + ", вам - " + age + " лет " +
+                ". По знаку зодиака вы - " + zodiac + " и работаете " + work);
+
+
+        }
+    }
+}
