@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeStudy4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int pictures = 52;
+            int rows = 3;
+            int numberOfRows = pictures / rows;
+            int remains = pictures % rows;
+
+            Console.WriteLine(" Имея 52 картинки и выводя по 3 в ряд, мы в итоге получим: " +
+                numberOfRows + " рядов и " + remains + " картинка уйдет в остаток ");
+
+        }
+    }
+}
