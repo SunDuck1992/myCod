@@ -11,14 +11,14 @@ namespace homeStydy
         static void Main(string[] args)
         {
             string firstName;
-            string secondName;
-            int monitors;
-            int gameJoysticks;
+            byte monitors;
+            ushort gameJoysticks;
             int age;
             float health;
-            float speed;
-            float temperature;
-            bool isYouHaveMana;
+            double speed;
+            sbyte temperature;
+            uint cups;
+            long killometrs;
             bool doYouHaveAmmo;
 
         }
