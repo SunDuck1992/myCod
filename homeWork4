@@ -12,11 +12,11 @@ namespace homeStudy4
         {
             int pictures = 52;
             int numberOfPicturesInRow = 3;
-            int numberOfRows = pictures / numberOfPicturesInRow;
+            int rows = pictures / numberOfPicturesInRow;
             int remains = pictures % numberOfPicturesInRow;
 
             Console.WriteLine(" Имея 52 картинки и выводя по 3 в ряд, мы в итоге получим: " +
-                numberOfRows + " рядов и " + remains + " картинка уйдет в остаток ");
+                rows + " рядов и " + remains + " картинка уйдет в остаток ");
 
         }
     }
