@@ -11,13 +11,19 @@ namespace homeWork7
         static void Main(string[] args)
         {
             int waitingTime = 10;
-            int pioples;
+            int peoples;
             int qieueTime;
+            int hours;
+            int minutes;
+            int hoursTime;
+            int minutesTime;
             Console.Write(" Какое кол-во человек перед вами в очереди: ");
-            pioples = Convert.ToInt32(Console.ReadLine());
-            qieueTime = pioples * waitingTime;
-            Console.WriteLine(" Ваше время ожидания составит: " + qieueTime / 60 +
-            " часа " + qieueTime % 60 + " минут ");
+            peoples = Convert.ToInt32(Console.ReadLine());
+            qieueTime = peoples * waitingTime;
+            hoursTime = qieueTime / 60;
+            minutesTime = qieueTime % 60;
+            Console.WriteLine(" Ваше время ожидания составит: " + hoursTime +
+            " часа " + minutesTime + " минут ");
             
         }
     }
