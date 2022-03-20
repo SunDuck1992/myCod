@@ -15,7 +15,7 @@ namespace homeStydy
             int age;
             int time;
             int cups;
-            int lumenLight;
+            int lumenLights;
             float health;
             float speed;
             bool enoughMoney;
