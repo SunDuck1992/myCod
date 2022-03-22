@@ -18,10 +18,11 @@ namespace homeWork2_1
             Console.Write(" Введите жедаемое кол-во повторений: ");
             numberOfRepetitions = Convert.ToInt32(Console.ReadLine());
 
-            while (numberOfRepetitions -- > 0)
+            for ( int i = numberOfRepetitions; i > 0; i -- )
             {
                 Console.WriteLine(installedMessage);
             }    
         }
     }
 }
+
