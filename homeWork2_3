@@ -12,11 +12,13 @@ namespace homeWork2_3
         {
             int initialNumber = 5;
             int finiteNumber = 96;
+            int numberChangeStep = 7;
 
-            for (int i = initialNumber; i <= 96; i += 7)
+            for (int i = initialNumber; i <= finiteNumber; i += numberChangeStep)
             {
                 Console.WriteLine(i);
             }
         }
     }
 }
+
