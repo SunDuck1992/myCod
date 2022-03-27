@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp8
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string password = "Sunduck";
+            string userInput;
+            int tryCount = 3;
+            Console.WriteLine("Для доступа к программе вам необходимо ввести пароль.");
+            
+
+            while (tryCount-- > 0)
+            {
+                Console.WriteLine("Введите пароль:");
+                userInput = Console.ReadLine();
+                if (userInput == password)
+                {
+                    Console.WriteLine("Вы на правильном пути! Продолжайте учиться :)");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Пароль неверный, попробуйте еще раз");
+                }
+            }
+
+
+        }
+    }
+}
