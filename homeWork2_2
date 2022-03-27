@@ -10,13 +10,13 @@ namespace ConsoleApp5
     {
         static void Main(string[] args)
         {
-            string day;
+            string userInput;
             Console.Write("Введите любой день недели, либо введите Exit для выхода из программы: ");
             do
             {
-                day = Console.ReadLine();
+                userInput = Console.ReadLine();
 
-                switch (day)
+                switch (userInput)
                 {
                     case "Понедельник":
                         Console.WriteLine(" Занимаемся спортом ");
@@ -49,7 +49,7 @@ namespace ConsoleApp5
                         Console.WriteLine(" Программа завершена! ");
                         break;
                 }
-            }       while (day != "Exit");
+            }       while (userInput != "Exit");
         }
     }
 }
