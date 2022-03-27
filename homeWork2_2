@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string day;
+            Console.Write("Введите любой день недели, либо введите Exit для выхода из программы: ");
+            do
+            {
+                day = Console.ReadLine();
+
+                switch (day)
+                {
+                    case "Понедельник":
+                        Console.WriteLine(" Занимаемся спортом ");
+                        break;
+
+                    case "Вторник":
+                        Console.WriteLine(" Изучаем C# ");
+                        break;
+
+                    case "Среда":
+                        Console.WriteLine(" Идем на прогулку ");
+                        break;
+
+                    case "Четверг":
+                        Console.WriteLine(" Смотрим кино ");
+                        break;
+
+                    case "Пятница":
+                        Console.WriteLine(" Учимся ");
+                        break;
+
+                    case "Суббота":
+                        Console.WriteLine(" Спим до обеда ");
+                        break;
+
+                    case "Воскресенье":
+                        Console.WriteLine(" Идем на пикник ");
+                        break;
+                    default:
+                        Console.WriteLine(" Программа завершена! ");
+                        break;
+                }
+            }       while (day != "Exit");
+        }
+    }
+}
