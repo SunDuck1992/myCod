@@ -22,10 +22,10 @@ namespace ConsoleApp9
 
             Console.WriteLine("Добро пожаловать в наш обменник валюты. У нас вы можете обменять " +
                 "рубли в доллары, доллары в рубли, рубли в евро, евро в рубли");
-            Console.WriteLine("Курс доллара на покупку - 98 рублей");
-            Console.WriteLine("Курс доллара на продажу - 96 рублей");
-            Console.WriteLine("Курс евро на покупку - 107 рублей");
-            Console.WriteLine("Курс евро на продажу - 105 рублей");
+            Console.WriteLine("Курс доллара на покупку - " + rubToUsd);
+            Console.WriteLine("Курс доллара на продажу - " + usdToRub);
+            Console.WriteLine("Курс евро на покупку - " + rubToEur);
+            Console.WriteLine("Курс евро на продажу - " + eurToRub);
             Console.WriteLine("Для выхода из программы введите Exit");
             Console.WriteLine();
             Console.WriteLine("Ваше кол - во рублей:");
@@ -50,6 +50,7 @@ namespace ConsoleApp9
                         Console.WriteLine("Обмен рублей на доллары");
                         Console.Write("Сколько вы хотите обменять?: ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (rub >= currencyCount)
                         {
                             rub -= currencyCount;
@@ -126,4 +127,3 @@ namespace ConsoleApp9
         }
     }
 }
-
