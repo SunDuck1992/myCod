@@ -19,8 +19,8 @@ namespace ConsoleApp9
             float eur;
             string userInput;
             float currencyCount;
-            float countDollar = 1 / rubToUsd;
-            float countEuro = 1 / rubToEur;
+            float countDollar = 1 / Convert.ToSingle(rubToUsd);
+            float countEuro = 1 / Convert.ToSingle(rubToEur);
 
             Console.WriteLine("Добро пожаловать в наш обменник валюты. У нас вы можете обменять " +
                 "рубли в доллары, доллары в рубли, рубли в евро, евро в рубли");
