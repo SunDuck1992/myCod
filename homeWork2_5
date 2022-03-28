@@ -118,7 +118,7 @@ namespace ConsoleApp9
                         }
                         else
                         {
-                            Console.WriteLine("Недопустимое кол -во евро");
+                            Console.WriteLine("Недопустимое кол - во евро");
                         }
                         break;
                 }
