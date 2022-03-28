@@ -10,13 +10,15 @@ namespace ConsoleApp9
     {
         static void Main(string[] args)
         {
-            int rubToUsd = 98, usdToRub = 96, rubToEur = 107, eurToRub = 105;
+            int rubToUsd = 98; 
+            int usdToRub = 96;
+            int rubToEur = 107;
+            int eurToRub = 105;
             float rub;
             float usd;
             float eur;
             string userInput;
             float currencyCount;
-
 
             Console.WriteLine("Добро пожаловать в наш обменник валюты. У нас вы можете обменять " +
                 "рубли в доллары, доллары в рубли, рубли в евро, евро в рубли");
@@ -44,27 +46,35 @@ namespace ConsoleApp9
                 switch (userInput)
                 {
                     case "1":
+
                         Console.WriteLine("Обмен рублей на доллары");
                         Console.Write("Сколько вы хотите обменять?: ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
                         if (rub >= currencyCount)
                         {
-                            Console.WriteLine("У вас остается " + (rub -= currencyCount) + " рублей ");
-                            Console.WriteLine("Вы получаете " + (usd += currencyCount / rubToUsd) + " долларов");
+                            rub -= currencyCount;
+                            usd += currencyCount / rubToUsd;
+                            Console.WriteLine("У вас остается " + rub + " рублей ");
+                            Console.WriteLine("Вы получаете " + usd + " долларов");
                         }
                         else
                         {
                             Console.WriteLine("Недопустимое кол-во рублей");
                         }
                         break;
+
                     case "2":
+
                         Console.WriteLine("Обмен долларов на рубли");
                         Console.Write("Сколько вы хотите обменять?: ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (usd >= currencyCount)
                         {
-                            Console.WriteLine("У вас остается " + (usd -= currencyCount) + " долларов ");
-                            Console.WriteLine("Вы получаете " + (rub += currencyCount * usdToRub) + " рублей ");
+                            usd -= currencyCount;
+                            rub += currencyCount * usdToRub;
+                            Console.WriteLine("У вас остается " + usd + " долларов ");
+                            Console.WriteLine("Вы получаете " + rub + " рублей ");
                         }
                         else
                         {
@@ -72,28 +82,38 @@ namespace ConsoleApp9
                         }
 
                         break;
+
                     case "3":
+
                         Console.WriteLine("Обмен рублей на евро");
                         Console.Write("Сколько вы хотите обменять?: ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (rub >= currencyCount)
                         {
-                            Console.WriteLine("У вас остается " + (rub -= currencyCount) + " рублей ");
-                            Console.WriteLine("Вы получаете " + (eur += currencyCount / rubToEur) + " евро");
+                            rub -= currencyCount;
+                            eur += currencyCount / rubToEur;
+                            Console.WriteLine("У вас остается " + rub + " рублей ");
+                            Console.WriteLine("Вы получаете " + eur + " евро");
                         }
                         else
                         {
                             Console.WriteLine("Недопустимое кол - во рублей");
                         }
                         break;
+
                     case "4":
+
                         Console.WriteLine("Обмен евро на рубли");
                         Console.Write("Сколько вы хотите обменять?: ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
+
                         if (eur >= currencyCount)
                         {
-                            Console.WriteLine("У вас остается " + (eur -= currencyCount) + " евро ");
-                            Console.WriteLine("Вы получаете " + (rub += currencyCount * eurToRub) + " рублей ");
+                            eur -= currencyCount;
+                            rub += currencyCount * eurToRub;
+                            Console.WriteLine("У вас остается " + eur + " евро ");
+                            Console.WriteLine("Вы получаете " + rub + " рублей ");
                         }
                         else
                         {
@@ -106,3 +126,4 @@ namespace ConsoleApp9
         }
     }
 }
+
