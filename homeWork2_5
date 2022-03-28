@@ -19,6 +19,8 @@ namespace ConsoleApp9
             float eur;
             string userInput;
             float currencyCount;
+            float countDollar = 1 / rubToUsd;
+            float countEuro = 1 / rubToEur;
 
             Console.WriteLine("Добро пожаловать в наш обменник валюты. У нас вы можете обменять " +
                 "рубли в доллары, доллары в рубли, рубли в евро, евро в рубли");
@@ -54,7 +56,7 @@ namespace ConsoleApp9
                         if (rub >= currencyCount)
                         {
                             rub -= currencyCount;
-                            usd += currencyCount / rubToUsd;
+                            usd += currencyCount * countDollar;
                             Console.WriteLine("У вас остается " + rub + " рублей ");
                             Console.WriteLine("Вы получаете " + usd + " долларов");
                         }
@@ -93,7 +95,7 @@ namespace ConsoleApp9
                         if (rub >= currencyCount)
                         {
                             rub -= currencyCount;
-                            eur += currencyCount / rubToEur;
+                            eur += currencyCount * countEuro;
                             Console.WriteLine("У вас остается " + rub + " рублей ");
                             Console.WriteLine("Вы получаете " + eur + " евро");
                         }
@@ -118,7 +120,7 @@ namespace ConsoleApp9
                         }
                         else
                         {
-                            Console.WriteLine("Недопустимое кол - во евро");
+                            Console.WriteLine("Недопустимое кол -во евро");
                         }
                         break;
                 }
