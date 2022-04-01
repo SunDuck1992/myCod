@@ -11,9 +11,8 @@ namespace ConsoleApp12
         static void Main(string[] args)
         {
             string name;
-            int i = 0;
-            int b = 0;
-            Char symbol ;
+            int i;
+            char symbol;
             int numberOfCharacters;
             Console.WriteLine("Введите ваше имя: ");
             name = Console.ReadLine();
@@ -21,18 +20,16 @@ namespace ConsoleApp12
             Console.WriteLine("Укажите предпочитаемый символ: ");
             symbol = Convert.ToChar(Console.ReadLine());
 
-            while (i < numberOfCharacters + 2)
+            for (i = 0; i < numberOfCharacters + 2; i++)
             {
                 Console.Write(symbol);
-                i++;
             }
 
             Console.WriteLine("\n" + symbol + name + symbol);
 
-            while (b < numberOfCharacters + 2)
+            for (i = 0; i < numberOfCharacters + 2; i++)
             {
                 Console.Write(symbol);
-                b++;
             }
 
             Console.WriteLine();
@@ -40,3 +37,4 @@ namespace ConsoleApp12
         }
     }
 }
+
