@@ -10,13 +10,13 @@ namespace Test_program_1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Программа получает произвольное число и выводит сумму чисел кратных 3 и 5");
-            Random random = new Random();
             int maximumNumberLimit = 101;
             int staticDivisorNumber1 = 3;
             int staticDivisorNumber2 = 5;
-            int number = random.Next(maximumNumberLimit);
             int sum = 0;
+            Console.WriteLine("Программа получает произвольное число и выводит сумму чисел кратных " + staticDivisorNumber1 + " и "+ staticDivisorNumber2);
+            Random random = new Random();
+            int number = random.Next(maximumNumberLimit);
             Console.WriteLine("Наше число - " + number);
 
             for (int i = 1; i <= number; i++)
