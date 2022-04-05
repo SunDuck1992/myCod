@@ -11,30 +11,29 @@ namespace ConsoleApp12
         static void Main(string[] args)
         {
             string name;
+            string line = "";
             int i;
             char symbol;
             int numberOfCharacters;
+
             Console.WriteLine("Введите ваше имя: ");
             name = Console.ReadLine();
             numberOfCharacters = name.Length;
             Console.WriteLine("Укажите предпочитаемый символ: ");
             symbol = Convert.ToChar(Console.ReadLine());
-
+            
             for (i = 0; i < numberOfCharacters + 2; i++)
+
             {
-                Console.Write(symbol);
+                line += symbol.ToString();
             }
 
+            Console.Write(line);
             Console.WriteLine("\n" + symbol + name + symbol);
-
-            for (i = 0; i < numberOfCharacters + 2; i++)
-            {
-                Console.Write(symbol);
-            }
-
-            Console.WriteLine();
+            Console.Write(line);
             Console.ReadKey();
         }
     }
 }
+
 
