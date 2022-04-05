@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp12
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name;
+            int i;
+            char symbol;
+            int numberOfCharacters;
+            Console.WriteLine("Введите ваше имя: ");
+            name = Console.ReadLine();
+            numberOfCharacters = name.Length;
+            Console.WriteLine("Укажите предпочитаемый символ: ");
+            symbol = Convert.ToChar(Console.ReadLine());
+            int s = 2 + 2;
+            string str = "2" + "2";//склеивание, конкатенация строк
+            string line = "";
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Clear();
+            Console.Title = "Ivanov (C)";
+            Console.SetWindowSize(20, 10);
+            Console.SetBufferSize(30, 15);
+            for (i = 0; i < numberOfCharacters + 2; i++)
+            {
+                line = line + symbol.ToString();
+                //Console.Write(symbol);
+            }
+            Console.Write(line);
+            Console.WriteLine("\n" + symbol + name + symbol);
+            Console.Write(line);
+            
+
+            Console.ReadKey();
+        }
+    }
+}
+
