@@ -12,27 +12,27 @@ namespace homeWork_7
         {
             int maximumLimitForRandom = 27;
             int minimumLimitForRandom = 1;
-            int minimumThreeDigitNumber = 100;
-            int maximumThreeDigitNumber = 999;
+            int minValue = 100;
+            int maxValue = 999;
             int number;
             int countNumbers = 0;
             Console.WriteLine("Случайным образом задается число от " + minimumLimitForRandom + " до " + maximumLimitForRandom);
             Random random = new Random();
             number = random.Next(minimumLimitForRandom, maximumLimitForRandom);
             Console.WriteLine("Наше число - " + number);
-            Console.WriteLine("Вычисляем кол-во трехзначных чисел(от " + minimumThreeDigitNumber + " до " + maximumThreeDigitNumber + ")" +
+            Console.WriteLine("Вычисляем кол-во трехзначных чисел(от " + minValue + " до " + maxValue + ")" +
                 "кратных числу " + number);
 
-            for ( int i = minimumThreeDigitNumber; i <= maximumThreeDigitNumber; i++)
+            for ( int i = minValue; i <= maxValue; i++)
             {
-                int x = i;
+                int bruteForceOfNumbers = i;
 
-                while (x >= number)
+                while (bruteForceOfNumbers >= number)
                 {
-                    x -= number;
+                    bruteForceOfNumbers -= number;
                 }
 
-                if (x == 0)
+                if (bruteForceOfNumbers == 0)
                 {
                     countNumbers++;
                 }
