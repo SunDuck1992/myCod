@@ -23,7 +23,6 @@ namespace ConsoleApp12
             symbol = Convert.ToChar(Console.ReadLine());
             
             for (i = 0; i < numberOfCharacters + 2; i++)
-
             {
                 line += symbol.ToString();
             }
