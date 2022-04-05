@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork_7
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int maximumLimitForRandom = 27;
+            int minimumLimitForRandom = 1;
+            int minimumThreeDigitNumber = 100;
+            int maximumThreeDigitNumber = 999;
+            int number;
+            int countNumbers = 0;
+            Console.WriteLine("Случайным образом задается число от " + minimumLimitForRandom + " до " + maximumLimitForRandom);
+            Random random = new Random();
+            number = random.Next(minimumLimitForRandom, maximumLimitForRandom);
+            Console.WriteLine("Наше число - " + number);
+            Console.WriteLine("Вычисляем кол-во трехзначных чисел(от " + minimumThreeDigitNumber + " до " + maximumThreeDigitNumber + ")" +
+                "кратных числу " + number);
+
+            for ( int i = minimumThreeDigitNumber; i <= maximumThreeDigitNumber; i++)
+            {
+                int x = i;
+
+                while (x >= number)
+                {
+                    x -= number;
+                }
+
+                if (x == 0)
+                {
+                    countNumbers++;
+                }
+            }
+
+            Console.WriteLine("Количество трехзначный чисел кратных " + number + " равно - " + countNumbers);
+
+        }
+    }
+}
