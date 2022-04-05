@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int n;
+            n = 3; //random.Next(1, 28);
+            int count = 0;
+
+            for (int i = 100; i < 1000; i++)
+            {
+                int x = i;
+                while ( x >= n)
+                {
+                    x -= n;
+                }
+                if (x == 0) 
+                { 
+               
+                    Console.WriteLine(i);
+                    count ++;
+                }
+                
+            }
+            Console.WriteLine(count);
+            Console.WriteLine(n);
+            Console.ReadKey();
+        }
+    }
+}
