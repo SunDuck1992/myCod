@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+          
+                int numbers = random.Next(101);
+            //numbers = 10;
+            int sum;
+            sum = 0;
+            
+                Console.Write(numbers+"\n");
+            for (int i = 1; i <= numbers; i++)
+            {
+                if (i % 3 == 0 || i % 5 == 0)
+                {
+                    sum += i;
+                   // Console.WriteLine("i={0,5}  s={1,5}",i,sum);
+                }
+                
+            }
+            Console.WriteLine(sum);
+//            bool a = !(true && false);
+
+            Console.ReadKey();
+        }
+    }
+}
