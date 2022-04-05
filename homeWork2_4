@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Test_program_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Программа получает произвольное число и выводит сумму чисел кратных 3 и 5");
+            Random random = new Random();
+            int number = random.Next(101);
+            int sum = 0;
+            int i;
+            Console.WriteLine("Наше число - " + number);
+
+            for (i = 1; i <= number; i++)
+            {
+                if (i % 3 == 0 || i % 5 == 0)
+                {
+                    sum += i;
+                }
+            }
+            Console.WriteLine("Общая сумма сложенных чисел = " + sum);
+        }
+    }
+}
