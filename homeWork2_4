@@ -12,14 +12,16 @@ namespace Test_program_1
         {
             Console.WriteLine("Программа получает произвольное число и выводит сумму чисел кратных 3 и 5");
             Random random = new Random();
-            int number = random.Next(101);
+            int maximumNumberLimit = 101;
+            int staticDivisorNumber1 = 3;
+            int staticDivisorNumber2 = 5;
+            int number = random.Next(maximumNumberLimit);
             int sum = 0;
-            int i;
             Console.WriteLine("Наше число - " + number);
 
-            for (i = 1; i <= number; i++)
+            for (int i = 1; i <= number; i++)
             {
-                if (i % 3 == 0 || i % 5 == 0)
+                if (i % staticDivisorNumber1 == 0 || i % staticDivisorNumber2 == 0)
                 {
                     sum += i;
                 }
