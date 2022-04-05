@@ -12,7 +12,6 @@ namespace ConsoleApp12
         {
             string name;
             string line = "";
-            int i;
             char symbol;
             int numberOfCharacters;
 
