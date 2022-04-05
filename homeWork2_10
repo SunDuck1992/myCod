@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork2__10
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int number;
+            int numberRaisedToPower = 2;
+            int degreeOfNumber = 1;
+            int maxValue = 100;
+            int result;
+            Console.WriteLine("Система создаст случайное число. Ограничимся " + maxValue + " для наглядности");
+            Console.WriteLine("Статичное число - " + numberRaisedToPower + " будет возводиться в степень до тех пор, пока не станет больше случайного числа");
+            Random random = new Random();
+            number = random.Next(maxValue);
+            Console.WriteLine("Наше число - " + number);
+
+            for (int i = numberRaisedToPower; i <= number; degreeOfNumber++)
+            {
+                result = Convert.ToInt32(Math.Pow(numberRaisedToPower, degreeOfNumber));
+
+                if (result > number)
+                {
+                    Console.WriteLine("Итоговое число при возведении в степень  - " + result);
+                    Console.WriteLine("Степень числа - " + degreeOfNumber);
+                    Console.WriteLine("Число - " + result + " > " + number + ", соответственно условие выполнено.");
+                    break;
+                }
+            }
+        }
+    }
+}
