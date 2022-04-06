@@ -16,7 +16,7 @@ namespace homeWork2_6
             Console.WriteLine("OpenMyData - выведет ваши данные на экран при вводу корректного пароля");
             Console.WriteLine("ChangeConsoleColor - изменит внешний вид консоли");
             Console.WriteLine("SymbolAroundYourName - выведет ваше имя в рамке с любым символом");
-            Console.WriteLine("Exit - при вводе этой команды или нажатии клавиши Esc программа завершит свою работу");
+            Console.WriteLine("Exit - при вводе этой команды программа свою работу");
             Console.WriteLine();
             Console.WriteLine("Введите нужную команду: ");
 
@@ -25,8 +25,11 @@ namespace homeWork2_6
             string userInput;
             string password;
             string userPassword = "";
+            string line = "";
             int age = 0;
             int inputAttempts = 3;
+            int numberOfCharacters;
+            char symbol;
 
             do
             {
@@ -56,16 +59,15 @@ namespace homeWork2_6
                         Console.WriteLine("Это меню проверки пароля. У вас есть 3 попытки ввода");
                         Console.WriteLine("Введите ваш пароль: ");
 
-
                         for (int i = 0; i < inputAttempts; i++)
                         {
                             password = Console.ReadLine();
+
                             if (userPassword == password)
                             {
                                 Console.WriteLine("Пароль верный!");
                                 Console.WriteLine("Ваше имя " + name + ", ваша фамилия " + surname + " и вам " + age + " лет.");
                                 break;
-
                             }
                             else
                             {
@@ -74,12 +76,48 @@ namespace homeWork2_6
                                 Console.WriteLine("У вас осталось " + inputAttempts + " попыток");
                             }
                         }
+
+                        break;
+
+                    case "ChangeConsoleColor":
+                        Console.WriteLine("Это меню изменения цвета консоли.");
+                        Console.WriteLine("Если вы желаете изменить цвета, введите 1. Или введите 0, если не хотите.");
+                        int changeColor = Convert.ToInt32(Console.ReadLine());
+
+                        if (changeColor == 1)
+                        {
+                            Console.BackgroundColor = ConsoleColor.White;
+                            Console.ForegroundColor = ConsoleColor.DarkBlue;
+                            Console.Clear();
+                            Console.WriteLine("Цвет консоли изменен!");
+                        }
+
+                        if (changeColor == 0)
+                        {
+                            Console.WriteLine("Цвет консоли оставлен по умолчанию.");
+                            break;
+                        }
+
+                        break;
+
+                    case "SymbolAroundYourName":
+                        Console.WriteLine("Это меню создания рамки вокруг вашего имени.");
+                        Console.WriteLine("Введите желаемый символ - ");
+                        symbol = Convert.ToChar(Console.ReadLine());
+                        numberOfCharacters = name.Length;
+
+                        for (int i = 0; i <numberOfCharacters + 2; i++)
+                        {
+                            line += symbol.ToString();
+                        }
+
+                        Console.WriteLine(line);
+                        Console.WriteLine(symbol + name + symbol);
+                        Console.WriteLine(line);
                         break;
                 }
+
             } while (userInput != "Exit");
-
-
-
         }
     }
 }
