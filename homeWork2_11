@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork2_11
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            char[] myArray = { '(', ')' };
+            foreach (char ch in myArray)
+            {
+                Console.Write(ch);
+            }
+
+            Console.WriteLine("\n" + "Скобочное выражение является корректным.");
+        }
+    }
+}
