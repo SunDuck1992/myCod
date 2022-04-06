@@ -1,0 +1,85 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork2_6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Добро пожаловать в нашу программу. Она может помочь вам выполнить ряд задач, при введении нужной команды: ");
+            Console.WriteLine("MyData - запросит вас ввести ваши данные и сохранит их в памяти");
+            Console.WriteLine("MyPassword - запросит вас придумать пароль");
+            Console.WriteLine("OpenMyData - выведет ваши данные на экран при вводу корректного пароля");
+            Console.WriteLine("ChangeConsoleColor - изменит внешний вид консоли");
+            Console.WriteLine("SymbolAroundYourName - выведет ваше имя в рамке с любым символом");
+            Console.WriteLine("Exit - при вводе этой команды или нажатии клавиши Esc программа завершит свою работу");
+            Console.WriteLine();
+            Console.WriteLine("Введите нужную команду: ");
+
+            string name = "";
+            string surname = "";
+            string userInput;
+            string password;
+            string userPassword = "";
+            int age = 0;
+            int inputAttempts = 3;
+
+            do
+            {
+                userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case "MyData":
+                        Console.WriteLine("Это меню ввода ваших данных.");
+                        Console.WriteLine("Пожалуйста, введите ваше имя: ");
+                        name = Console.ReadLine();
+                        Console.WriteLine("Пожалуйста, введите вашу фамилию: ");
+                        surname = Console.ReadLine();
+                        Console.WriteLine("Ваш возраст: ");
+                        age = Convert.ToInt32(Console.ReadLine());
+                        break;
+
+                    case "MyPassword":
+                        Console.WriteLine("Это меню создания пароля.");
+                        Console.WriteLine("Пожалуйста, придумайте ваш пароль и не забудьте его!");
+                        Console.WriteLine("Ввод пароля: ");
+                        userPassword = Console.ReadLine();
+                        break;
+
+
+                    case "OpenMyData":
+                        Console.WriteLine("Это меню проверки пароля. У вас есть 3 попытки ввода");
+                        Console.WriteLine("Введите ваш пароль: ");
+
+
+                        for (int i = 0; i < inputAttempts; i++)
+                        {
+                            password = Console.ReadLine();
+                            if (userPassword == password)
+                            {
+                                Console.WriteLine("Пароль верный!");
+                                Console.WriteLine("Ваше имя " + name + ", ваша фамилия " + surname + " и вам " + age + " лет.");
+                                break;
+
+                            }
+                            else
+                            {
+                                inputAttempts--;
+                                Console.WriteLine("Неверный пароль, попробуйте ввести еще раз");
+                                Console.WriteLine("У вас осталось " + inputAttempts + " попыток");
+                            }
+                        }
+                        break;
+                }
+            } while (userInput != "Exit");
+
+
+
+        }
+    }
+}
