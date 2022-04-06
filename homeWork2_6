@@ -16,7 +16,7 @@ namespace homeWork2_6
             Console.WriteLine("OpenMyData - выведет ваши данные на экран при вводу корректного пароля");
             Console.WriteLine("ChangeConsoleColor - изменит внешний вид консоли");
             Console.WriteLine("SymbolAroundYourName - выведет ваше имя в рамке с любым символом");
-            Console.WriteLine("Exit - при вводе этой команды программа свою работу");
+            Console.WriteLine("Exit - при вводе этой команды программа завершит свою работу");
             Console.WriteLine();
             Console.WriteLine("Введите нужную команду: ");
 
