@@ -10,13 +10,41 @@ namespace homeWork2_11
     {
         static void Main(string[] args)
         {
-            char[] myArray = { '(', ')' };
-            foreach (char ch in myArray)
+            int depthOfBrackets = 0;
+            int chekingTheClosureOfBrackets = 0;
+            //char[] myArray = { '(', ')', '(',')'};
+            Console.WriteLine("Введите ваше строковое выражение. Программа проверит " +
+                "правильность написания вложенных скобок и выведет результат: ");
+            var myArray = Console.ReadLine();
+
+            foreach (char symbol in myArray)
             {
-                Console.Write(ch);
+                if (symbol == '(')
+
+                {
+                    chekingTheClosureOfBrackets++;
+                }
+
+                if (symbol == ')')
+
+                {
+                    chekingTheClosureOfBrackets--;
+                    depthOfBrackets++;
+                }
             }
 
-            Console.WriteLine("\n" + "Скобочное выражение является корректным.");
+            if (chekingTheClosureOfBrackets == 0)
+
+            {
+                Console.WriteLine("Скобочное выражение верное");
+                Console.WriteLine("Глубина вложенных скобок = " + depthOfBrackets);
+            }
+
+            else
+
+            {
+                Console.WriteLine("Скобочное выражение не верное");
+            }
         }
     }
 }
