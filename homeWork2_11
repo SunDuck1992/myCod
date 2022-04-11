@@ -12,7 +12,7 @@ namespace homeWork2_11
         {
             int depthOfBrackets = 0;
             int chekingTheClosureOfBrackets = 0;
-            //char[] myArray = { '(', ')', '(',')'};
+            //char[] myArray = { '(', ')' };
             Console.WriteLine("Введите ваше строковое выражение. Программа проверит " +
                 "правильность написания вложенных скобок и выведет результат: ");
             var myArray = Console.ReadLine();
