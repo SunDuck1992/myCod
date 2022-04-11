@@ -1,0 +1,163 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork2_12
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int healthGoldenDragon = random.Next(450, 600);
+            int healthPlayer = random.Next(400, 450);
+            int damageGoldenDragon = random.Next(50, 70);
+            int extraDamageGoldenDragon = random.Next(70, 100);
+            int manaOfPlayer = random.Next(300, 350);
+            int manaFrostBolt = 30;
+            int manaIceRain = 50;
+            int manaHeal = 50;
+            int manaIceVortex = 100;
+            int pointOfPower = 0;
+            int damageFrostBolt = 50;
+            int damageIceRain = 100;
+            int powerOfHeal = 120;
+            int damageIceVortex = 200;
+            int costPointOfPowerIceRain = 1;
+            int costPointOfPowerHeal = 2;
+            int costPointOfPowerIceVortex = 3;
+            string spellCast = "";
+            bool startGame = true;
+
+            Console.WriteLine("Вы входите в пещеру великого дракона, чтобы завладеть его богатствами. Дракон заметил вас и да начнется битва!");
+            Console.WriteLine("Характеристики дракона - " + "\n" + "Здоровье: " + healthGoldenDragon + "\n" + "Урон дракона: " + damageGoldenDragon);
+            Console.WriteLine("Ваши характеритики - " + "\n" + "Здоровье: " + healthPlayer + "\n" +
+                "Мана:" + manaOfPlayer);
+            Console.WriteLine();
+            Console.WriteLine("Вы маг ледяного ветра. У вас есть следующие способности:");
+            Console.WriteLine("1 - Ледяная стрела. Вы выпускаете ледяную стрелу во врага. Наносит 50 урона. Расходует 30 маны. " + "\n" +
+                "Накапливает очки силы, которые можно использовать на более мощные заклинания.");
+            Console.WriteLine("2 - Ледяной дождь. С неба падают глыбы льда. Наносит 100 урона." + "\n" + 
+                "возможно применить после накопления 1 очка силы. Расходует 50 маны.");
+            Console.WriteLine("3 - Исцеление. Восстанавливает 70 ед здоровья. Расходует  50 маны. Возможно " +
+                "после накопления 2 очков силы.");
+            Console.WriteLine("4 - Вихрь. Создает морозный вихрь, который наносит 200 урона." + "\n" + 
+                "возможно применить после накопления 3 очков силы. Расходует 100 маны.");
+            Console.WriteLine();
+
+            while (startGame)
+            {
+                if (manaOfPlayer < manaFrostBolt)
+                {
+                    startGame = false;
+                    Console.WriteLine("У вас закончилась мана. Это конец!");
+                }
+                if (healthPlayer <= 0)
+                {
+                    startGame = false;
+                    Console.WriteLine("Вы съедены. Это конец!");
+                }
+                if (healthGoldenDragon <= 0)
+                {
+                    startGame = false;
+                    Console.WriteLine("Дракон пал к вашим ногам. Все его богатсва ваши!");
+                }
+                if (healthPlayer <= 0 && healthGoldenDragon <= 0)
+                {
+                    Console.WriteLine("И великий воин, и дракон пали в этой схватке. Ваши останки будут напоминать об этом сражении" + "\n" + 
+                        "будущим искателям приключений.");
+                }
+                else
+                {
+                    switch (spellCast = Console.ReadLine())
+                    {
+                        case "1":
+                            if (manaOfPlayer >= manaFrostBolt)
+                            {
+                                healthGoldenDragon -= damageFrostBolt;
+                                pointOfPower++;
+                                Console.WriteLine("Вы выпускаете ледяную стрелу и дракон получает " + damageFrostBolt + " урона.");
+                                manaOfPlayer -= manaFrostBolt;
+                                healthPlayer -= damageGoldenDragon;
+                                Console.WriteLine("Дракон наносит вам " + damageGoldenDragon + " урона.");
+                                Console.WriteLine("Вы накапливаете " + pointOfPower + " очка силы.");
+                                Console.WriteLine("Кол - во жизней дракона: " + healthGoldenDragon);
+                                Console.WriteLine("Кол - во жизней героя: " + healthPlayer);
+                                Console.WriteLine("Кол - во маны героя: " + manaOfPlayer);
+                            }
+                            break;
+
+                        case "2":
+
+                            if (manaOfPlayer >= manaIceRain && pointOfPower >= costPointOfPowerIceRain)
+                            {
+                                healthGoldenDragon -= damageIceRain;
+                                Console.WriteLine("На дракона падают острые глыбы льда и он получает " + damageIceRain + " урона.");
+                                manaOfPlayer -= manaIceRain;
+                                pointOfPower -= costPointOfPowerIceRain;
+                                healthPlayer -= damageGoldenDragon;
+                                Console.WriteLine("Дракон наносит вам " + damageGoldenDragon + " урона.");
+                                Console.WriteLine("Вы расходуете " + costPointOfPowerIceRain + " очка силы.");
+                                Console.WriteLine("У вас осталось " + pointOfPower + " очка силы.");
+                                Console.WriteLine("Кол - во жизней дракона: " + healthGoldenDragon);
+                                Console.WriteLine("Кол - во жизней героя: " + healthPlayer);
+                                Console.WriteLine("Кол - во маны героя: " + manaOfPlayer);
+                            }
+                            else
+                            {
+                                Console.WriteLine("У вас не достаточно очков силы для этого заклинания!");
+                            }
+                            break;
+
+                        case "3":
+
+                            if (manaOfPlayer >= manaHeal && pointOfPower >= costPointOfPowerHeal)
+                            {
+                                healthPlayer += powerOfHeal;
+                                Console.WriteLine("Вы накладываете чары и излечиваете свои раны на " + powerOfHeal + " едениц здоровья.");
+                                manaOfPlayer -= manaHeal;
+                                pointOfPower -= costPointOfPowerHeal;
+                                healthPlayer -= damageGoldenDragon;
+                                Console.WriteLine("Дракон наносит вам " + damageGoldenDragon + " урона.");
+                                Console.WriteLine("Вы расходуете " + costPointOfPowerHeal + " очка силы.");
+                                Console.WriteLine("У вас осталось " + pointOfPower + " очка силы.");
+                                Console.WriteLine("Кол - во жизней дракона: " + healthGoldenDragon);
+                                Console.WriteLine("Кол - во жизней героя: " + healthPlayer);
+                                Console.WriteLine("Кол - во маны героя: " + manaOfPlayer);
+                            }
+                            else
+                            {
+                                Console.WriteLine("У вас не достаточно очков силы для этого заклинания!");
+                            }
+                            break;
+
+                        case "4":
+
+                            if (manaOfPlayer >= manaIceVortex && pointOfPower >= costPointOfPowerIceVortex)
+                            {
+                                healthGoldenDragon -= damageIceVortex;
+                                Console.WriteLine("Вы обрушиваете на дракона ледяной вихрь и наносите ему " + damageIceVortex + " урона.");
+                                manaOfPlayer -= manaIceVortex;
+                                pointOfPower -= costPointOfPowerIceVortex;
+                                healthPlayer -= extraDamageGoldenDragon;
+                                Console.WriteLine("Дракон в ярости выпускает всю свою мощь огня и наносит вам " + extraDamageGoldenDragon + " урона.");
+                                Console.WriteLine("Вы расходуете " + costPointOfPowerIceVortex + " очка силы.");
+                                Console.WriteLine("У вас осталось " + pointOfPower + " очка силы.");
+                                Console.WriteLine("Кол - во жизней дракона: " + healthGoldenDragon);
+                                Console.WriteLine("Кол - во жизней героя: " + healthPlayer);
+                                Console.WriteLine("Кол - во маны героя: " + manaOfPlayer);
+                            }
+                            else
+                            {
+                                Console.WriteLine("У вас не достаточно очков силы для этого заклинания!");
+                            }
+                            break;
+                    }
+                }
+            }
+
+        }
+    }
+}
