@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork3_6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int sizeArray = 10;
+            int[] array = new int[sizeArray];
+            int temporaryStorage;
+            int minNumber = 1;
+            int maxNumber = 11;
+            Random random = new Random();
+            
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = random.Next(minNumber, maxNumber);
+                Console.Write(array[i] + " ");
+            }
+            Console.WriteLine();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                for(int j = i + 1; j < array.Length; j++)
+                {
+                    if (array[i] > array[j])
+                    {
+                        temporaryStorage = array[i];
+                        array[i] = array[j];
+                        array[j] = temporaryStorage;
+                    }
+                }
+            }
+            Console.Write("Отсортированный массив выглядит так:");
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write(array[i] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
