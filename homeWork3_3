@@ -34,14 +34,11 @@ namespace homeWork3_3
                     Console.WriteLine("Список локальных максимумов - " + array[i]);
                 }
             }
-
-            for (int i = 29; i < array.Length; i++)
-            {
-                if (array[array.Length - 1] > array[array.Length - 2])
+            
+            if (array[array.Length - 1] > array[array.Length - 2])
                 {
                     Console.WriteLine("Последнее число является локальным максимумом - " + array[array.Length - 1]);
                 }
-            }
         }
     }
 }
