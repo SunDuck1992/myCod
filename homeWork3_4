@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Вы вводите числа, программа их запоминает до тех пор пока не будет введено контрольное слово " + "\n" + "sum или exit. ");
+        int lenghtArray = 0;
+        int[] array = new int[lenghtArray];
+        int[] arrayClone = new int[lenghtArray];
+        int amount = 0;
+        string message;
+        int number;
+        int zeroNumber = 0;
+
+        Console.WriteLine("Введите число, sum или exit: ");
+
+        while (true)
+        {
+            message = Console.ReadLine();
+
+            if (message != "sum" && message != "exit")
+            {
+                lenghtArray++;
+                array = new int[lenghtArray];
+                number = Convert.ToInt32(message);
+                array[array.Length - 1] = number;
+
+                for (int i = 0; i < arrayClone.Length; i++)
+                {
+                    array[i] = arrayClone[i];
+                }
+                arrayClone = array;
+            }
+
+            else if (message == "sum")
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    amount += array[i];
+
+                }
+                Console.WriteLine("Сумма чисел равна = " + amount);
+                amount = zeroNumber;
+            }
+
+            else if (message == "exit")
+            {
+                Console.WriteLine("Программа завершена.");
+                break;
+            }
+        }
+    }
+}
