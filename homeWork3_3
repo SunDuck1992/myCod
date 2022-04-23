@@ -1,1 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
+namespace homeWork3_3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int sizeArray = 30;
+            int[] array = new int[sizeArray];
+            Random random = new Random();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = random.Next(100, 500);
+                Console.Write(array[i] + " ");
+            }
+
+            if (array[0] > array[1])
+            {
+                Console.WriteLine("Первое число является локальным максимумом - " + array[0]);
+            }
+
+            if (array[array.Length - 1] > array[array.Length - 2])
+            {
+                Console.WriteLine("Последнее число является локальным максимумом - " + array[array.Length - 1]);
+            }
+
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                if (array[i - 1] < array[i] && array[i + 1] < array[i])
+                {
+                    Console.WriteLine("Список локальных максимумов - " + array[i]);
+                }
+            }
+        }
+    }
+}
