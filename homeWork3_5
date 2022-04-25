@@ -22,9 +22,9 @@ namespace homeWork3_5
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = random.Next(minNumber, maxNumber);
-                Console.Write(array[i] + " ");    
+                Console.Write(array[i] + " ");
             }
-           
+
             for (int i = 0; i < array.Length - 1; i++)
             {
                 if (array[i] == array[i + 1]) count++;
@@ -32,11 +32,10 @@ namespace homeWork3_5
                 else
                 {
                     if (count > maxCount)
-                {
-                    maxCount = count;
-                    theValueOfNumber = array[i];
-                    
-                }
+                    {
+                        maxCount = count;
+                        theValueOfNumber = array[i];
+                    }
                     count = 1;
                 }
             }
