@@ -27,7 +27,10 @@ namespace homeWork3_5
 
             for (int i = 0; i < array.Length - 1; i++)
             {
-                if (array[i] == array[i + 1]) count++;
+                if (array[i] == array[i + 1])
+                { 
+                    count++; 
+                }
 
                 else
                 {
