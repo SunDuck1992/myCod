@@ -10,7 +10,7 @@ namespace homeWork3_1._1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Дан двумерный массив.Вычислить сумму второй строки и произведение первого столбца." +"\n" + "Вывести исходную матрицу и результаты вычислений." + "\n");
+            Console.WriteLine("Дан двумерный массив.Вычислить сумму второй строки и произведение первого столбца." + "\n" + "Вывести исходную матрицу и результаты вычислений." + "\n");
             Random random = new Random();
             int sumOfSecondLine = 0;
             int productOfFirstColumn = 1;
@@ -30,31 +30,19 @@ namespace homeWork3_1._1
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
                     array[i, j] = random.Next(numberStartArray, numberEndArray);
-                    Console.Write( array[i,j] + " ");    
+                    Console.Write(array[i, j] + " ");
                 }
                 Console.WriteLine();
             }
 
-            for (int i = 0; i < array.GetLength(0); i++)
+            for (int j = 0; j < array.GetLength(1); j++)
             {
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    if (i == 1)
-                    {
-                        sumOfSecondLine += array[i, j];
-                    }
-                }
+                sumOfSecondLine += array[1, j];
             }
 
             for (int i = 0; i < array.GetLength(0); i++)
             {
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    if (j == 0)
-                    {
-                        productOfFirstColumn += array[i, j];
-                    }
-                }
+                productOfFirstColumn *= array[i, 0];
             }
 
             Console.WriteLine("Сумма второй строки равна - " + sumOfSecondLine);
@@ -62,4 +50,4 @@ namespace homeWork3_1._1
         }
     }
 }
-
+}
