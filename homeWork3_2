@@ -46,14 +46,12 @@ namespace homeWork3_2
                 {
                     if (array[i, j] == maximumValue)
                     {
-                        array[i, j] = 0;
-                        Console.Write(array[i,j]);
+                        array[i, j] = 0;    
                     }
+                    Console.Write(array[i, j] + "  ");
                 }
                 Console.WriteLine();
             }
-
         }
-
     }
 }
