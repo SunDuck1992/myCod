@@ -22,16 +22,18 @@ namespace homeWork3_5
             for (int i = 0; i < array.Length - 1; i++)
             {
                 array[i] = random.Next(minNumber, maxNumber);
-                //Console.Write(array[i] + " ");
-                if (array[i] == array[i] + 1)
+                Console.Write(array[i] + " ");
+                if (array[i] == array[i + 1])
                 {
                     count++;
-                    
-                    
+
+
                 }
-                Console.WriteLine(count);
+                ///*Console.WriteLine(count*/);
             }
-            
+            Console.WriteLine();
+            Console.WriteLine(count);
+
 
         }
     }
