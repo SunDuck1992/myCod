@@ -15,26 +15,33 @@ namespace homeWork3_5
             int maxNumber = 5;
             int[] array = new int[sizeArray];
             int count = 1;
-            int max = 0;
-            int maxN = -1;
+            int maxCount = 0;
+            int theValueOfNumber = 0;
             Random random = new Random();
 
-            for (int i = 0; i < array.Length - 1; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 array[i] = random.Next(minNumber, maxNumber);
-                Console.Write(array[i] + " ");
-                if (array[i] == array[i + 1])
+                Console.Write(array[i] + " ");    
+            }
+           
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                if (array[i] == array[i + 1]) count++;
+
+                else
                 {
-                    count++;
-
-
+                    if (count > maxCount)
+                {
+                    maxCount = count;
+                    theValueOfNumber = array[i];
+                    
                 }
-                ///*Console.WriteLine(count*/);
+                    count = 1;
+                }
             }
             Console.WriteLine();
-            Console.WriteLine(count);
-
-
+            Console.WriteLine("Максимальное кол -во повторений - " + maxCount + ".   " + "Это число - " + theValueOfNumber);
         }
     }
 }
