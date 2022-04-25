@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork3_2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int line = 10;
+            int column = 10;
+            int minNumber = 10;
+            int maxNumber = 100;
+            int[,] array = new int[line, column];
+            Random random = new Random();
+
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    array[i, j] = random.Next(minNumber, maxNumber);
+                    Console.Write(array[i, j] + "  ");
+                }
+                Console.WriteLine();
+            }
+            int maximumValue = array[0, 0];
+
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (maximumValue < array[i, j])
+                    {
+                        maximumValue = array[i, j];
+                    }
+                }
+            }
+            Console.WriteLine("Максимальное значение массива равно - " + maximumValue);
+
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j] == maximumValue)
+                    {
+                        array[i, j] = 0;
+                        Console.Write(array[i,j]);
+                    }
+                }
+                Console.WriteLine();
+            }
+
+        }
+
+    }
+}
