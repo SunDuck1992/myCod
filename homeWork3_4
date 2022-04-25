@@ -6,17 +6,13 @@ class Program
     static void Main()
     {
         Console.WriteLine("Вы вводите числа, программа их запоминает до тех пор пока не будет введено контрольное слово " + "\n" + "sum или exit. ");
+        Console.WriteLine("Введите число, sum или exit: ");
         int lenghtArray = 0;
         int[] array = new int[lenghtArray];
         int[] arrayClone = new int[lenghtArray];
-        int amount = 0;
-        string message;
-        int number;
-        int zeroNumber = 0;
+        string message = "";
 
-        Console.WriteLine("Введите число, sum или exit: ");
-
-        while (true)
+        while (message != "exit")
         {
             message = Console.ReadLine();
 
@@ -24,8 +20,14 @@ class Program
             {
                 lenghtArray++;
                 array = new int[lenghtArray];
-                number = Convert.ToInt32(message);
+                int number;
+                bool flag = int.TryParse(message, out number);
                 array[array.Length - 1] = number;
+
+                if (flag == false)
+                {
+                    Console.WriteLine("Не могу конвертировать");
+                }
 
                 for (int i = 0; i < arrayClone.Length; i++)
                 {
@@ -36,20 +38,16 @@ class Program
 
             else if (message == "sum")
             {
+                int amount = 0;
                 for (int i = 0; i < array.Length; i++)
                 {
+
                     amount += array[i];
 
                 }
-                Console.WriteLine("Сумма чисел равна = " + amount);
-                amount = zeroNumber;
-            }
-
-            else if (message == "exit")
-            {
-                Console.WriteLine("Программа завершена.");
-                break;
+                Console.WriteLine("Сумма чисел равна = " + amount);   
             }
         }
+        Console.WriteLine("Программа завершена.");
     }
 }
