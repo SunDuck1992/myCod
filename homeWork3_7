@@ -13,8 +13,9 @@ namespace homeWork3_7
             //Дана строка с текстом, используя метод строки String.Split() 
             //получить массив слов, которые разделены пробелом в тексте и вывести массив, каждое слово с новой строки.          
             Console.WriteLine("Введите ваши слова. Программа выведет их на экран с новой строки");
-            string str = Console.ReadLine();
-            string[] array = str.Split(' ');
+            string line = Console.ReadLine();
+            string[] array = line.Split(' ');
+
             for (int i = 0; i < array.Length; i++)
             {
                 Console.WriteLine(array[i]);
