@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork3_8._2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int sizeArray = 5;
+            int minValue = 1;
+            int maxValue = 11;
+            int[] array = new int[sizeArray];
+            Random random = new Random();
+            Console.WriteLine("Выводим наш массив:");
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = random.Next(minValue, maxValue);
+                Console.Write(array[i] + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Введите желаемое кол - во сдвигов массива чисел влево: ");
+            int numberOfShifts = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Преобразованный массив:");
+
+            for (int i = 0; i < numberOfShifts; i++)
+            {
+                int firstNumber = array[0];
+
+                for (int j = 0; j < sizeArray - 1; j++)
+                {
+                    array[j] = array[j + 1];
+                    Console.Write(array[j] + " ");
+                }
+                array[sizeArray - 1] = firstNumber;
+                Console.Write(firstNumber + " Сдвиг на " + (i + 1) + " цикл(а)");
+                Console.WriteLine();                
+            }            
+        }
+    }
+}
