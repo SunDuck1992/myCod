@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork4_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int health;
+            int maxHealth = 10;
+            int mana;
+            int maxMana = 10;
+
+            Console.SetCursorPosition(0, 5);
+            Console.WriteLine("Введите кол - во жизней вашего персонажа(1 - 10):");
+            health = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите кол - во маны вашего персонажа(1 - 10):");
+            mana = Convert.ToInt32(Console.ReadLine());
+
+            DrawBar(health, maxHealth, ConsoleColor.Red, 0);
+            DrawBar(mana, maxMana, ConsoleColor.Blue, 1);
+
+            Console.SetCursorPosition(0, 2);
+            Console.ReadKey();
+        }
+
+        static void DrawBar(int value, int maxValue, ConsoleColor color, int position, char symbol = ' ')
+        {
+            string bar = "";
+            ConsoleColor defaultColor = Console.BackgroundColor;
+
+            for (int i = 0; i < value; i++)
+            {
+                bar += '#';
+            }
+
+            Console.SetCursorPosition(0, position);
+            Console.Write('[');
+            Console.BackgroundColor = color;
+            Console.Write(bar);
+            Console.BackgroundColor = defaultColor;
+            bar = "";
+
+            for (int i = value; i < maxValue; i++)
+            {
+                bar += symbol;
+            }
+            Console.Write(bar);
+            Console.Write(']');
+        }
+    }
+}
