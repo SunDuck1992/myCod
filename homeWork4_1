@@ -1,0 +1,164 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork4_2
+{
+    class Program
+    {
+        static void RemoveAt(ref string[] array, int index)
+        {
+
+            //if (array.Length == 0)
+            //{
+            //    Console.WriteLine("Картотека досье пуста. Удаление не возможно!");
+            //    return;
+
+            //}
+
+            string[] newArray = new string[array.Length - 1];          
+
+            for (int i = 0; i < index; i++)
+            {
+                newArray[i] = array[i];
+            }
+
+            for (int i = index + 1; i < array.Length; i++)
+            {
+                newArray[i - 1] = array[i];
+            }
+            array = newArray;            
+        }
+        static void Main(string[] args)
+        {
+            int arrayLenght = 0;
+            string[] initialsOfPeople = new string[arrayLenght];
+            string[] postOfPeople = new string[arrayLenght];
+            string message = "";           
+            string initials;
+            bool peopleIsFind = false;
+            Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
+            Console.WriteLine();
+            Console.SetCursorPosition(50, 2);
+            Console.WriteLine("Архив досье." + "\n" + "Меню Архива: " + "\n" + "1 - ввод ФИО человека и должности" + "\n" + "2 - вывод всех досье на экран" +
+                "\n" + "3 - удалить досье" + "\n" + "4 - поиск по ФИО и индексу в списке" + "\n" + "Для выхода из программы введите Exit");
+            Console.WriteLine();
+
+            while (message != "Exit")
+            {                
+                message = Console.ReadLine();
+
+                switch (message)
+                {
+                    case "1":
+                        string[] tempArray;
+                        string[] tempArray2;
+                        Console.WriteLine("Введите ФИО человека:");
+                        string people = Console.ReadLine();
+                        arrayLenght++;
+                        tempArray = new string[arrayLenght];
+
+                        for (int i = 0; i < tempArray.Length - 1; i++)
+                        {
+                            tempArray[i] = initialsOfPeople[i];
+                        }
+                        tempArray[arrayLenght - 1] = people;
+                        initialsOfPeople = tempArray;
+
+                        Console.WriteLine("Введите должность:");
+                        string post = Console.ReadLine();
+                        tempArray2 = new string[arrayLenght];
+
+                        for (int i = 0; i < tempArray2.Length - 1; i++)
+                        {
+                            tempArray2[i] = postOfPeople[i];
+                        }
+                        tempArray2[arrayLenght - 1] = post;
+                        postOfPeople = tempArray2;
+                        break;
+
+                    case "2":
+
+                        for (int i = 0; i < initialsOfPeople.Length; i++)
+                        {
+                            Console.Write(i + 1 + " - ");
+                            Console.Write(initialsOfPeople[i] + " - ");
+                            Console.Write(postOfPeople[i] + " | ");
+                        }
+                        Console.WriteLine();  
+                        if (initialsOfPeople.Length == 0)
+                        {
+                            Console.WriteLine("Картотека досье пуста!");
+                        }
+                        break;
+
+                    case "3":
+                        Console.WriteLine("Введите порядковый номер досье, которое желаете удалить:");
+                        int number = Convert.ToInt32(Console.ReadLine());
+
+                        if (number > initialsOfPeople.Length)
+                        {
+                            Console.WriteLine("Недопустимый индекс!");
+                            break;
+
+                        }
+                        else if (number == 0)
+                        {
+                            Console.WriteLine("Недопустимый индекс!");
+                            break;
+                        }
+
+
+
+                        if (initialsOfPeople.Length == 0)
+                        {
+                            Console.WriteLine("Картотека досье пуста. Удаление не возможно!");
+                            break;
+                        }
+
+                        RemoveAt(ref initialsOfPeople, number - 1);
+                        RemoveAt(ref postOfPeople, number - 1);
+
+                        for (int i = 0; i < initialsOfPeople.Length; i++)
+                        {
+                            Console.Write(initialsOfPeople[i] + " - ");
+                            Console.Write(postOfPeople[i] + " | ");
+                        }
+                        if (initialsOfPeople.Length == 0)
+                        {
+                            if (postOfPeople.Length == 0)
+                            {
+                                Console.WriteLine("Все досье удалены. Картотека пуста!");
+                            }
+                        }
+
+                        Console.WriteLine();
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Введите ФИО для поиска в картотеке:");
+                        initials = Console.ReadLine();
+
+                        for (int i = 0; i < initialsOfPeople.Length; i++)
+                        {
+                            if (initials.ToLower() == initialsOfPeople[i].ToLower())
+                            {
+                                Console.WriteLine("Досье найдено:");
+                                Console.Write(initialsOfPeople[i] + " - ");
+                                Console.Write(postOfPeople[i]);
+                                peopleIsFind = true;
+                            }
+                        }
+
+                        if (peopleIsFind == false)
+                        {
+                            Console.WriteLine("Такого человека нет в списке");
+                        }
+                        break;
+                }
+            }
+        }
+    }
+}
