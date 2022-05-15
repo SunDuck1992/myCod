@@ -58,24 +58,24 @@ namespace homeWork4_2
                         Console.WriteLine("Введите ФИО человека:");
                         string people = Console.ReadLine();
                         arrayLenght++;
-                        tempArray = new string[arrayLenght];
+                        tempArray = new string[initialsOfPeople.Length + 1];
 
-                        for (int i = 0; i < tempArray.Length - 1; i++)
+                        for (int i = 0; i < initialsOfPeople.Length - 1; i++)
                         {
                             tempArray[i] = initialsOfPeople[i];
                         }
-                        tempArray[arrayLenght - 1] = people;
+                        tempArray[initialsOfPeople.Length] = people;
                         initialsOfPeople = tempArray;
 
                         Console.WriteLine("Введите должность:");
                         string post = Console.ReadLine();
-                        tempArray2 = new string[arrayLenght];
+                        tempArray2 = new string[postOfPeople.Length + 1];
 
-                        for (int i = 0; i < tempArray2.Length - 1; i++)
+                        for (int i = 0; i < postOfPeople.Length - 1; i++)
                         {
                             tempArray2[i] = postOfPeople[i];
                         }
-                        tempArray2[arrayLenght - 1] = post;
+                        tempArray2[postOfPeople.Length] = post;
                         postOfPeople = tempArray2;
                         break;
 
