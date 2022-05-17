@@ -10,15 +10,7 @@ namespace homeWork4_2
     {
         static void RemoveAt(ref string[] array, int index)
         {
-
-            //if (array.Length == 0)
-            //{
-            //    Console.WriteLine("Картотека досье пуста. Удаление не возможно!");
-            //    return;
-
-            //}
-
-            string[] newArray = new string[array.Length - 1];          
+            string[] newArray = new string[array.Length - 1];
 
             for (int i = 0; i < index; i++)
             {
@@ -29,16 +21,81 @@ namespace homeWork4_2
             {
                 newArray[i - 1] = array[i];
             }
-            array = newArray;            
+            array = newArray;
+        }
+
+        static void AddPeople(ref string[] array, ref string[] array2)
+        {
+            string[] tempArray;
+            string[] tempArray2;
+            Console.WriteLine("Введите ФИО человека:");
+            string people = Console.ReadLine();
+            tempArray = new string[array.Length + 1];
+
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                tempArray[i] = array[i];
+            }
+            tempArray[array.Length] = people;
+            array = tempArray;
+
+            Console.WriteLine("Введите должность:");
+            string post = Console.ReadLine();
+            tempArray2 = new string[array2.Length + 1];
+
+            for (int i = 0; i < array2.Length - 1; i++)
+            {
+                tempArray2[i] = array2[i];
+            }
+            tempArray2[array2.Length] = post;
+            array2 = tempArray2;
+        }
+
+        static void ShowPeople(ref string[] array, ref string[] array2)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write(i + 1 + " - ");
+                Console.Write(array[i] + " - ");
+                Console.Write(array2[i] + " | ");
+            }
+            Console.WriteLine();
+
+            if (array.Length == 0)
+            {
+                Console.WriteLine("Картотека досье пуста!");
+            }
+        }
+
+        static void FindPeopleInList(ref string [] array, ref string[] array2)
+        {
+            string initials;
+            bool peopleIsFind = false;
+            Console.WriteLine("Введите ФИО для поиска в картотеке:");
+            initials = Console.ReadLine();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (initials.ToLower() == array[i].ToLower())
+                {
+                    Console.WriteLine("Досье найдено:");
+                    Console.Write(array[i] + " - ");
+                    Console.Write(array2[i]);
+                    peopleIsFind = true;
+                }
+            }
+
+            if (peopleIsFind == false)
+            {
+                Console.WriteLine("Такого человека нет в списке");
+            }
         }
         static void Main(string[] args)
         {
             int arrayLenght = 0;
             string[] initialsOfPeople = new string[arrayLenght];
             string[] postOfPeople = new string[arrayLenght];
-            string message = "";           
-            string initials;
-            bool peopleIsFind = false;
+            string message = "";                 
             Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
             Console.WriteLine();
             Console.SetCursorPosition(50, 2);
@@ -47,51 +104,17 @@ namespace homeWork4_2
             Console.WriteLine();
 
             while (message != "Exit")
-            {                
+            {
                 message = Console.ReadLine();
 
                 switch (message)
                 {
                     case "1":
-                        string[] tempArray;
-                        string[] tempArray2;
-                        Console.WriteLine("Введите ФИО человека:");
-                        string people = Console.ReadLine();
-                        arrayLenght++;
-                        tempArray = new string[initialsOfPeople.Length + 1];
-
-                        for (int i = 0; i < initialsOfPeople.Length - 1; i++)
-                        {
-                            tempArray[i] = initialsOfPeople[i];
-                        }
-                        tempArray[initialsOfPeople.Length] = people;
-                        initialsOfPeople = tempArray;
-
-                        Console.WriteLine("Введите должность:");
-                        string post = Console.ReadLine();
-                        tempArray2 = new string[postOfPeople.Length + 1];
-
-                        for (int i = 0; i < postOfPeople.Length - 1; i++)
-                        {
-                            tempArray2[i] = postOfPeople[i];
-                        }
-                        tempArray2[postOfPeople.Length] = post;
-                        postOfPeople = tempArray2;
+                        AddPeople(ref initialsOfPeople, ref postOfPeople);
                         break;
 
                     case "2":
-
-                        for (int i = 0; i < initialsOfPeople.Length; i++)
-                        {
-                            Console.Write(i + 1 + " - ");
-                            Console.Write(initialsOfPeople[i] + " - ");
-                            Console.Write(postOfPeople[i] + " | ");
-                        }
-                        Console.WriteLine();  
-                        if (initialsOfPeople.Length == 0)
-                        {
-                            Console.WriteLine("Картотека досье пуста!");
-                        }
+                        ShowPeople(ref initialsOfPeople, ref postOfPeople);
                         break;
 
                     case "3":
@@ -104,13 +127,12 @@ namespace homeWork4_2
                             break;
 
                         }
+
                         else if (number == 0)
                         {
                             Console.WriteLine("Недопустимый индекс!");
                             break;
                         }
-
-
 
                         if (initialsOfPeople.Length == 0)
                         {
@@ -126,6 +148,7 @@ namespace homeWork4_2
                             Console.Write(initialsOfPeople[i] + " - ");
                             Console.Write(postOfPeople[i] + " | ");
                         }
+
                         if (initialsOfPeople.Length == 0)
                         {
                             if (postOfPeople.Length == 0)
@@ -133,29 +156,11 @@ namespace homeWork4_2
                                 Console.WriteLine("Все досье удалены. Картотека пуста!");
                             }
                         }
-
                         Console.WriteLine();
                         break;
 
                     case "4":
-                        Console.WriteLine("Введите ФИО для поиска в картотеке:");
-                        initials = Console.ReadLine();
-
-                        for (int i = 0; i < initialsOfPeople.Length; i++)
-                        {
-                            if (initials.ToLower() == initialsOfPeople[i].ToLower())
-                            {
-                                Console.WriteLine("Досье найдено:");
-                                Console.Write(initialsOfPeople[i] + " - ");
-                                Console.Write(postOfPeople[i]);
-                                peopleIsFind = true;
-                            }
-                        }
-
-                        if (peopleIsFind == false)
-                        {
-                            Console.WriteLine("Такого человека нет в списке");
-                        }
+                        FindPeopleInList(ref initialsOfPeople, ref postOfPeople);
                         break;
                 }
             }
