@@ -10,10 +10,10 @@ namespace homeWork4_3
     {
         static void Main(string[] args)
         {
-            CheckNumber("Введите целочисленное число типа int:");
+            ReadIntNumber("Введите целочисленное число типа int:");
         }
 
-        static int CheckNumber(string message)
+        static int ReadIntNumber(string message)
         {
             bool correctInput;
             int number;
