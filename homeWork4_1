@@ -8,6 +8,48 @@ namespace homeWork4_2
 {
     class Program
     {
+        static void RemovePeople(ref string[] array, ref string[] array2)
+        {
+            Console.WriteLine("Введите порядковый номер досье, которое желаете удалить:");
+            int number = Convert.ToInt32(Console.ReadLine());
+
+            if (number > array.Length)
+            {
+                Console.WriteLine("Недопустимый индекс!");
+                return;
+            }
+
+            else if (number == 0)
+            {
+                Console.WriteLine("Недопустимый индекс!");
+                return;
+            }
+
+            if (array.Length == 0)
+            {
+                Console.WriteLine("Картотека досье пуста. Удаление не возможно!");
+                return;
+            }
+
+            RemoveAt(ref array, number - 1);
+            RemoveAt(ref array2, number - 1);
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write(array[i] + " - ");
+                Console.Write(array2[i] + " | ");
+            }
+
+            if (array.Length == 0)
+            {
+                if (array2.Length == 0)
+                {
+                    Console.WriteLine("Все досье удалены. Картотека пуста!");
+                }
+            }
+            Console.WriteLine();
+        }
+
         static void RemoveAt(ref string[] array, int index)
         {
             string[] newArray = new string[array.Length - 1];
@@ -32,7 +74,7 @@ namespace homeWork4_2
             string people = Console.ReadLine();
             tempArray = new string[array.Length + 1];
 
-            for (int i = 0; i < array.Length - 1; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 tempArray[i] = array[i];
             }
@@ -43,7 +85,7 @@ namespace homeWork4_2
             string post = Console.ReadLine();
             tempArray2 = new string[array2.Length + 1];
 
-            for (int i = 0; i < array2.Length - 1; i++)
+            for (int i = 0; i < array2.Length; i++)
             {
                 tempArray2[i] = array2[i];
             }
@@ -67,7 +109,7 @@ namespace homeWork4_2
             }
         }
 
-        static void FindPeopleInList(ref string [] array, ref string[] array2)
+        static void FindPeopleInList(ref string[] array, ref string[] array2)
         {
             string initials;
             bool peopleIsFind = false;
@@ -95,7 +137,7 @@ namespace homeWork4_2
             int arrayLenght = 0;
             string[] initialsOfPeople = new string[arrayLenght];
             string[] postOfPeople = new string[arrayLenght];
-            string message = "";                 
+            string message = "";
             Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
             Console.WriteLine();
             Console.SetCursorPosition(50, 2);
@@ -118,45 +160,7 @@ namespace homeWork4_2
                         break;
 
                     case "3":
-                        Console.WriteLine("Введите порядковый номер досье, которое желаете удалить:");
-                        int number = Convert.ToInt32(Console.ReadLine());
-
-                        if (number > initialsOfPeople.Length)
-                        {
-                            Console.WriteLine("Недопустимый индекс!");
-                            break;
-
-                        }
-
-                        else if (number == 0)
-                        {
-                            Console.WriteLine("Недопустимый индекс!");
-                            break;
-                        }
-
-                        if (initialsOfPeople.Length == 0)
-                        {
-                            Console.WriteLine("Картотека досье пуста. Удаление не возможно!");
-                            break;
-                        }
-
-                        RemoveAt(ref initialsOfPeople, number - 1);
-                        RemoveAt(ref postOfPeople, number - 1);
-
-                        for (int i = 0; i < initialsOfPeople.Length; i++)
-                        {
-                            Console.Write(initialsOfPeople[i] + " - ");
-                            Console.Write(postOfPeople[i] + " | ");
-                        }
-
-                        if (initialsOfPeople.Length == 0)
-                        {
-                            if (postOfPeople.Length == 0)
-                            {
-                                Console.WriteLine("Все досье удалены. Картотека пуста!");
-                            }
-                        }
-                        Console.WriteLine();
+                        RemovePeople(ref initialsOfPeople, ref postOfPeople);                        
                         break;
 
                     case "4":
