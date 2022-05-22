@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork4_5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int sizeArray = 100;
+            int shuffleCount = 50;
+            int[] array = new int[sizeArray];
+
+            for (int i = 0; i < sizeArray; i++)
+            {
+                array[i] = i;
+            }
+
+            Shuffle(array, shuffleCount);
+
+            for (int i = 0; i < sizeArray; i++)
+            {
+                Console.WriteLine(array[i]);
+            }
+        }
+
+        static void Shuffle(int[] array, int shuffleCount)
+        {
+            Random random = new Random();
+
+            for (int i = 0; i < shuffleCount; i++)
+            {
+                int randomNumber1 = random.Next(0, array.Length);
+                int randomNumber2 = random.Next(0, array.Length);
+                int tempNumber = array[randomNumber1];
+                array[randomNumber1] = array[randomNumber2];
+                array[randomNumber2] = tempNumber;
+            }
+        }
+    }
+}
