@@ -10,10 +10,10 @@ namespace homeWork4_3
     {
         static void Main(string[] args)
         {
-            InputNumber("Введите целочисленное число типа int:");
+            CheckNumber("Введите целочисленное число типа int:");
         }
 
-        static int InputNumber(string message)
+        static int CheckNumber(string message)
         {
             bool correctInput;
             int number;
@@ -21,8 +21,8 @@ namespace homeWork4_3
             do
             {
                 Console.WriteLine(message);
-                string str = Console.ReadLine();
-                correctInput = int.TryParse(str, out number);
+                string enteredNumber = Console.ReadLine();
+                correctInput = int.TryParse(enteredNumber, out number);
                 
                 if (correctInput == false)
                 {
