@@ -8,6 +8,44 @@ namespace homeWork4_2
 {
     class Program
     {
+        static void Main(string[] args)
+        {
+            int arrayLenght = 0;
+            string[] initialsOfPeople = new string[arrayLenght];
+            string[] postOfPeople = new string[arrayLenght];
+            string message = "";
+            Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
+            Console.WriteLine();
+            Console.SetCursorPosition(50, 2);
+            Console.WriteLine("Архив досье." + "\n" + "Меню Архива: " + "\n" + "1 - ввод ФИО человека и должности" + "\n" + "2 - вывод всех досье на экран" +
+                "\n" + "3 - удалить досье" + "\n" + "4 - поиск по ФИО и индексу в списке" + "\n" + "Для выхода из программы введите Exit");
+            Console.WriteLine();
+
+            while (message != "Exit")
+            {
+                message = Console.ReadLine();
+
+                switch (message)
+                {
+                    case "1":
+                        AddPeople(ref initialsOfPeople, ref postOfPeople);
+                        break;
+
+                    case "2":
+                        ShowPeople(initialsOfPeople, postOfPeople);
+                        break;
+
+                    case "3":
+                        RemovePeople(ref initialsOfPeople, ref postOfPeople);
+                        break;
+
+                    case "4":
+                        FindPeopleInList(initialsOfPeople, postOfPeople);
+                        break;
+                }
+            }
+        }
+
         static void RemovePeople(ref string[] array, ref string[] array2)
         {
             Console.WriteLine("Введите порядковый номер досье, которое желаете удалить:");
@@ -66,34 +104,29 @@ namespace homeWork4_2
             array = newArray;
         }
 
-        static void AddPeople(ref string[] array, ref string[] array2)
+        static void AddArrayElement(ref string[] array)
         {
             string[] tempArray;
-            string[] tempArray2;
-            Console.WriteLine("Введите ФИО человека:");
-            string people = Console.ReadLine();
+            string addElement = Console.ReadLine();
             tempArray = new string[array.Length + 1];
 
             for (int i = 0; i < array.Length; i++)
             {
                 tempArray[i] = array[i];
             }
-            tempArray[array.Length] = people;
+            tempArray[array.Length] = addElement;
             array = tempArray;
-
-            Console.WriteLine("Введите должность:");
-            string post = Console.ReadLine();
-            tempArray2 = new string[array2.Length + 1];
-
-            for (int i = 0; i < array2.Length; i++)
-            {
-                tempArray2[i] = array2[i];
-            }
-            tempArray2[array2.Length] = post;
-            array2 = tempArray2;
         }
 
-        static void ShowPeople(ref string[] array, ref string[] array2)
+        static void AddPeople(ref string[] array, ref string[] array2)
+        {
+            Console.WriteLine("Введите ФИО человека:");
+            AddArrayElement(ref array);
+            Console.WriteLine("Введите должность:");
+            AddArrayElement(ref array2);
+        }
+
+        static void ShowPeople(string[] array,string[] array2)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -109,7 +142,7 @@ namespace homeWork4_2
             }
         }
 
-        static void FindPeopleInList(ref string[] array, ref string[] array2)
+        static void FindPeopleInList(string[] array,string[] array2)
         {
             string initials;
             bool peopleIsFind = false;
@@ -131,43 +164,6 @@ namespace homeWork4_2
             {
                 Console.WriteLine("Такого человека нет в списке");
             }
-        }
-        static void Main(string[] args)
-        {
-            int arrayLenght = 0;
-            string[] initialsOfPeople = new string[arrayLenght];
-            string[] postOfPeople = new string[arrayLenght];
-            string message = "";
-            Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
-            Console.WriteLine();
-            Console.SetCursorPosition(50, 2);
-            Console.WriteLine("Архив досье." + "\n" + "Меню Архива: " + "\n" + "1 - ввод ФИО человека и должности" + "\n" + "2 - вывод всех досье на экран" +
-                "\n" + "3 - удалить досье" + "\n" + "4 - поиск по ФИО и индексу в списке" + "\n" + "Для выхода из программы введите Exit");
-            Console.WriteLine();
-
-            while (message != "Exit")
-            {
-                message = Console.ReadLine();
-
-                switch (message)
-                {
-                    case "1":
-                        AddPeople(ref initialsOfPeople, ref postOfPeople);
-                        break;
-
-                    case "2":
-                        ShowPeople(ref initialsOfPeople, ref postOfPeople);
-                        break;
-
-                    case "3":
-                        RemovePeople(ref initialsOfPeople, ref postOfPeople);                        
-                        break;
-
-                    case "4":
-                        FindPeopleInList(ref initialsOfPeople, ref postOfPeople);
-                        break;
-                }
-            }
-        }
+        }        
     }
 }
