@@ -71,12 +71,7 @@ namespace homeWork4_2
 
             RemoveAt(ref array, number - 1);
             RemoveAt(ref array2, number - 1);
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                Console.Write(array[i] + " - ");
-                Console.Write(array2[i] + " | ");
-            }
+            ShowPeople(array, array2);
 
             if (array.Length == 0)
             {
@@ -85,7 +80,6 @@ namespace homeWork4_2
                     Console.WriteLine("Все досье удалены. Картотека пуста!");
                 }
             }
-            Console.WriteLine();
         }
 
         static void RemoveAt(ref string[] array, int index)
