@@ -1,0 +1,111 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork4_5_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.CursorVisible = false;
+            bool isGaming = true;
+            int pacManX = 5;
+            int pacManY = 4;
+            int pacManDirectionX = 0;
+            int pacManDirectionY = 0;           
+            char[,] map =
+            {
+                {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+                {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                {'#',' ','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#',' ',' ',' ','#','#','#','#','#','#','#',' ','#'},
+                {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','!',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                {'#',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#','#','#','#','#','#','#',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ','#'},
+                {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ','#'},
+                {'#',' ',' ','#',' ','!',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','!',' ','#','#','#',' ','#'},
+                {'#',' ',' ','#',' ',' ',' ',' ','#','#','#','#','#','#','#','#','#','#','#','#','#',' ','#',' ',' ',' ',' ',' ',' ','#'},
+                {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ','#'},
+                {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ','#'},
+                {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ','!',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ','#','#','#',' ','#'},
+                {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ','#'},
+                {'#',' ',' ','#',' ',' ','#','#','#','#','#',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','!',' ',' ','#'},
+                {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                {'#','!',' ',' ',' ',' ',' ','!',' ',' ',' ',' ','#',' ',' ','!',' ',' ','#','#','#','#','#','#','#','#','#',' ',' ','#'},
+                {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
+            };
+            DrawMap(map);
+            Console.SetCursorPosition(pacManY, pacManX);
+            Console.Write('@');
+
+            while (isGaming)
+            {               
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            pacManDirectionX = -1; pacManDirectionY = 0;
+                            break;
+
+                        case ConsoleKey.DownArrow:
+                            pacManDirectionX = 1; pacManDirectionY = 0;
+                            break;
+
+                        case ConsoleKey.LeftArrow:
+                            pacManDirectionX = 0; pacManDirectionY = -1;
+                            break;
+
+                        case ConsoleKey.RightArrow:
+                            pacManDirectionX = 0; pacManDirectionY = 1;
+                            break;
+                    }                   
+                }
+
+                int sumPacManX = pacManX + pacManDirectionX;
+                int sumPacManY = pacManY + pacManDirectionY;
+
+                if (map[sumPacManX, sumPacManY] == '!')
+                {
+                    Console.SetCursorPosition(sumPacManY, sumPacManX);
+                    Console.Write(" ");
+                    Console.SetCursorPosition(20, 20);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Вы проиграли!!!");
+                    Console.WriteLine();
+                    break;
+                }
+
+                if (map[sumPacManX, sumPacManY] != '#')
+                {
+                    Console.SetCursorPosition(pacManY, pacManX);
+                    Console.Write(" ");
+
+                    pacManX += pacManDirectionX;
+                    pacManY += pacManDirectionY;
+
+                    Console.SetCursorPosition(pacManY, pacManX);
+                    Console.Write('@');
+                }
+                System.Threading.Thread.Sleep(200);
+            }
+        }
+
+        static void DrawMap(char[,] map)
+        {
+            Console.SetCursorPosition(0, 0);
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    Console.Write(map[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
