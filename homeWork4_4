@@ -12,8 +12,8 @@ namespace homeWork4_5_1
         {
             Console.CursorVisible = false;
             bool isGaming = true;
-            int pacManX = 5;
-            int pacManY = 4;
+            int pacManXPosition = 5;
+            int pacManYPosition = 4;
             int pacManDirectionX = 0;
             int pacManDirectionY = 0;
             char[,] map =
@@ -37,7 +37,7 @@ namespace homeWork4_5_1
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
             };
             DrawMap(map);
-            Console.SetCursorPosition(pacManY, pacManX);
+            Console.SetCursorPosition(pacManYPosition, pacManXPosition);
             Console.Write('@');
 
             while (isGaming)
@@ -48,15 +48,15 @@ namespace homeWork4_5_1
                     ChangeDirection(key, ref pacManDirectionX, ref pacManDirectionY);
                 }
 
-                if (map[pacManX + pacManDirectionX, pacManY + pacManDirectionY] == '!')
+                if (map[pacManXPosition + pacManDirectionX, pacManYPosition + pacManDirectionY] == '!')
                 {
-                    YouLose(ref pacManX, ref pacManY, ref pacManDirectionX, ref pacManDirectionY);
+                    LoseTheGame(ref pacManXPosition, ref pacManYPosition, ref pacManDirectionX, ref pacManDirectionY);
                     break;
                 }
 
-                if (map[pacManX + pacManDirectionX, pacManY + pacManDirectionY] != '#')
+                if (map[pacManXPosition + pacManDirectionX, pacManYPosition + pacManDirectionY] != '#')
                 {
-                    Move(ref pacManX, ref pacManY, pacManDirectionX, pacManDirectionY);                    
+                    MovePlayer(ref pacManXPosition, ref pacManYPosition, pacManDirectionX, pacManDirectionY);                    
                 }
                 System.Threading.Thread.Sleep(200);                
             }
@@ -81,24 +81,28 @@ namespace homeWork4_5_1
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    pacManDirectionX = -1; pacManDirectionY = 0;
+                    pacManDirectionX = -1; 
+                    pacManDirectionY = 0;
                     break;
 
                 case ConsoleKey.DownArrow:
-                    pacManDirectionX = 1; pacManDirectionY = 0;
+                    pacManDirectionX = 1; 
+                    pacManDirectionY = 0;
                     break;
 
                 case ConsoleKey.LeftArrow:
-                    pacManDirectionX = 0; pacManDirectionY = -1;
+                    pacManDirectionX = 0; 
+                    pacManDirectionY = -1;
                     break;
 
                 case ConsoleKey.RightArrow:
-                    pacManDirectionX = 0; pacManDirectionY = 1;
+                    pacManDirectionX = 0; 
+                    pacManDirectionY = 1;
                     break;
             }
         }
 
-        static void YouLose(ref int pacmanX, ref int pacmanY, ref int directionX, ref int directionY)
+        static void LoseTheGame(ref int pacmanX, ref int pacmanY, ref int directionX, ref int directionY)
         {
             Console.SetCursorPosition(pacmanY + directionY, pacmanX + directionX);
             Console.Write(" ");
@@ -108,13 +112,13 @@ namespace homeWork4_5_1
             Console.WriteLine();
         }
 
-        static void Move(ref int pacmanX, ref int pacmanY, int DX, int DY)
+        static void MovePlayer(ref int pacmanX, ref int pacmanY, int changingThePositionX, int changingThePositionY)
         {
             Console.SetCursorPosition(pacmanY, pacmanX);
             Console.Write(" ");
 
-            pacmanX += DX;
-            pacmanY += DY;
+            pacmanX += changingThePositionX;
+            pacmanY += changingThePositionY;
 
             Console.SetCursorPosition(pacmanY, pacmanX);
             Console.Write('@');
