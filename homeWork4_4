@@ -15,7 +15,7 @@ namespace homeWork4_5_1
             int pacManX = 5;
             int pacManY = 4;
             int pacManDirectionX = 0;
-            int pacManDirectionY = 0;           
+            int pacManDirectionY = 0;
             char[,] map =
             {
                 {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
@@ -41,59 +41,27 @@ namespace homeWork4_5_1
             Console.Write('@');
 
             while (isGaming)
-            {               
+            {
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey(true);
-
-                    switch (key.Key)
-                    {
-                        case ConsoleKey.UpArrow:
-                            pacManDirectionX = -1; pacManDirectionY = 0;
-                            break;
-
-                        case ConsoleKey.DownArrow:
-                            pacManDirectionX = 1; pacManDirectionY = 0;
-                            break;
-
-                        case ConsoleKey.LeftArrow:
-                            pacManDirectionX = 0; pacManDirectionY = -1;
-                            break;
-
-                        case ConsoleKey.RightArrow:
-                            pacManDirectionX = 0; pacManDirectionY = 1;
-                            break;
-                    }                   
+                    ChangeDirection(key, ref pacManDirectionX, ref pacManDirectionY);
                 }
 
-                int sumPacManX = pacManX + pacManDirectionX;
-                int sumPacManY = pacManY + pacManDirectionY;
-
-                if (map[sumPacManX, sumPacManY] == '!')
+                if (map[pacManX + pacManDirectionX, pacManY + pacManDirectionY] == '!')
                 {
-                    Console.SetCursorPosition(sumPacManY, sumPacManX);
-                    Console.Write(" ");
-                    Console.SetCursorPosition(20, 20);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Вы проиграли!!!");
-                    Console.WriteLine();
+                    YouLose(ref pacManX, ref pacManY, ref pacManDirectionX, ref pacManDirectionY);
                     break;
                 }
 
-                if (map[sumPacManX, sumPacManY] != '#')
+                if (map[pacManX + pacManDirectionX, pacManY + pacManDirectionY] != '#')
                 {
-                    Console.SetCursorPosition(pacManY, pacManX);
-                    Console.Write(" ");
-
-                    pacManX += pacManDirectionX;
-                    pacManY += pacManDirectionY;
-
-                    Console.SetCursorPosition(pacManY, pacManX);
-                    Console.Write('@');
+                    Move(ref pacManX, ref pacManY, pacManDirectionX, pacManDirectionY);                    
                 }
-                System.Threading.Thread.Sleep(200);
+                System.Threading.Thread.Sleep(200);                
             }
         }
+
 
         static void DrawMap(char[,] map)
         {
@@ -106,6 +74,50 @@ namespace homeWork4_5_1
                 }
                 Console.WriteLine();
             }
+        }
+
+        static void ChangeDirection(ConsoleKeyInfo key, ref int pacManDirectionX, ref int pacManDirectionY)
+        {
+            switch (key.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    pacManDirectionX = -1; pacManDirectionY = 0;
+                    break;
+
+                case ConsoleKey.DownArrow:
+                    pacManDirectionX = 1; pacManDirectionY = 0;
+                    break;
+
+                case ConsoleKey.LeftArrow:
+                    pacManDirectionX = 0; pacManDirectionY = -1;
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    pacManDirectionX = 0; pacManDirectionY = 1;
+                    break;
+            }
+        }
+
+        static void YouLose(ref int pacmanX, ref int pacmanY, ref int directionX, ref int directionY)
+        {
+            Console.SetCursorPosition(pacmanY + directionY, pacmanX + directionX);
+            Console.Write(" ");
+            Console.SetCursorPosition(20, 20);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Вы проиграли!!!");
+            Console.WriteLine();
+        }
+
+        static void Move(ref int pacmanX, ref int pacmanY, int DX, int DY)
+        {
+            Console.SetCursorPosition(pacmanY, pacmanX);
+            Console.Write(" ");
+
+            pacmanX += DX;
+            pacmanY += DY;
+
+            Console.SetCursorPosition(pacmanY, pacmanX);
+            Console.Write('@');
         }
     }
 }
