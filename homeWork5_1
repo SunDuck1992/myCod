@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork5_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, string> countries = new Dictionary<string, string>();
+            countries.Add("Россия", "Москва");
+            countries.Add("Франция", "Париж");
+            countries.Add("Беларусь", "Минск");
+            countries.Add("Армения", "Ереван");
+            bool flag = false;
+            foreach (var item in countries)
+            {
+                Console.WriteLine($"Страна - {item.Key}, столица -  {item.Value}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Нажмите любую клавишу, как будете готовы ввести страну.");
+            Console.ReadKey();
+            Console.Clear();
+
+            SearchCountries(ref flag, ref countries);            
+        }
+
+        static void SearchCountries(ref bool flag, ref Dictionary<string, string> countries)
+        {           
+            Console.WriteLine("Введите страну ключ:");
+            string countryName = Console.ReadLine();
+
+            foreach (var item in countries)
+            {
+                if (countryName == item.Key)
+                {
+                    flag = true;                    
+                }
+            }
+
+            if (flag == false)
+            {
+                Console.WriteLine("Такой страны в списке нет!");
+            }
+
+            if (flag == true)
+            {
+                Console.Clear();
+                Console.WriteLine("Страна - " + countryName + " город - " + countries[countryName]);
+                Console.WriteLine();
+            }
+        }
+    }
+}
