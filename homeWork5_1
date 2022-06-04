@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace homeWork5_1
+namespace homeWork5_1_Test
 {
     class Program
     {
@@ -15,42 +15,31 @@ namespace homeWork5_1
             countries.Add("Франция", "Париж");
             countries.Add("Беларусь", "Минск");
             countries.Add("Армения", "Ереван");
-            bool flag = false;
-            foreach (var item in countries)
-            {
-                Console.WriteLine($"Страна - {item.Key}, столица -  {item.Value}");
-            }
-            Console.WriteLine();
-            Console.WriteLine("Нажмите любую клавишу, как будете готовы ввести страну.");
-            Console.ReadKey();
-            Console.Clear();
 
-            SearchCountries(ref flag, ref countries);            
+            SearchCountries(countries);            
         }
 
-        static void SearchCountries(ref bool flag, ref Dictionary<string, string> countries)
-        {           
-            Console.WriteLine("Введите страну ключ:");
-            string countryName = Console.ReadLine();
-
-            foreach (var item in countries)
+        static void SearchCountries(Dictionary<string, string> countries)
+        {
+            string enterCountry = "";
+            foreach (var country in countries)
             {
-                if (countryName == item.Key)
-                {
-                    flag = true;                    
-                }
+                Console.WriteLine($"Страна - {country.Key }, Столица - {country.Value}");
             }
 
-            if (flag == false)
+            Console.WriteLine();
+            Console.WriteLine("Введите страну:");
+            enterCountry = Console.ReadLine();
+            Console.Clear();
+
+            if (countries.ContainsKey(enterCountry))
+            {
+                Console.WriteLine(enterCountry + " - " + countries[enterCountry]);
+            }
+
+            else
             {
                 Console.WriteLine("Такой страны в списке нет!");
-            }
-
-            if (flag == true)
-            {
-                Console.Clear();
-                Console.WriteLine("Страна - " + countryName + " город - " + countries[countryName]);
-                Console.WriteLine();
             }
         }
     }
