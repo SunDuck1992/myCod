@@ -16,18 +16,13 @@ namespace homeWork5_1_Test
             countries.Add("Беларусь", "Минск");
             countries.Add("Армения", "Ереван");
 
+            ShowCountries(countries);
             SearchCountries(countries);            
         }
 
         static void SearchCountries(Dictionary<string, string> countries)
         {
-            string enterCountry = "";
-            foreach (var country in countries)
-            {
-                Console.WriteLine($"Страна - {country.Key }, Столица - {country.Value}");
-            }
-
-            Console.WriteLine();
+            string enterCountry = "";           
             Console.WriteLine("Введите страну:");
             enterCountry = Console.ReadLine();
             Console.Clear();
@@ -41,6 +36,15 @@ namespace homeWork5_1_Test
             {
                 Console.WriteLine("Такой страны в списке нет!");
             }
+        }
+
+        static void ShowCountries(Dictionary<string, string> countries)
+        {
+            foreach (var country in countries)
+            {
+                Console.WriteLine($"Страна - {country.Key }, Столица - {country.Value}");
+            }
+            Console.WriteLine();
         }
     }
 }
