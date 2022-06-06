@@ -14,21 +14,29 @@ namespace homeWork5_3
             Console.WriteLine("Введите число, sum или exit: ");
 
             List<int> numbers = new List<int>();
-            string message = "";
-            while (message != "Exit")
+            string message = "";           
+            while (message != "exit")
             {
-                message = Console.ReadLine();
+               message = Console.ReadLine();
+
+                if (message == "exit")
+                {
+                    CompletionOfWork();
+                }                
 
                 if (message != "sum" && message != "exit")
                 {
-                    CompletionOfWork( ref message);
-                    AddingElement(numbers, ref message);
-                    AddingAllNumbers(numbers, ref message);
-                }               
-            }                                             
+                    AddingElement(ref numbers, message);
+                }           
+
+                if (message == "sum")
+                {
+                    AddingAllNumbers(ref numbers);
+                }
+            }
         }
 
-        static void AddingElement(List<int> numbers, ref string message)
+        static void AddingElement(ref List<int> numbers, string message)
         {
             int number;
             bool isThatANumber = int.TryParse(message, out number);
@@ -37,29 +45,22 @@ namespace homeWork5_3
             if (isThatANumber == false)
             {
                 Console.WriteLine("Не могу конвертировать");
-            }           
-        }
-        
-        static void CompletionOfWork(ref string message)
-        {
-            if (message == "Exit")
-            {
-                Console.WriteLine("Работа программы завершена!");
-                return;
             }
         }
 
-        static void AddingAllNumbers(List<int> numbers, ref string message)
+        static void CompletionOfWork()
         {
-            if (message == "sum")
+            Console.WriteLine("Работа программы завершена!");
+        }
+
+        static void AddingAllNumbers(ref List<int> numbers)
+        {
+            int amount = 0;
+            for (int i = 0; i < numbers.Count; i++)
             {
-                int amount = 0;
-                for (int i = 0; i < numbers.Count; i++)
-                {
-                    amount += numbers[i];
-                }
-                Console.WriteLine("Сумма чисел равна = " + amount);
+                amount += numbers[i];                
             }
+            Console.WriteLine("Сумма чисел равна = " + amount);
         }
     }
 }
