@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork5_3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Вы вводите числа, программа их запоминает до тех пор пока не будет введено контрольное слово " + "\n" + "sum или exit. ");
+            Console.WriteLine("Введите число, sum или exit: ");
+
+            List<int> numbers = new List<int>();           
+            AddingElement(numbers);                               
+        }
+
+        static void AddingElement(List<int> numbers)
+        {
+            string message = "";
+
+            while (message != "Exit")
+            {
+                message = Console.ReadLine();
+
+                if (message != "sum" && message != "exit")
+                {
+                    int number;
+                    bool flag = int.TryParse(message, out number);
+                    numbers.Add(number);
+
+                    if (message == "Exit")
+                    {
+                        Console.WriteLine("Работа программы завершена!");
+                        break;
+                    }
+
+                    if (flag == false)
+                    {
+                        Console.WriteLine("Не могу конвертировать");
+                    }
+                }
+
+                if (message == "sum")
+                {
+                    int amount = 0;
+                    for (int i = 0; i < numbers.Count; i++)
+                    {
+                        amount += numbers[i];
+                    }
+                    Console.WriteLine("Сумма чисел равна = " + amount);
+                }
+            }
+        }      
+    }
+}
