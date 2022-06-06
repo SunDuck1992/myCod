@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork5_2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Queue<int> buyers = new Queue<int>();
+
+            FillingTheQueue(buyers);
+            OutputToTheScreen(buyers);
+            AddingAllPurchases(buyers);            
+        }
+
+        static void FillingTheQueue(Queue<int> buyers)
+        {
+            Random random = new Random();
+            int minValue = 1000;
+            int maxValue = 5000;
+            int numberOfBuyers = 10;
+
+            for (int i = 0; i < numberOfBuyers; i++)
+            {
+                buyers.Enqueue(random.Next(minValue, maxValue));
+            }
+        }
+
+        static void OutputToTheScreen(Queue<int> buyers)
+        {
+            foreach (var buyer in buyers)
+            {               
+                Console.WriteLine("Покупатель положил товаров в корзину на сумму - " + buyer);               
+            }
+
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        static void AddingAllPurchases(Queue<int> buyers)
+        {
+            int numberOfBuyers = 10;
+            int storeRevenue = 0;
+            while (buyers.Count < numberOfBuyers + 1)
+            {
+                if (buyers.Count() == 0)
+                {
+                    Console.WriteLine("Очередь пуста!");
+                    break;
+                }
+                Console.WriteLine("Покупатель на сумму - " + buyers.Peek() + " проходит на кассу.");
+                storeRevenue += buyers.Peek();
+                buyers.Dequeue();
+                Console.WriteLine("Общая прибыль магазина составляет - " + storeRevenue);
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+}
