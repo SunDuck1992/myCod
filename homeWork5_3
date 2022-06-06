@@ -26,27 +26,26 @@ namespace homeWork5_3
 
                 else if (message == "sum")
                 {
-                    AddingAllNumbers(numbers);
+                    AdditionAllNumbers(numbers);
                 }
 
                 else 
                 {
-                    AddingElement(numbers, message);
+                    AddElement(numbers, message);
                 }                         
             }
         }
 
-        static void AddingElement(List<int> numbers, string message)
+        static void AddElement(List<int> numbers, string message)
         {
             int number;
-            bool isThatANumber = int.TryParse(message, out number);
 
-            if (isThatANumber == true)
+            if (int.TryParse(message, out number))
             {
                 numbers.Add(number);
             }           
 
-            if (isThatANumber == false)
+            else
             {
                 Console.WriteLine("Не могу конвертировать");
             }
@@ -57,12 +56,12 @@ namespace homeWork5_3
             Console.WriteLine("Работа программы завершена!");
         }
 
-        static void AddingAllNumbers(List<int> numbers)
+        static void AdditionAllNumbers(List<int> numbers)
         {
             int amount = 0;
             for (int i = 0; i < numbers.Count; i++)
             {
-                amount += numbers[i];              
+                amount += numbers[i];
             }
             Console.WriteLine("Сумма чисел равна = " + amount);
         }
