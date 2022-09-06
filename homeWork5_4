@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork5_4._1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
+            Console.WriteLine("Архив досье." + "\n" + "Меню Архива: " + "\n" + "1 - ввод ФИО человека и должности" + "\n" + "2 - вывод всех досье на экран" +
+                "\n" + "3 - удалить досье" + "\n" + "Для выхода из программы введите Exit");
+            Dictionary<string, string> dataBaseOfWorkers = new Dictionary<string, string>();
+            string message = "";
+            Console.WriteLine();
+
+            while (message != "Exit")
+            {
+                message = Console.ReadLine();
+
+                switch (message)
+                {
+                    case "1":
+                        AddPeople(ref dataBaseOfWorkers);
+                        break;
+
+                    case "2":
+                        ShowPeople(dataBaseOfWorkers);
+                        break;
+
+                    case "3":
+                        RemoveAt(ref dataBaseOfWorkers);
+                        break;
+                }
+            }
+        }
+
+        static void AddPeople(ref Dictionary<string, string> dataBaseOfWorkers)
+        {
+            Console.WriteLine("Введите ФИО работника:");
+            string initialsPeople = Console.ReadLine();
+            Console.WriteLine("Введите должность человека:");
+            string postOfPeople = Console.ReadLine();
+            dataBaseOfWorkers.Add(initialsPeople, postOfPeople);          
+        }
+
+        static void ShowPeople(Dictionary<string, string> dataBaseOfWorkers)
+        {
+            foreach (var workers in dataBaseOfWorkers)
+            {
+                Console.WriteLine($"Работник - {workers.Key}, должность - {workers.Value}");
+            }
+            
+            if (dataBaseOfWorkers.Count == 0)
+            {
+                Console.WriteLine("Картотека досье пуста!");
+            }
+        }
+
+        static void RemoveAt(ref Dictionary<string, string> dataBaseOfWorkers)
+        {
+            Console.WriteLine("Введите ФИО работника, которого нужно удалить из архива:");
+            string initialsPeople = Console.ReadLine();
+            dataBaseOfWorkers.Remove(initialsPeople);
+        }
+    }
+}
