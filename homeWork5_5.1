@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork5_5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] array1 = { "1", "2", "3", "3", "5" };
+            string[] array2 = { "1", "6", "7" };
+            PrintArray(array1);
+            Console.Write("- Первый массив");
+            Console.WriteLine();
+            PrintArray(array2);
+            Console.Write("- Второй массив");
+            Console.WriteLine();
+
+            List<string> combiningString = Merge(array1, array2);
+            Listing(combiningString);
+            Console.Write("- Обьединение массивов без повторений");
+            Console.ReadKey();
+        }
+
+        static List<string> Merge(string[] array1, string[] array2)
+        {
+            List<string> combiningString = new List<string>();
+
+            for (int i = 0; i < array1.Length; i++)
+            {
+                if (!combiningString.Contains(array1[i]))
+                {
+                    combiningString.Add(array1[i]);
+                }
+            }
+
+            for (int i = 0; i < array2.Length; i++)
+            {
+                if (!combiningString.Contains(array2[i]))
+                {
+                    combiningString.Add(array2[i]);
+                }
+            }
+            return combiningString;
+        }
+
+        static void PrintArray(string[] array)
+        {
+            foreach (string element in array)
+            {
+                Console.Write(element + " ");
+            }
+        }
+
+        static public List<string> Listing(List<string> combiningString)
+        {
+            foreach (string element in combiningString)
+            {
+                Console.Write(element + " ");
+            }
+            return combiningString;
+        }
+    }
+}
