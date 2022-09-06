@@ -1,0 +1,84 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Test_5_5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int arraySize = 10;
+            int[] array1 = new int[arraySize];
+            int[] array2 = new int[arraySize];
+            int tempNumber = 0;
+            List<int> numbers = new List<int>();
+            Random random = new Random();
+
+            for (int i = 0; i < array1.Length; i++)
+            {
+                array1[i] = random.Next(1, 9);
+                Console.Write(array1[i] + " ");
+            }
+            Console.Write(" - Первый массив");
+            Console.WriteLine();
+
+            for (int i = 0; i < array2.Length; i++)
+            {
+                array2[i] = random.Next(1, 9);
+                Console.Write(array2[i] + " ");
+            }
+            Console.WriteLine(" - Второй массив");
+
+            numbers.AddRange(array1);
+            numbers.AddRange(array2);
+            int[] result = numbers.ToArray();
+            Console.WriteLine();
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                Console.Write(result[i] + " ");
+            }
+            Console.WriteLine(" - Объединенный массив");
+
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                for (int j = i + 1; j < result.Length; j++)
+                {
+
+                    if (result[i] == result[j])
+                    {                      
+                        result[j] = 0;
+                    }
+                }
+            }
+           
+            
+            Console.WriteLine();
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                if (result[i] == 0)
+                {
+                    tempNumber++;
+                }
+
+                else
+                {
+                    result[i - tempNumber] = result[i];
+                }
+                Console.Write(result[i] + " ");
+            }
+
+            Array.Resize(ref result, result.Length - tempNumber);
+            Console.WriteLine();
+            for (int i = 0; i < result.Length; i++)
+            {
+                Console.Write(result[i] + " ");
+            }
+        }
+    }
+}
