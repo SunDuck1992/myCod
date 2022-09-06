@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork5_5._2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int arraySize = 10;
+            int[] array1 = new int[arraySize];
+            int[] array2 = new int[arraySize];
+            List<int> numbers = new List<int>();         
+
+            FillingTheArray(ref array1);
+            FillingTheArray(ref array2);
+
+            ShowTheArray(array1);
+            Console.Write(" - первый заполненный массив");
+            Console.WriteLine();
+            ShowTheArray(array2);
+            Console.Write(" - второй заполненный массив");
+            Console.WriteLine();
+
+            numbers.AddRange(array1);
+            numbers.AddRange(array2);
+            int[] result = numbers.ToArray();
+            ShowTheArray(result);
+            Console.Write(" - объединение двух массивов");
+            Console.WriteLine();
+
+            ReplacingIdentialElements(ref result);
+            ShowTheArray(result);
+            Console.Write(" - устранение повторений, заменой их на 0");
+
+            RemovingZero(ref result);
+            Console.WriteLine();
+            ShowTheArray(result);
+            Console.Write(" - итоговый массив без повторений");
+        }
+
+        static void FillingTheArray(ref int[] array)
+        {
+            Random random = new Random();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = random.Next(1, 9);
+            }
+        }
+
+        static void ShowTheArray(int[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write(array[i] + " ");
+            }
+        }
+
+        static void ReplacingIdentialElements(ref int[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = i + 1; j < array.Length; j++)
+                {
+
+                    if (array[i] == array[j])
+                    {
+                        array[j] = 0;
+                    }
+                }
+            }            
+        }
+
+        static void RemovingZero(ref int[] array)
+        {
+            int tempNumber = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == 0)
+                {
+                    tempNumber++;
+                }
+
+                else
+                {
+                    array[i - tempNumber] = array[i];
+                }
+            }
+            Array.Resize(ref array, array.Length - tempNumber);
+        }
+    }
+}
