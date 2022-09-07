@@ -13,42 +13,46 @@ namespace homeWork5_5._2
             int arraySize = 10;
             int[] array1 = new int[arraySize];
             int[] array2 = new int[arraySize];
-            List<int> numbers = new List<int>();         
+            List<int> numbers = new List<int>();
 
-            FillingTheArray(ref array1);
-            FillingTheArray(ref array2);
+            FillTheArray(array1);
+            FillTheArray(array2);
 
             ShowTheArray(array1);
             Console.Write(" - первый заполненный массив");
             Console.WriteLine();
+
             ShowTheArray(array2);
             Console.Write(" - второй заполненный массив");
             Console.WriteLine();
 
             numbers.AddRange(array1);
             numbers.AddRange(array2);
-            int[] result = numbers.ToArray();
-            ShowTheArray(result);
-            Console.Write(" - объединение двух массивов");
-            Console.WriteLine();
+            ShowTheCollection(numbers);
+            Console.Write(" - Объединенный лист");
 
-            ReplacingIdentialElements(ref result);
-            ShowTheArray(result);
-            Console.Write(" - устранение повторений, заменой их на 0");
-
-            RemovingZero(ref result);
+            ReplacingIdentialElements(numbers);
             Console.WriteLine();
-            ShowTheArray(result);
-            Console.Write(" - итоговый массив без повторений");
+            ShowTheCollection(numbers);
+            Console.Write(" - Удаление повторений");
+            Console.WriteLine();
         }
 
-        static void FillingTheArray(ref int[] array)
+        static void FillTheArray(int[] array)
         {
             Random random = new Random();
 
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = random.Next(1, 9);
+            }
+        }
+
+        static void ShowTheCollection(List<int> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
             }
         }
 
@@ -60,37 +64,20 @@ namespace homeWork5_5._2
             }
         }
 
-        static void ReplacingIdentialElements(ref int[] array)
+        static void ReplacingIdentialElements(List<int> numbers)
         {
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < numbers.Count; i++)
             {
-                for (int j = i + 1; j < array.Length; j++)
+                for (int j = i + 1; j < numbers.Count; j++)
                 {
 
-                    if (array[i] == array[j])
+                    if (numbers[i] == numbers[j])
                     {
-                        array[j] = 0;
-                    }
-                }
-            }            
-        }
-
-        static void RemovingZero(ref int[] array)
-        {
-            int tempNumber = 0;
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i] == 0)
-                {
-                    tempNumber++;
-                }
-
-                else
-                {
-                    array[i - tempNumber] = array[i];
+                        numbers.RemoveAt(j);
+                        j--;
+                    }                   
                 }
             }
-            Array.Resize(ref array, array.Length - tempNumber);
         }
     }
 }
