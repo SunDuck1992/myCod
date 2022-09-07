@@ -8,9 +8,9 @@ namespace homeWork5_4._1
 {
     class Program
     {
-        public const string one = "1";
-        public const string two = "2";
-        public const string three = "3";
+        public const string CaseOne = "1";
+        public const string CaseTwo = "2";
+        public const string CaseThree = "3";
         static void Main(string[] args)
         {
             Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
@@ -27,15 +27,15 @@ namespace homeWork5_4._1
 
                 switch (message)
                 {
-                    case one:
+                    case CaseOne:
                         AddPeople(dataBaseOfWorkers);
                         break;
 
-                    case two:
+                    case CaseTwo:
                         ShowPeople(dataBaseOfWorkers);
                         break;
 
-                    case three:
+                    case CaseThree:
                         RemoveAt(dataBaseOfWorkers);
                         break;
                 }
@@ -49,7 +49,7 @@ namespace homeWork5_4._1
             Console.WriteLine("Введите должность человека:");
             string postOfPeople = Console.ReadLine();
             
-                if (!dataBaseOfWorkers.ContainsKey(initialsPeople))
+                if (dataBaseOfWorkers.ContainsKey(initialsPeople) == false)
                 {
                     dataBaseOfWorkers.Add(initialsPeople, postOfPeople);
                 }
