@@ -31,7 +31,7 @@ namespace homeWork5_5._2
             ShowTheCollection(numbers);
             Console.Write(" - Объединенный лист");
 
-            ReplacingIdentialElements(ref numbers);
+            ReplacingIdentialElements(numbers);
             Console.WriteLine();
             ShowTheCollection(numbers);
             Console.Write(" - Удаление повторений");
@@ -64,7 +64,7 @@ namespace homeWork5_5._2
             }
         }
 
-        static void ReplacingIdentialElements(ref List<int> numbers)
+        static void ReplacingIdentialElements(List<int> numbers)
         {
             for (int i = 0; i < numbers.Count; i++)
             {
