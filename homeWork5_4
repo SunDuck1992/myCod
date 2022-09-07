@@ -8,6 +8,9 @@ namespace homeWork5_4._1
 {
     class Program
     {
+        public const string one = "1";
+        public const string two = "2";
+        public const string three = "3";
         static void Main(string[] args)
         {
             Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
@@ -15,36 +18,46 @@ namespace homeWork5_4._1
                 "\n" + "3 - удалить досье" + "\n" + "Для выхода из программы введите Exit");
             Dictionary<string, string> dataBaseOfWorkers = new Dictionary<string, string>();
             string message = "";
-            Console.WriteLine();
+            string stopWord = "Exit";
+            Console.WriteLine();            
 
-            while (message != "Exit")
+            while (message != stopWord)
             {
                 message = Console.ReadLine();
 
                 switch (message)
                 {
-                    case "1":
-                        AddPeople(ref dataBaseOfWorkers);
+                    case one:
+                        AddPeople(dataBaseOfWorkers);
                         break;
 
-                    case "2":
+                    case two:
                         ShowPeople(dataBaseOfWorkers);
                         break;
 
-                    case "3":
-                        RemoveAt(ref dataBaseOfWorkers);
+                    case three:
+                        RemoveAt(dataBaseOfWorkers);
                         break;
                 }
             }
         }
 
-        static void AddPeople(ref Dictionary<string, string> dataBaseOfWorkers)
+        static void AddPeople(Dictionary<string, string> dataBaseOfWorkers)
         {
             Console.WriteLine("Введите ФИО работника:");
             string initialsPeople = Console.ReadLine();
             Console.WriteLine("Введите должность человека:");
             string postOfPeople = Console.ReadLine();
-            dataBaseOfWorkers.Add(initialsPeople, postOfPeople);          
+            
+                if (!dataBaseOfWorkers.ContainsKey(initialsPeople))
+                {
+                    dataBaseOfWorkers.Add(initialsPeople, postOfPeople);
+                }
+
+                else
+                {
+                    Console.WriteLine("Такой человек уже есть в базе данных.");
+                }                               
         }
 
         static void ShowPeople(Dictionary<string, string> dataBaseOfWorkers)
@@ -60,11 +73,12 @@ namespace homeWork5_4._1
             }
         }
 
-        static void RemoveAt(ref Dictionary<string, string> dataBaseOfWorkers)
+        static void RemoveAt(Dictionary<string, string> dataBaseOfWorkers)
         {
             Console.WriteLine("Введите ФИО работника, которого нужно удалить из архива:");
             string initialsPeople = Console.ReadLine();
             dataBaseOfWorkers.Remove(initialsPeople);
+            Console.WriteLine("Сотрудник удален из базы данных.");
         }
     }
 }
