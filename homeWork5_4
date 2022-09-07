@@ -8,14 +8,14 @@ namespace homeWork5_4._1
 {
     class Program
     {
-        public const string CaseOne = "1";
-        public const string CaseTwo = "2";
-        public const string CaseThree = "3";
+        public const string DataEntry = "1";
+        public const string OutPutToTheScreen = "2";
+        public const string DeleteDossier = "3";
         static void Main(string[] args)
         {
             Console.WriteLine("Программа запоминает внесенные в нее данные. ФИО человека и должность. После чего может сделать вывод на экран.");
-            Console.WriteLine("Архив досье." + "\n" + "Меню Архива: " + "\n" + "1 - ввод ФИО человека и должности" + "\n" + "2 - вывод всех досье на экран" +
-                "\n" + "3 - удалить досье" + "\n" + "Для выхода из программы введите Exit");
+            Console.WriteLine("Архив досье." + "\n" + "Меню Архива: " + "\n" + DataEntry + " - ввод ФИО человека и должности" + "\n" + OutPutToTheScreen + " - вывод всех досье на экран" +
+                "\n" + DeleteDossier + " - удалить досье" + "\n" + "Для выхода из программы введите Exit");
             Dictionary<string, string> dataBaseOfWorkers = new Dictionary<string, string>();
             string message = "";
             string stopWord = "Exit";
@@ -27,15 +27,15 @@ namespace homeWork5_4._1
 
                 switch (message)
                 {
-                    case CaseOne:
+                    case DataEntry:
                         AddPeople(dataBaseOfWorkers);
                         break;
 
-                    case CaseTwo:
+                    case OutPutToTheScreen:
                         ShowPeople(dataBaseOfWorkers);
                         break;
 
-                    case CaseThree:
+                    case DeleteDossier:
                         RemoveAt(dataBaseOfWorkers);
                         break;
                 }
