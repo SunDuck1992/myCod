@@ -4,64 +4,79 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace homeWork5_5
+namespace homeWork5_5._2
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string[] array1 = { "1", "2", "3", "3", "5" };
-            string[] array2 = { "1", "6", "7" };
-            PrintArray(array1);
-            Console.Write("- Первый массив");
-            Console.WriteLine();
-            PrintArray(array2);
-            Console.Write("- Второй массив");
+            int arraySize = 10;
+            int[] array1 = new int[arraySize];
+            int[] array2 = new int[arraySize];
+            List<int> numbers = new List<int>();
+
+            FillTheArray(array1);
+            FillTheArray(array2);
+
+            ShowTheArray(array1);
+            Console.Write(" - первый заполненный массив");
             Console.WriteLine();
 
-            List<string> combiningString = Merge(array1, array2);
-            Listing(combiningString);
-            Console.Write("- Обьединение массивов без повторений");
-            Console.ReadKey();
+            ShowTheArray(array2);
+            Console.Write(" - второй заполненный массив");
+            Console.WriteLine();
+
+            numbers.AddRange(array1);
+            numbers.AddRange(array2);
+            ShowTheCollection(numbers);
+            Console.Write(" - Объединенный лист");
+
+            ReplacingIdentialElements(ref numbers);
+            Console.WriteLine();
+            ShowTheCollection(numbers);
+            Console.Write(" - Удаление повторений");
+            Console.WriteLine();
         }
 
-        static List<string> Merge(string[] array1, string[] array2)
+        static void FillTheArray(int[] array)
         {
-            List<string> combiningString = new List<string>();
+            Random random = new Random();
 
-            for (int i = 0; i < array1.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                if (!combiningString.Contains(array1[i]))
+                array[i] = random.Next(1, 9);
+            }
+        }
+
+        static void ShowTheCollection(List<int> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+        }
+
+        static void ShowTheArray(int[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write(array[i] + " ");
+            }
+        }
+
+        static void ReplacingIdentialElements(ref List<int> numbers)
+        {
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                for (int j = i + 1; j < numbers.Count; j++)
                 {
-                    combiningString.Add(array1[i]);
+
+                    if (numbers[i] == numbers[j])
+                    {
+                        numbers.RemoveAt(numbers[j]);
+                    }
                 }
             }
-
-            for (int i = 0; i < array2.Length; i++)
-            {
-                if (!combiningString.Contains(array2[i]))
-                {
-                    combiningString.Add(array2[i]);
-                }
-            }
-            return combiningString;
-        }
-
-        static void PrintArray(string[] array)
-        {
-            foreach (string element in array)
-            {
-                Console.Write(element + " ");
-            }
-        }
-
-        static public List<string> Listing(List<string> combiningString)
-        {
-            foreach (string element in combiningString)
-            {
-                Console.Write(element + " ");
-            }
-            return combiningString;
         }
     }
 }
