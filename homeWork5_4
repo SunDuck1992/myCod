@@ -28,7 +28,7 @@ namespace homeWork5_4._1
                 switch (message)
                 {
                     case DataEntry:
-                        AddPeople(dataBaseOfWorkers);
+                        AddHuman(dataBaseOfWorkers);
                         break;
 
                     case OutPutToTheScreen:
@@ -36,22 +36,22 @@ namespace homeWork5_4._1
                         break;
 
                     case DeleteDossier:
-                        RemoveAt(dataBaseOfWorkers);
+                        Remove(dataBaseOfWorkers);
                         break;
                 }
             }
         }
 
-        static void AddPeople(Dictionary<string, string> dataBaseOfWorkers)
+        static void AddHuman(Dictionary<string, string> dataBaseOfWorkers)
         {
             Console.WriteLine("Введите ФИО работника:");
-            string initialsPeople = Console.ReadLine();
+            string name = Console.ReadLine();
             Console.WriteLine("Введите должность человека:");
-            string postOfPeople = Console.ReadLine();
+            string post = Console.ReadLine();
             
-                if (dataBaseOfWorkers.ContainsKey(initialsPeople) == false)
+                if (dataBaseOfWorkers.ContainsKey(name) == false)
                 {
-                    dataBaseOfWorkers.Add(initialsPeople, postOfPeople);
+                    dataBaseOfWorkers.Add(name, post);
                 }
 
                 else
@@ -60,24 +60,24 @@ namespace homeWork5_4._1
                 }                               
         }
 
-        static void ShowPeople(Dictionary<string, string> dataBaseOfWorkers)
+        static void ShowPeople(Dictionary<string, string> workers)
         {
-            foreach (var workers in dataBaseOfWorkers)
+            foreach (var worker in workers)
             {
-                Console.WriteLine($"Работник - {workers.Key}, должность - {workers.Value}");
+                Console.WriteLine($"Работник - {worker.Key}, должность - {worker.Value}");
             }
             
-            if (dataBaseOfWorkers.Count == 0)
+            if (workers.Count == 0)
             {
                 Console.WriteLine("Картотека досье пуста!");
             }
         }
 
-        static void RemoveAt(Dictionary<string, string> dataBaseOfWorkers)
+        static void Remove(Dictionary<string, string> workers)
         {
             Console.WriteLine("Введите ФИО работника, которого нужно удалить из архива:");
-            string initialsPeople = Console.ReadLine();
-            dataBaseOfWorkers.Remove(initialsPeople);
+            string name = Console.ReadLine();
+            workers.Remove(name);
             Console.WriteLine("Сотрудник удален из базы данных.");
         }
     }
