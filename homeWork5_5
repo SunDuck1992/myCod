@@ -15,30 +15,30 @@ namespace homeWork5_5._2
             int[] array2 = new int[arraySize];
             List<int> numbers = new List<int>();
 
-            FillTheArray(array1);
-            FillTheArray(array2);
+            FillArray(array1);
+            FillArray(array2);
 
-            ShowTheArray(array1);
+            ShowArray(array1);
             Console.Write(" - первый заполненный массив");
             Console.WriteLine();
 
-            ShowTheArray(array2);
+            ShowArray(array2);
             Console.Write(" - второй заполненный массив");
             Console.WriteLine();
 
             numbers.AddRange(array1);
             numbers.AddRange(array2);
-            ShowTheCollection(numbers);
+            ShowCollection(numbers);
             Console.Write(" - Объединенный лист");
 
-            ReplacingIdentialElements(numbers);
+            RemoveIdentialElement(numbers);
             Console.WriteLine();
-            ShowTheCollection(numbers);
+            ShowCollection(numbers);
             Console.Write(" - Удаление повторений");
             Console.WriteLine();
         }
 
-        static void FillTheArray(int[] array)
+        static void FillArray(int[] array)
         {
             Random random = new Random();
 
@@ -48,7 +48,7 @@ namespace homeWork5_5._2
             }
         }
 
-        static void ShowTheCollection(List<int> list)
+        static void ShowCollection(List<int> list)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -56,7 +56,7 @@ namespace homeWork5_5._2
             }
         }
 
-        static void ShowTheArray(int[] array)
+        static void ShowArray(int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -64,7 +64,7 @@ namespace homeWork5_5._2
             }
         }
 
-        static void ReplacingIdentialElements(List<int> numbers)
+        static void RemoveIdentialElement(List<int> numbers)
         {
             for (int i = 0; i < numbers.Count; i++)
             {
