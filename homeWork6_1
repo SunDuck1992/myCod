@@ -10,17 +10,17 @@ namespace homeWork6_1
     {
         static void Main(string[] args)
         {
-            Player player1 = new Player("Bob", 25, 5, 123);
+            Player player1 = new Player("Bob", 22, 5, 123);
             player1.ShowInfo();
         }
     }
 
     class Player
     {
-        public string Name;
-        public int Age;
-        public int Level;
-        public int Id;
+        private string Name;
+        private int Age;
+        private int Level;
+        private int Id;
 
         public Player(string name, int age, int level, int id)
         {
