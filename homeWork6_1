@@ -32,7 +32,7 @@ namespace homeWork6_1
 
         public void ShowInfo()
         {
-            Console.WriteLine("Имя - " + Name + "\nВозраст - " + Age + "\nУровень - " + Level + "\nId пользователя  - " + Id);
+            Console.WriteLine("Имя - " + _name + "\nВозраст - " + _age + "\nУровень - " + _level + "\nId пользователя  - " + _id);
         }
     }
 }
