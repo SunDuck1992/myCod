@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork6_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Player player1 = new Player("Bob", 25, 5, 123);
+            player1.ShowInfo();
+        }
+    }
+
+    class Player
+    {
+        public string Name;
+        public int Age;
+        public int Level;
+        public int Id;
+
+        public Player(string name, int age, int level, int id)
+        {
+            Name = name;
+            Age = age;
+            Level = level;
+            Id = id;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("Имя - " + Name + "\nВозраст - " + Age + "\nУровень - " + Level + "\nId пользователя  - " + Id);
+        }
+    }
+}
