@@ -17,17 +17,17 @@ namespace homeWork6_1
 
     class Player
     {
-        private string Name;
-        private int Age;
-        private int Level;
-        private int Id;
+        private string _name;
+        private int _age;
+        private int _level;
+        private int _id;
 
         public Player(string name, int age, int level, int id)
         {
-            Name = name;
-            Age = age;
-            Level = level;
-            Id = id;
+            _name = name;
+            _age = age;
+            _level = level;
+            _id = id;
         }
 
         public void ShowInfo()
