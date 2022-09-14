@@ -10,31 +10,33 @@ namespace homeWork6_2
     {
         static void Main(string[] args)
         {
-            Player player = new Player(15, 10);
+            Player player = new Player(15, 10, '$');
             Renderer renderer = new Renderer();
-            renderer.DrawPlayer(player.X, player.Y);
+            renderer.DrawPlayer(player.PositionX, player.PositionY, player.Symbol);
             Console.ReadKey();           
         }
     }
 
     class Player
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
+        public int PositionX { get; private set; }
+        public int PositionY { get; private set; }
+        public char Symbol { get; private set; }
 
-        public Player(int x, int y)
+        public Player(int positionX, int positionY, char symbol)
         {
-            X = x;
-            Y = y;
+            PositionX = positionX;
+            PositionY = positionY;
+            Symbol = symbol;
         }
     }
 
     class Renderer
     {
-        public void DrawPlayer(int x, int y, char ch = '$')
+        public void DrawPlayer(int positionX, int positionY, char symbol)
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write(ch);
+            Console.SetCursorPosition(positionX, positionY);
+            Console.Write(symbol);
         }
     }
 }
