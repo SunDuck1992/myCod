@@ -17,9 +17,7 @@ namespace homeWork6_3._1
             const string CommandUnLockCharacter = "5";
             const string CommandExit = "6";
             bool isWork = true;
-
-            DataBase dataBase = new DataBase();
-
+            Database database = new Database();
             Console.SetCursorPosition(40, 0);
             Console.WriteLine("Меню базы данных:");
             Console.WriteLine("Добавить игрока - " + CommandAddCharacter);
@@ -36,23 +34,23 @@ namespace homeWork6_3._1
                 switch (message)
                 {
                     case CommandAddCharacter:
-                        dataBase.AddPlayer();
+                        database.AddPlayer();
                         break;
 
                     case CommandShowCharacters:
-                        dataBase.ShowPlayersList();
+                        database.ShowPlayersList();
                         break;
 
                     case CommandDeleteCharacter:
-                        dataBase.DeletePlayer();
+                        database.DeletePlayer();
                         break;
 
                     case CommandLockCharacter:
-                        dataBase.BanPlayer();
+                        database.BanPlayer();
                         break;
 
                     case CommandUnLockCharacter:
-                        dataBase.UnBanPlayer();
+                        database.UnBanPlayer();
                         break;
 
                     case CommandExit:
@@ -63,10 +61,9 @@ namespace homeWork6_3._1
         }
     }
 
-    class DataBase
+    class Database
     {
         private List<Player> _players = new List<Player>();
-
         public void AddPlayer()
         {
             Console.WriteLine("Введите никнейм игрока:");
@@ -90,7 +87,7 @@ namespace homeWork6_3._1
         public void DeletePlayer()
         {
             Console.WriteLine("Введите порядковый номер игрока, которого хотите удалить:");
-            int userInput = CheckInput.ReadInt();
+            int userInput = UserUnilities.ReadInt();
 
             for (int  i = 0;  i < _players.Count;  i++)
             {
@@ -110,13 +107,13 @@ namespace homeWork6_3._1
         public void BanPlayer()
         {
             Console.WriteLine("Введите номер игрока, которого хотите забанить:");
-            int inputUserId = CheckInput.ReadInt();
+            int inputUserId = UserUnilities.ReadInt();
 
             for (int i = 0; i < _players.Count; i++)
             {
                 if (inputUserId == _players[i].Id)
                 {
-                    _players[i].LockedPlayer();
+                    _players[i].Banned();
                     Console.WriteLine("Бан в студию!");
                 }
 
@@ -130,13 +127,13 @@ namespace homeWork6_3._1
         public void UnBanPlayer()
         {
             Console.WriteLine("Введите номер игрока, с которого нужно снять бан:");
-            int inputUserId = CheckInput.ReadInt();
+            int inputUserId = UserUnilities.ReadInt();
 
             for (int i = 0; i < _players.Count; i++)
             {
                 if (inputUserId == _players[i].Id)
                 {
-                    _players[i].UnLockedPlayer();
+                    _players[i].UnBanned();
                     Console.WriteLine("Бан снят!");
                 }
 
@@ -150,49 +147,49 @@ namespace homeWork6_3._1
 
     class Player
     {
-        static private int _idCount = 0;
+        static private int _id = 0;
         private string _name;
         private int _level;
         public int Id { get; private set; }
-        public bool Ban { get; private set; }
+        public bool IsBan { get; private set; }
+
         public Player(string name, int level)
         {
-            _idCount++;
+            _id++;
             _name = name;
             _level = level;
-            Id = _idCount;
-            Ban = false;
+            Id = _id;
+            IsBan = false;
         }
 
         public void ShowPlayerInfo()
         {
             Console.Write("Порядковый номер игрока - " + Id + "|| Никнейм игрока - " + _name + "|| Уровень игрока - " + _level);
 
-            if (Ban == false)
+            if (IsBan == false)
             {
                 Console.Write(" - Бана нет");
             }
 
-            if (Ban == true)
+            if (IsBan == true)
             {
                 Console.Write(" - Игрок заблокирован!");
             }
         }
 
-        public void LockedPlayer()
+        public void Banned()
         {
-            Ban = true;
+            IsBan = true;
         }
 
-        public void UnLockedPlayer()
+        public void UnBanned()
         {
-            Ban = false;
+            IsBan = false;
         }
     }
-
-    static class CheckInput
+    static class UserUnilities
     {
-        static public int ReadInt()
+        public static int ReadInt()
         {
             int resalt = 0;
             bool isWork = true;
