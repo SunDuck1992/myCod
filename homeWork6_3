@@ -87,7 +87,7 @@ namespace homeWork6_3._1
         public void DeletePlayer()
         {
             Console.WriteLine("Введите порядковый номер игрока, которого хотите удалить:");
-            int userInput = UserUnilities.ReadInt();
+            int userInput = UserUtilities.ReadInt();
 
             for (int  i = 0;  i < _players.Count;  i++)
             {
@@ -107,7 +107,7 @@ namespace homeWork6_3._1
         public void BanPlayer()
         {
             Console.WriteLine("Введите номер игрока, которого хотите забанить:");
-            int inputUserId = UserUnilities.ReadInt();
+            int inputUserId = UserUtilities.ReadInt();
 
             for (int i = 0; i < _players.Count; i++)
             {
@@ -127,7 +127,7 @@ namespace homeWork6_3._1
         public void UnBanPlayer()
         {
             Console.WriteLine("Введите номер игрока, с которого нужно снять бан:");
-            int inputUserId = UserUnilities.ReadInt();
+            int inputUserId = UserUtilities.ReadInt();
 
             for (int i = 0; i < _players.Count; i++)
             {
@@ -187,7 +187,7 @@ namespace homeWork6_3._1
             IsBan = false;
         }
     }
-    static class UserUnilities
+    static class UserUtilities
     {
         public static int ReadInt()
         {
