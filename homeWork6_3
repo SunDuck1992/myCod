@@ -69,7 +69,7 @@ namespace homeWork6_3._1
             Console.WriteLine("Введите никнейм игрока:");
             string inputName = Console.ReadLine();
             Console.WriteLine("Введите уровень игрока:");
-            int inputLevel = Convert.ToInt32(Console.ReadLine());
+            int inputLevel = UserUtilities.ReadInt();
             Player player = new Player(inputName, inputLevel);
             _players.Add(player);
         }
@@ -78,7 +78,7 @@ namespace homeWork6_3._1
         {
             for (int i = 0; i < _players.Count; i++)
             {
-                _players[i].ShowPlayerInfo();
+                _players[i].ToShowInfo();
                 Console.WriteLine();
                 Console.WriteLine();                
             }
@@ -113,13 +113,14 @@ namespace homeWork6_3._1
             {
                 if (inputUserId == _players[i].Id)
                 {
-                    _players[i].Banned();
+                    _players[i].ToBan();
                     Console.WriteLine("Бан в студию!");
+                    break;
                 }
 
                 else
                 {
-                    Console.WriteLine("Игрока с таким номером нет в базе!");
+                    Console.WriteLine("Игрока с таким номером нет в базе!");                    
                 }
             }
         }
@@ -133,8 +134,9 @@ namespace homeWork6_3._1
             {
                 if (inputUserId == _players[i].Id)
                 {
-                    _players[i].UnBanned();
+                    _players[i].ToUnBan();
                     Console.WriteLine("Бан снят!");
+                    break;
                 }
 
                 else
@@ -151,7 +153,7 @@ namespace homeWork6_3._1
         private string _name;
         private int _level;
         public int Id { get; private set; }
-        public bool IsBan { get; private set; }
+        public bool IsBanned { get; private set; }
 
         public Player(string name, int level)
         {
@@ -159,32 +161,32 @@ namespace homeWork6_3._1
             _name = name;
             _level = level;
             Id = _id;
-            IsBan = false;
+            IsBanned = false;
         }
 
-        public void ShowPlayerInfo()
+        public void ToShowInfo()
         {
             Console.Write("Порядковый номер игрока - " + Id + "|| Никнейм игрока - " + _name + "|| Уровень игрока - " + _level);
 
-            if (IsBan == false)
+            if (IsBanned == false)
             {
                 Console.Write(" - Бана нет");
             }
 
-            if (IsBan == true)
+            if (IsBanned == true)
             {
                 Console.Write(" - Игрок заблокирован!");
             }
         }
 
-        public void Banned()
+        public void ToBan()
         {
-            IsBan = true;
+            IsBanned = true;
         }
 
-        public void UnBanned()
+        public void ToUnBan()
         {
-            IsBan = false;
+            IsBanned = false;
         }
     }
     static class UserUtilities
