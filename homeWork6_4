@@ -1,0 +1,158 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork6_4._1
+{
+    class Program
+    {
+        const string TakeCard = "1";
+        const string ShowCards = "2";
+        const string ExitProgramm = "3";
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Мы приветствуем вас за нашим игральным столом!\nВы можете взять в руку до 6 карт, после чего начнется игра!");
+            Console.WriteLine();
+            Console.SetCursorPosition(35, 2);
+            Console.WriteLine("Меню комманд:");
+            Console.WriteLine(TakeCard + " - Взять карту из колоды");
+            Console.WriteLine(ShowCards + " - Показать все карты на руке игрока");
+            Console.WriteLine(ExitProgramm + " - Выход из программы");
+            CardDeck cardDeck = new CardDeck();
+            Player player = new Player();
+            bool isWork = true;
+            int maxCountCard = 6;
+
+            cardDeck.FillDeck();
+            cardDeck.Shuffle();
+
+            while (isWork)
+            {
+                string userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case TakeCard:
+                        player.AddCard(cardDeck.RemoveCard(), maxCountCard);
+                        break;
+
+                    case ShowCards:
+                        player.ShowCards();
+                        break;
+
+                    case ExitProgramm:
+                        isWork = false;
+                        break;
+                }
+            }
+        }
+    }
+
+    class CardDeck
+    {
+        private List<Card> _cards = new List<Card>();
+        private int _deckSize = 36;
+        
+        public void FillDeck()
+        {
+            for (int i = 0; i < _deckSize; i++)
+            {
+                _cards.Add(new Card("6 - Пик"));
+                _cards.Add(new Card("6 - Крестей"));
+                _cards.Add(new Card("6 - Бубей"));
+                _cards.Add(new Card("6 - Червей"));
+                _cards.Add(new Card("7 - Пик"));
+                _cards.Add(new Card("7 - Крестей"));
+                _cards.Add(new Card("7 - Бубей"));
+                _cards.Add(new Card("7 - Червей"));
+                _cards.Add(new Card("8 - Пик"));
+                _cards.Add(new Card("8 - Крестей"));
+                _cards.Add(new Card("8 - Бубей"));
+                _cards.Add(new Card("8 - Червей"));
+                _cards.Add(new Card("9 - Пик"));
+                _cards.Add(new Card("9 - Крестей"));
+                _cards.Add(new Card("9 - Бубей"));
+                _cards.Add(new Card("9 - Червей"));
+                _cards.Add(new Card("10 - Пик"));
+                _cards.Add(new Card("10 - Крестей"));
+                _cards.Add(new Card("10 - Бубей"));
+                _cards.Add(new Card("10 - Червей"));
+                _cards.Add(new Card("Валет - Пик"));
+                _cards.Add(new Card("Валет - Крестей"));
+                _cards.Add(new Card("Валет - Бубей"));
+                _cards.Add(new Card("Валет - Червей"));
+                _cards.Add(new Card("Дама - Пик"));
+                _cards.Add(new Card("Дама - Крестей"));
+                _cards.Add(new Card("Дама - Бубей"));
+                _cards.Add(new Card("Дама - Червей"));
+                _cards.Add(new Card("Король - Пик"));
+                _cards.Add(new Card("Король - Крестей"));
+                _cards.Add(new Card("Король - Бубей"));
+                _cards.Add(new Card("Король - Червей"));
+                _cards.Add(new Card("Туз - Пик"));
+                _cards.Add(new Card("Туз - Крестей"));
+                _cards.Add(new Card("Туз - Бубей"));
+                _cards.Add(new Card("Туз - Червей"));
+            }
+        }
+
+        public void Shuffle()
+        {
+            Random random = new Random();
+            Card tempCard;
+
+            for (int i = 0; i < _cards.Count; i++)
+            {              
+                int firstCard = random.Next(_cards.Count);
+                int secondCard = random.Next(_cards.Count);
+                tempCard = _cards[firstCard];
+                _cards[firstCard] = _cards[secondCard];
+                _cards[secondCard] = tempCard;
+            }
+        }
+
+        public Card RemoveCard()
+        {
+            Card card = _cards[0];
+            _cards.Remove(card);
+            return card;
+        }
+    }
+
+    class Card
+    {
+        public string Name { get; private set; }
+
+        public Card(string name)
+        {
+            Name = name;
+        }
+    }
+
+    class Player
+    {
+        private List<Card> _handCards = new List<Card>();
+
+        public void AddCard(Card _cards, int count)
+        {
+            if (_handCards.Count < count)
+            {
+                _handCards.Add(_cards);               
+            }
+            else
+            {
+                Console.WriteLine("У вас полный набор карт на руке.");
+            }
+        }
+
+        public void ShowCards()
+        {
+            foreach (Card card in _handCards)
+            {
+                Console.WriteLine(card.Name + " ");
+            }
+        }
+    }   
+}
