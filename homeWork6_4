@@ -8,9 +8,9 @@ namespace homeWork6_4._1
 {
     class Program
     {
-        const string TakeCard = "1";
-        const string ShowCards = "2";
-        const string ExitProgramm = "3";
+        private const string TakeCard = "1";
+        private const string ShowCards = "2";
+        private const string ExitProgramm = "3";
         static void Main(string[] args)
         {
             Console.WriteLine("Мы приветствуем вас за нашим игральным столом!\nВы можете взять в руку до 6 карт, после чего начнется игра!");
@@ -20,6 +20,7 @@ namespace homeWork6_4._1
             Console.WriteLine(TakeCard + " - Взять карту из колоды");
             Console.WriteLine(ShowCards + " - Показать все карты на руке игрока");
             Console.WriteLine(ExitProgramm + " - Выход из программы");
+            Console.WriteLine();
             CardDeck cardDeck = new CardDeck();
             Player player = new Player();
             bool isWork = true;
@@ -52,50 +53,47 @@ namespace homeWork6_4._1
 
     class CardDeck
     {
-        private List<Card> _cards = new List<Card>();
-        private int _deckSize = 36;
+        private static int _deckSize = 36;
+        private List<Card> _cards = new List<Card>(_deckSize);
         
         public void FillDeck()
-        {
-            for (int i = 0; i < _deckSize; i++)
-            {
-                _cards.Add(new Card("6 - Пик"));
-                _cards.Add(new Card("6 - Крестей"));
-                _cards.Add(new Card("6 - Бубей"));
-                _cards.Add(new Card("6 - Червей"));
-                _cards.Add(new Card("7 - Пик"));
-                _cards.Add(new Card("7 - Крестей"));
-                _cards.Add(new Card("7 - Бубей"));
-                _cards.Add(new Card("7 - Червей"));
-                _cards.Add(new Card("8 - Пик"));
-                _cards.Add(new Card("8 - Крестей"));
-                _cards.Add(new Card("8 - Бубей"));
-                _cards.Add(new Card("8 - Червей"));
-                _cards.Add(new Card("9 - Пик"));
-                _cards.Add(new Card("9 - Крестей"));
-                _cards.Add(new Card("9 - Бубей"));
-                _cards.Add(new Card("9 - Червей"));
-                _cards.Add(new Card("10 - Пик"));
-                _cards.Add(new Card("10 - Крестей"));
-                _cards.Add(new Card("10 - Бубей"));
-                _cards.Add(new Card("10 - Червей"));
-                _cards.Add(new Card("Валет - Пик"));
-                _cards.Add(new Card("Валет - Крестей"));
-                _cards.Add(new Card("Валет - Бубей"));
-                _cards.Add(new Card("Валет - Червей"));
-                _cards.Add(new Card("Дама - Пик"));
-                _cards.Add(new Card("Дама - Крестей"));
-                _cards.Add(new Card("Дама - Бубей"));
-                _cards.Add(new Card("Дама - Червей"));
-                _cards.Add(new Card("Король - Пик"));
-                _cards.Add(new Card("Король - Крестей"));
-                _cards.Add(new Card("Король - Бубей"));
-                _cards.Add(new Card("Король - Червей"));
-                _cards.Add(new Card("Туз - Пик"));
-                _cards.Add(new Card("Туз - Крестей"));
-                _cards.Add(new Card("Туз - Бубей"));
-                _cards.Add(new Card("Туз - Червей"));
-            }
+        {          
+            _cards.Add(new Card("6" , "Пик"));
+            _cards.Add(new Card("6", "Крестей"));
+            _cards.Add(new Card("6" , "Бубей"));
+            _cards.Add(new Card("6", "Червей"));
+            _cards.Add(new Card("7", "Пик"));
+            _cards.Add(new Card("7", "Крестей"));
+            _cards.Add(new Card("7", "Бубей"));
+            _cards.Add(new Card("7", "Червей"));
+            _cards.Add(new Card("8", "Пик"));
+            _cards.Add(new Card("8", "Крестей"));
+            _cards.Add(new Card("8", "Бубей"));
+            _cards.Add(new Card("8", "Червей"));
+            _cards.Add(new Card("9", "Пик"));
+            _cards.Add(new Card("9", "Крестей"));
+            _cards.Add(new Card("9", "Бубей"));
+            _cards.Add(new Card("9", "Червей"));
+            _cards.Add(new Card("10", "Пик"));
+            _cards.Add(new Card("10", "Крестей"));
+            _cards.Add(new Card("10", "Бубей"));
+            _cards.Add(new Card("10", "Червей"));
+            _cards.Add(new Card("Валет", "Пик"));
+            _cards.Add(new Card("Валет", "Крестей"));
+            _cards.Add(new Card("Валет", "Бубей"));
+            _cards.Add(new Card("Валет", "Червей"));
+            _cards.Add(new Card("Дама", "Пик"));
+            _cards.Add(new Card("Дама", "Крестей"));
+            _cards.Add(new Card("Дама", "Бубей"));
+            _cards.Add(new Card("Дама", "Червей"));
+            _cards.Add(new Card("Король", "Пик"));
+            _cards.Add(new Card("Король", "Крестей"));
+            _cards.Add(new Card("Король", "Бубей"));
+            _cards.Add(new Card("Король", "Червей"));
+            _cards.Add(new Card("Туз", "Пик"));
+            _cards.Add(new Card("Туз", "Крестей"));
+            _cards.Add(new Card("Туз", "Бубей"));
+            _cards.Add(new Card("Туз", "Червей"));
         }
 
         public void Shuffle()
@@ -124,10 +122,12 @@ namespace homeWork6_4._1
     class Card
     {
         public string Name { get; private set; }
+        public string Value { get; private set; }
 
-        public Card(string name)
+        public Card(string name, string value)
         {
             Name = name;
+            Value = value;
         }
     }
 
@@ -150,9 +150,9 @@ namespace homeWork6_4._1
         public void ShowCards()
         {
             foreach (Card card in _handCards)
-            {
-                Console.WriteLine(card.Name + " ");
-            }
+            {               
+                Console.WriteLine(card.Name + " - " + card.Value);
+            }          
         }
     }   
 }
