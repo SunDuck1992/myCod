@@ -54,11 +54,11 @@ namespace homeWork6_5
 
     class Book
     {
+        private static int _id = 0;
         public string Name { get; private set; }
         public string Author { get; private set; }
         public int YearOfRelease { get; private set; }
         public int Id { get; private set; }
-        static private int _id = 0;
 
         public Book(string name, string author, int yearOfRelease)
         {
@@ -85,9 +85,9 @@ namespace homeWork6_5
         public void AddBook()
         {
             Console.WriteLine("Введите название книги:");
-            string inputName = GetInputText();
+            string inputName = Console.ReadLine();
             Console.WriteLine("Введите автора:");
-            string inputAuthor = GetInputText();
+            string inputAuthor = Console.ReadLine();
             Console.WriteLine("Введите год написания произведения:");
             int inputYearOfRelease = GetInputNumber();
             Book book = new Book(inputName, inputAuthor, inputYearOfRelease);
@@ -177,7 +177,7 @@ namespace homeWork6_5
         private void FindByName()
         {
             Console.WriteLine("Введите название:");
-            string inputName = GetInputText();
+            string inputName = Console.ReadLine();
             bool success = false;
 
             foreach (var book in _books)
@@ -186,7 +186,6 @@ namespace homeWork6_5
                 {
                     Console.WriteLine("Книга - " + book.Name + " ~~ Автор - " + book.Author + " ~~ Год выпуска - " + book.YearOfRelease);
                     success = true;
-                    break;
                 }
             }
 
@@ -199,7 +198,7 @@ namespace homeWork6_5
         private void FindByAuthor()
         {
             Console.WriteLine("Введите автора:");
-            string inputAuthor = GetInputText();
+            string inputAuthor = Console.ReadLine();
             bool success = false;
 
             foreach (var book in _books)
@@ -208,7 +207,6 @@ namespace homeWork6_5
                 {
                     Console.WriteLine("Книга - " + book.Name + " ~~ Автор - " + book.Author + " ~~ Год выпуска - " + book.YearOfRelease);
                     success = true;
-                    break;
                 }
             }
 
@@ -230,7 +228,6 @@ namespace homeWork6_5
                 {
                     Console.WriteLine("Книга - " + book.Name + " ~~ Автор - " + book.Author + " ~~ Год выпуска - " + book.YearOfRelease);
                     success = true;
-                    break;
                 }
             }
 
@@ -243,14 +240,13 @@ namespace homeWork6_5
         private int GetInputNumber()
         {
             int resalt = 0;
-            int maxInputLenght = 4;
             bool isWork = true;
 
             while (isWork)
             {
                 bool success = int.TryParse(Console.ReadLine(), out int number);
 
-                if (success == true && number <= maxInputLenght && number > 0)
+                if (success == true && number > 0)
                 {
                     resalt = number;
                     isWork = false;
@@ -261,21 +257,6 @@ namespace homeWork6_5
                 }
             }
             return resalt;
-        }
-
-        private string GetInputText()
-        {
-            string text = Console.ReadLine();
-
-            foreach (char symbol in text)
-            {
-                if (char.IsLetter(symbol) == false)
-                {
-                    Console.WriteLine("Не корректный ввод. Введите текст!");
-                    return null;
-                }
-            }
-            return text;
         }
     }
 }
