@@ -36,7 +36,7 @@ namespace homeWork6_4._1
                 switch (userInput)
                 {
                     case TakeCard:
-                        player.AddCard(cardDeck.RemoveCard(), maxCountCard);
+                        player.AddCard(cardDeck.DeleteCard(), maxCountCard);
                         break;
 
                     case ShowCards:
@@ -111,7 +111,7 @@ namespace homeWork6_4._1
             }
         }
 
-        public Card RemoveCard()
+        public Card DeleteCard()
         {
             Card card = _cards[0];
             _cards.Remove(card);
