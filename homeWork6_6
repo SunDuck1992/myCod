@@ -1,0 +1,209 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork6_6
+{
+    class Program
+    {
+        private const string CommandShowAllProducts = "1";
+        private const string CommandSellProduct = "2";
+        private const string CommandShowBuyProducts = "3";
+        private const string CommandExit = "4";
+        static void Main(string[] args)
+        {
+            Console.SetCursorPosition(40, 0);
+            Console.WriteLine("Магазин продуктов:");
+            Console.WriteLine("Меню магазина:");
+            Console.WriteLine(CommandShowAllProducts + " - Показать весь товар магазина\n" + CommandSellProduct + " - Продажа товара\n" +
+                CommandShowBuyProducts + " - Показать мои покупки");
+            Console.WriteLine();
+            Buyer buyer = new Buyer();
+            Console.WriteLine("В магазин пришел покупатель, у него " + buyer.Money + " - рублей");
+            Seller seller = new Seller();
+            bool isWork = true;
+
+            seller.FillStore();
+
+            while (isWork)
+            {
+                string userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case CommandShowAllProducts:
+                        seller.ShowInfo();
+                        break;
+
+                    case CommandSellProduct:
+                        seller.Sell();
+                        break;
+
+                    case CommandShowBuyProducts:
+                        buyer.ShowInventory();
+                        break;
+
+                    case CommandExit:
+                        isWork = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Не верный ввод. Такая команда отсутствует!");
+                        break;
+                }
+            }
+        }
+    }
+
+    class Buyer
+    {
+        Random random = new Random();
+        private List<Product> _inventory = new List<Product>();
+        int minMoney = 200;
+        int maxMoney = 1000;
+        public int Money { get; private set; }
+        private int _moneyToPay;
+
+        public Buyer()
+        {
+            Money = random.Next(minMoney, maxMoney);
+        }
+
+        public void ShowInventory()
+        {
+            Console.WriteLine("Ваши покупки:");
+
+            foreach (var item in _inventory)
+            {
+                Console.WriteLine(item.Name);
+            }
+        }
+
+        public void AddItem(Product product)
+        {
+            _inventory.Add(product);
+        }
+
+        public bool CheckSolvency(Product product)
+        {
+            _moneyToPay = product.Price;
+
+            if (Money >= _moneyToPay)
+            {
+                return true;
+            }
+            else
+            {
+                _moneyToPay = 0;
+                return false;
+            }
+        }
+
+        public int GiveMoney()
+        {
+            Money -= _moneyToPay;
+            return _moneyToPay;
+        }
+
+    }
+
+    class Seller
+    {
+        private List<Product> _products = new List<Product>();
+        Buyer buyer = new Buyer();
+        Random random = new Random();
+
+        public void FillStore()
+        {
+            _products.Add(new Product("Молоко", 60, random.Next(1, 5)));
+            _products.Add(new Product("Хлеб", 35, random.Next(1, 5)));
+            _products.Add(new Product("Тушенка", 120, random.Next(1, 5)));
+            _products.Add(new Product("Яйца", 50, random.Next(1, 5)));
+            _products.Add(new Product("Йогурт", 40, random.Next(1, 5)));
+            _products.Add(new Product("Сметана", 50, random.Next(1, 5)));
+            _products.Add(new Product("Творог", 80, random.Next(1, 5)));
+            _products.Add(new Product("Печенье", 100, random.Next(1, 5)));
+            _products.Add(new Product("Шоколад", 80, random.Next(1, 5)));
+            _products.Add(new Product("Чай", 100, random.Next(1, 5)));
+            _products.Add(new Product("Колбаса", 200, random.Next(1, 5)));
+            _products.Add(new Product("Сыр", 150, random.Next(1, 5)));
+            _products.Add(new Product("Сельдь", 100, random.Next(1, 5)));
+            _products.Add(new Product("Батончик", 60, random.Next(1, 5)));
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("Товары в наличии:");
+
+            foreach (var product in _products)
+            {
+                Console.WriteLine(product.Number + " - " + product.Name + " - цена " + product.Price + " рублей, количество - " + product.CountProduct + " шт.");
+            }
+        }
+
+        public void Sell()
+        {
+            Console.WriteLine("Ваши деньги " + buyer.Money + " - рублей");
+            Console.WriteLine("Что вы хотите купить?");
+            int userInput = UserUtiliies.ReadInt();
+
+            if (buyer.CheckSolvency(_products[userInput - 1]))
+            {
+                buyer.AddItem(_products[userInput - 1]);
+                buyer.GiveMoney();
+                _products[userInput - 1].ChangeQuantity();
+            }
+            else
+            {
+                Console.WriteLine("У вас не хватает денег. Приходите в другой раз!");
+            }
+        }
+    }
+
+    class Product
+    {    
+        private static int _number = 0;
+        public string Name { get; private set; }
+        public int Price { get; private set; }
+        public int Number { get; private set; }
+        public int CountProduct { get; private set; }
+
+        public Product (string name, int price, int count)
+        {
+            _number++;
+            Name = name;
+            Price = price;
+            Number = _number;
+            CountProduct = count;
+        }
+
+        public void ChangeQuantity()
+        {
+            CountProduct--;
+        }
+    }
+
+    static class UserUtiliies
+    {
+        public static int ReadInt()
+        {
+            int resalt = 0;
+            bool isWork = true;
+
+            while (isWork)
+            {
+                string userInput = Console.ReadLine();
+                bool success = int.TryParse(userInput, out int number);
+
+                if (success == true && number > 0)
+                {
+                    resalt = number;
+                    isWork = false;
+                }
+            }
+            return resalt;
+        }
+    }
+}
