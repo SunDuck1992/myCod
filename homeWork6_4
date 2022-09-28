@@ -54,46 +54,20 @@ namespace homeWork6_4._1
     class CardDeck
     {
         private static int _deckSize = 36;
-        private List<Card> _cards = new List<Card>(_deckSize);
+        private List<Card> _cards = new List<Card>(_deckSize);                
         
         public void FillDeck()
-        {          
-            _cards.Add(new Card("6" , "Пик"));
-            _cards.Add(new Card("6", "Крестей"));
-            _cards.Add(new Card("6" , "Бубей"));
-            _cards.Add(new Card("6", "Червей"));
-            _cards.Add(new Card("7", "Пик"));
-            _cards.Add(new Card("7", "Крестей"));
-            _cards.Add(new Card("7", "Бубей"));
-            _cards.Add(new Card("7", "Червей"));
-            _cards.Add(new Card("8", "Пик"));
-            _cards.Add(new Card("8", "Крестей"));
-            _cards.Add(new Card("8", "Бубей"));
-            _cards.Add(new Card("8", "Червей"));
-            _cards.Add(new Card("9", "Пик"));
-            _cards.Add(new Card("9", "Крестей"));
-            _cards.Add(new Card("9", "Бубей"));
-            _cards.Add(new Card("9", "Червей"));
-            _cards.Add(new Card("10", "Пик"));
-            _cards.Add(new Card("10", "Крестей"));
-            _cards.Add(new Card("10", "Бубей"));
-            _cards.Add(new Card("10", "Червей"));
-            _cards.Add(new Card("Валет", "Пик"));
-            _cards.Add(new Card("Валет", "Крестей"));
-            _cards.Add(new Card("Валет", "Бубей"));
-            _cards.Add(new Card("Валет", "Червей"));
-            _cards.Add(new Card("Дама", "Пик"));
-            _cards.Add(new Card("Дама", "Крестей"));
-            _cards.Add(new Card("Дама", "Бубей"));
-            _cards.Add(new Card("Дама", "Червей"));
-            _cards.Add(new Card("Король", "Пик"));
-            _cards.Add(new Card("Король", "Крестей"));
-            _cards.Add(new Card("Король", "Бубей"));
-            _cards.Add(new Card("Король", "Червей"));
-            _cards.Add(new Card("Туз", "Пик"));
-            _cards.Add(new Card("Туз", "Крестей"));
-            _cards.Add(new Card("Туз", "Бубей"));
-            _cards.Add(new Card("Туз", "Червей"));
+        {
+            string[] title = { "Пик", "Крестей", "Бубей", "Червей" };
+            string[] mean = { "6", "7", "8", "9", "10", "Валет", "Дама", "Король", "Туз" };
+
+            for (int i = 0; i < title.Length; i++)
+            {
+                for (int j = 0; j < mean.Length; j++)
+                {
+                    _cards.Add(new Card(title[i], mean[j]));
+                }
+            }          
         }
 
         public void Shuffle()
