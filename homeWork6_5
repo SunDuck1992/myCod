@@ -12,6 +12,7 @@ namespace homeWork6_5
         private const string CommandRemoveBook = "2";
         private const string CommandShowBooks = "3";
         private const string CommandExit = "4";
+        
         static void Main(string[] args)
         {
             Console.WriteLine("Это хранилище книг. Оно хранит все книги добавленные в него. Вы можете добавлять, удалять,\nискать нужную по критерию.");
