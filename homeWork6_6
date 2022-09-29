@@ -12,17 +12,18 @@ namespace homeWork6_6
         private const string CommandSellProduct = "2";
         private const string CommandShowBuyProducts = "3";
         private const string CommandExit = "4";
+
         static void Main(string[] args)
         {
+            Buyer buyer = new Buyer();
+            Seller seller = new Seller();
             Console.SetCursorPosition(40, 0);
             Console.WriteLine("Магазин продуктов:");
             Console.WriteLine("Меню магазина:");
             Console.WriteLine(CommandShowAllProducts + " - Показать весь товар магазина\n" + CommandSellProduct + " - Продажа товара\n" +
                 CommandShowBuyProducts + " - Показать мои покупки");
             Console.WriteLine();
-            Buyer buyer = new Buyer();
             Console.WriteLine("В магазин пришел покупатель, у него " + buyer.Money + " - рублей");
-            Seller seller = new Seller();
             bool isWork = true;
 
             seller.FillStore();
@@ -38,7 +39,7 @@ namespace homeWork6_6
                         break;
 
                     case CommandSellProduct:
-                        seller.Sell();
+                        seller.Sell(buyer);
                         break;
 
                     case CommandShowBuyProducts:
@@ -61,10 +62,10 @@ namespace homeWork6_6
     {
         Random random = new Random();
         private List<Product> _inventory = new List<Product>();
+        private int _moneyToPay;
         int minMoney = 200;
         int maxMoney = 1000;
         public int Money { get; private set; }
-        private int _moneyToPay;
 
         public Buyer()
         {
@@ -90,12 +91,19 @@ namespace homeWork6_6
         {
             _moneyToPay = product.Price;
 
-            if (Money >= _moneyToPay)
+            if (product.CountProduct <= 0)
+            {
+                Console.WriteLine("Продукт закончился в магазине. Приходите в другой раз!");
+                return false;
+            }
+
+            if (Money >= _moneyToPay && product.CountProduct > 0)
             {
                 return true;
             }
             else
             {
+                Console.WriteLine("У вас нет денег. Приходите в другой раз!");
                 _moneyToPay = 0;
                 return false;
             }
@@ -106,13 +114,11 @@ namespace homeWork6_6
             Money -= _moneyToPay;
             return _moneyToPay;
         }
-
     }
 
     class Seller
     {
         private List<Product> _products = new List<Product>();
-        Buyer buyer = new Buyer();
         Random random = new Random();
 
         public void FillStore()
@@ -143,34 +149,31 @@ namespace homeWork6_6
             }
         }
 
-        public void Sell()
+        public void Sell(Buyer buyer)
         {
             Console.WriteLine("Ваши деньги " + buyer.Money + " - рублей");
             Console.WriteLine("Что вы хотите купить?");
-            int userInput = UserUtiliies.ReadInt();
+            int userInput = UserUtilities.ReadInt();
 
             if (buyer.CheckSolvency(_products[userInput - 1]))
             {
                 buyer.AddItem(_products[userInput - 1]);
                 buyer.GiveMoney();
                 _products[userInput - 1].ChangeQuantity();
-            }
-            else
-            {
-                Console.WriteLine("У вас не хватает денег. Приходите в другой раз!");
+                Console.WriteLine("Вы купили товар!");
             }
         }
     }
 
     class Product
-    {    
+    {
         private static int _number = 0;
         public string Name { get; private set; }
         public int Price { get; private set; }
         public int Number { get; private set; }
         public int CountProduct { get; private set; }
 
-        public Product (string name, int price, int count)
+        public Product(string name, int price, int count)
         {
             _number++;
             Name = name;
@@ -185,7 +188,7 @@ namespace homeWork6_6
         }
     }
 
-    static class UserUtiliies
+    static class UserUtilities
     {
         public static int ReadInt()
         {
