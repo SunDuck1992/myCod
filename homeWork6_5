@@ -73,7 +73,6 @@ namespace homeWork6_5
     class Storage
     {
         private List<Book> _books = new List<Book>();
-
         public Storage()
         {
             _books.Add(new Book("Спартак", "Рафаэлло Джованьоли", 1954));
@@ -89,7 +88,7 @@ namespace homeWork6_5
             Console.WriteLine("Введите автора:");
             string inputAuthor = Console.ReadLine();
             Console.WriteLine("Введите год написания произведения:");
-            int inputYearOfRelease = GetInputNumber();
+            int inputYearOfRelease = GetNumber();
             Book book = new Book(inputName, inputAuthor, inputYearOfRelease);
             _books.Add(book);
             Console.WriteLine("Книга добавлена в хранилище");
@@ -98,7 +97,7 @@ namespace homeWork6_5
         public void RemoveBook()
         {
             Console.WriteLine("Введите порядковый номер книги, которую желаете удалить из хранилища:");
-            int userInput = GetInputNumber();
+            int userInput = GetNumber();
             bool isDelete = false;
 
             for (int i = 0; i < _books.Count; i++)
@@ -178,18 +177,18 @@ namespace homeWork6_5
         {
             Console.WriteLine("Введите название:");
             string inputName = Console.ReadLine();
-            bool success = false;
+            bool isSuccess = false;
 
             foreach (var book in _books)
             {
                 if (inputName.ToLower() == book.Name.ToLower())
                 {
                     Console.WriteLine("Книга - " + book.Name + " ~~ Автор - " + book.Author + " ~~ Год выпуска - " + book.YearOfRelease);
-                    success = true;
+                    isSuccess = true;
                 }
             }
 
-            if (success == false)
+            if (isSuccess == false)
             {
                 Console.WriteLine("Книга не найдена!");
             }
@@ -199,18 +198,18 @@ namespace homeWork6_5
         {
             Console.WriteLine("Введите автора:");
             string inputAuthor = Console.ReadLine();
-            bool success = false;
+            bool isSuccess = false;
 
             foreach (var book in _books)
             {
                 if (inputAuthor.ToLower() == book.Author.ToLower())
                 {
                     Console.WriteLine("Книга - " + book.Name + " ~~ Автор - " + book.Author + " ~~ Год выпуска - " + book.YearOfRelease);
-                    success = true;
+                    isSuccess = true;
                 }
             }
 
-            if (success == false)
+            if (isSuccess == false)
             {
                 Console.WriteLine("Книга не найдена!");
             }
@@ -219,34 +218,34 @@ namespace homeWork6_5
         private void FindByYear()
         {
             Console.WriteLine("Введите год издания:");
-            int inputYear = GetInputNumber();
-            bool success = false;
+            int inputYear = GetNumber();
+            bool isSuccess = false;
 
             foreach (var book in _books)
             {
                 if (inputYear == book.YearOfRelease)
                 {
                     Console.WriteLine("Книга - " + book.Name + " ~~ Автор - " + book.Author + " ~~ Год выпуска - " + book.YearOfRelease);
-                    success = true;
+                    isSuccess = true;
                 }
             }
 
-            if (success == false)
+            if (isSuccess == false)
             {
                 Console.WriteLine("Книга не найдена!");
             }
         }
 
-        private int GetInputNumber()
+        private int GetNumber()
         {
             int resalt = 0;
             bool isWork = true;
 
             while (isWork)
             {
-                bool success = int.TryParse(Console.ReadLine(), out int number);
+                bool isSuccess = int.TryParse(Console.ReadLine(), out int number);
 
-                if (success == true && number > 0)
+                if (isSuccess == true && number > 0)
                 {
                     resalt = number;
                     isWork = false;
