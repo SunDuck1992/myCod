@@ -26,7 +26,7 @@ namespace homeWork6_4._1
             bool isWork = true;
             int maxCountCard = 6;
 
-            cardDeck.FillDeck();
+            cardDeck.Fill();
             cardDeck.Shuffle();
 
             while (isWork)
@@ -54,9 +54,9 @@ namespace homeWork6_4._1
     class CardDeck
     {
         private static int _deckSize = 36;
-        private List<Card> _cards = new List<Card>(_deckSize);                
+        private List<Card> _card = new List<Card>(_deckSize);                
         
-        public void FillDeck()
+        public void Fill()
         {
             string[] title = { "Пик", "Крестей", "Бубей", "Червей" };
             string[] mean = { "6", "7", "8", "9", "10", "Валет", "Дама", "Король", "Туз" };
@@ -65,7 +65,7 @@ namespace homeWork6_4._1
             {
                 for (int j = 0; j < mean.Length; j++)
                 {
-                    _cards.Add(new Card(title[i], mean[j]));
+                    _card.Add(new Card(title[i], mean[j]));
                 }
             }          
         }
@@ -75,20 +75,20 @@ namespace homeWork6_4._1
             Random random = new Random();
             Card tempCard;
 
-            for (int i = 0; i < _cards.Count; i++)
+            for (int i = 0; i < _card.Count; i++)
             {              
-                int firstCard = random.Next(_cards.Count);
-                int secondCard = random.Next(_cards.Count);
-                tempCard = _cards[firstCard];
-                _cards[firstCard] = _cards[secondCard];
-                _cards[secondCard] = tempCard;
+                int firstCard = random.Next(_card.Count);
+                int secondCard = random.Next(_card.Count);
+                tempCard = _card[firstCard];
+                _card[firstCard] = _card[secondCard];
+                _card[secondCard] = tempCard;
             }
         }
 
         public Card DeleteCard()
         {
-            Card card = _cards[0];
-            _cards.Remove(card);
+            Card card = _card[0];
+            _card.Remove(card);
             return card;
         }
     }
@@ -109,11 +109,11 @@ namespace homeWork6_4._1
     {
         private List<Card> _handCards = new List<Card>();
 
-        public void AddCard(Card _cards, int count)
+        public void AddCard(Card _card, int count)
         {
             if (_handCards.Count < count)
             {
-                _handCards.Add(_cards);               
+                _handCards.Add(_card);               
             }
             else
             {
