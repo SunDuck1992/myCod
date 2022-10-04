@@ -11,9 +11,10 @@ namespace homeWork6_4._1
         private const string TakeCard = "1";
         private const string ShowCards = "2";
         private const string ExitProgramm = "3";
+        private const string MaxCountCards = "6";
         static void Main(string[] args)
         {
-            Console.WriteLine("Мы приветствуем вас за нашим игральным столом!\nВы можете взять в руку до 6 карт, после чего начнется игра!");
+            Console.WriteLine("Мы приветствуем вас за нашим игральным столом!\nВы можете взять в руку до " + MaxCountCards + " карт, после чего начнется игра!");
             Console.WriteLine();
             Console.SetCursorPosition(35, 2);
             Console.WriteLine("Меню комманд:");
@@ -24,7 +25,6 @@ namespace homeWork6_4._1
             CardDeck cardDeck = new CardDeck();
             Player player = new Player();
             bool isWork = true;
-            int maxCountCard = 6;
 
             cardDeck.Fill();
             cardDeck.Shuffle();
@@ -36,7 +36,7 @@ namespace homeWork6_4._1
                 switch (userInput)
                 {
                     case TakeCard:
-                        player.AddCard(cardDeck.DeleteCard(), maxCountCard);
+                        player.AddCard(cardDeck.GiveCard());
                         break;
 
                     case ShowCards:
@@ -54,8 +54,8 @@ namespace homeWork6_4._1
     class CardDeck
     {
         private static int _deckSize = 36;
-        private List<Card> _card = new List<Card>(_deckSize);                
-        
+        private List<Card> _card = new List<Card>(_deckSize);
+
         public void Fill()
         {
             string[] title = { "Пик", "Крестей", "Бубей", "Червей" };
@@ -67,7 +67,7 @@ namespace homeWork6_4._1
                 {
                     _card.Add(new Card(title[i], mean[j]));
                 }
-            }          
+            }
         }
 
         public void Shuffle()
@@ -76,7 +76,7 @@ namespace homeWork6_4._1
             Card tempCard;
 
             for (int i = 0; i < _card.Count; i++)
-            {              
+            {
                 int firstCard = random.Next(_card.Count);
                 int secondCard = random.Next(_card.Count);
                 tempCard = _card[firstCard];
@@ -85,7 +85,7 @@ namespace homeWork6_4._1
             }
         }
 
-        public Card DeleteCard()
+        public Card GiveCard()
         {
             Card card = _card[0];
             _card.Remove(card);
@@ -108,12 +108,19 @@ namespace homeWork6_4._1
     class Player
     {
         private List<Card> _handCards = new List<Card>();
+        private int _maxCountCards = 6;
+        public int MaxCountCards { get; private set; }
 
-        public void AddCard(Card _card, int count)
+        public Player()
         {
-            if (_handCards.Count < count)
+            MaxCountCards = _maxCountCards;
+        }
+
+        public void AddCard(Card _card)
+        {
+            if (_handCards.Count < MaxCountCards)
             {
-                _handCards.Add(_card);               
+                _handCards.Add(_card);
             }
             else
             {
@@ -124,9 +131,9 @@ namespace homeWork6_4._1
         public void ShowCards()
         {
             foreach (Card card in _handCards)
-            {               
+            {
                 Console.WriteLine(card.Name + " - " + card.Value);
-            }          
+            }
         }
-    }   
+    }
 }
