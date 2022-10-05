@@ -60,7 +60,7 @@ namespace homeWork6_6
 
     class Buyer
     {
-        private Random random = new Random();
+        private Random _random = new Random();
         private List<Product> _inventory = new List<Product>();
         private int _moneyToPay;
         private int minMoney = 200;
@@ -69,7 +69,7 @@ namespace homeWork6_6
 
         public Buyer()
         {
-            Money = random.Next(minMoney, maxMoney);
+            Money = _random.Next(minMoney, maxMoney);
         }
 
         public void ShowInventory()
@@ -148,7 +148,7 @@ namespace homeWork6_6
     class Seller
     {
         private List<Stack> _products = new List<Stack>();
-        private Random random = new Random();
+        private Random _random = new Random();
 
         Stack GetStack(int ID)
         {
@@ -164,20 +164,20 @@ namespace homeWork6_6
 
         public void FillStore()
         {
-            _products.Add(new Stack(new Product("Молоко", 60), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Хлеб", 35), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Тушенка", 120), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Яйца", 50), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Йогурт", 40), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Сметана", 50), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Творог", 80), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Печенье", 100), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Шоколад", 80), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Чай", 100), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Колбаса", 200), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Сыр", 150), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Сельдь", 100), random.Next(1, 5)));
-            _products.Add(new Stack(new Product("Батончик", 60), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Молоко", 60), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Хлеб", 35), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Тушенка", 120), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Яйца", 50), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Йогурт", 40), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Сметана", 50), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Творог", 80), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Печенье", 100), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Шоколад", 80), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Чай", 100), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Колбаса", 200), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Сыр", 150), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Сельдь", 100), _random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Батончик", 60), _random.Next(1, 5)));
         }
 
         public void ShowInfo()
