@@ -60,11 +60,11 @@ namespace homeWork6_6
 
     class Buyer
     {
-        Random random = new Random();
+        private Random random = new Random();
         private List<Product> _inventory = new List<Product>();
         private int _moneyToPay;
-        int minMoney = 200;
-        int maxMoney = 1000;
+        private int minMoney = 200;
+        private int maxMoney = 1000;
         public int Money { get; private set; }
 
         public Buyer()
@@ -87,17 +87,17 @@ namespace homeWork6_6
             _inventory.Add(product);
         }
 
-        public bool CheckSolvency(Product product)
+        public bool IsSolvency(Stack stack)
         {
-            _moneyToPay = product.Price;
+            _moneyToPay = stack.Product.Price;
 
-            if (product.CountProduct <= 0)
+            if (stack.Count <= 0)
             {
                 Console.WriteLine("Продукт закончился в магазине. Приходите в другой раз!");
                 return false;
             }
 
-            if (Money >= _moneyToPay && product.CountProduct > 0)
+            if (Money >= _moneyToPay && stack.Count > 0)
             {
                 return true;
             }
@@ -109,43 +109,84 @@ namespace homeWork6_6
             }
         }
 
-        public int GiveMoney()
+        public void GiveMoney()
         {
             Money -= _moneyToPay;
-            return _moneyToPay;
+        }
+    }
+
+
+    class Stack
+    {
+        private static int _countID = 0;
+        public Product Product { get; private set; }
+        public int ID { get; private set; }
+        public int Count { get; private set; }
+
+        public Stack(Product product, int count)
+        {
+            Product = product;
+            Count = count;
+            _countID++;
+            ID = _countID;
+        }
+
+        public bool Remove(int count)
+        {
+            if (Count - count < 0)
+            {
+                return false;
+            }
+            else
+            {
+                Count--;
+                return true;
+            }
         }
     }
 
     class Seller
     {
-        private List<Product> _products = new List<Product>();
-        Random random = new Random();
+        private List<Stack> _products = new List<Stack>();
+        private Random random = new Random();
+
+        Stack GetStack(int ID)
+        {
+            foreach (var stack in _products)
+            {
+                if (stack.ID == ID)
+                {
+                    return stack;
+                }
+            }
+            return null;
+        }
 
         public void FillStore()
         {
-            _products.Add(new Product("Молоко", 60, random.Next(1, 5)));
-            _products.Add(new Product("Хлеб", 35, random.Next(1, 5)));
-            _products.Add(new Product("Тушенка", 120, random.Next(1, 5)));
-            _products.Add(new Product("Яйца", 50, random.Next(1, 5)));
-            _products.Add(new Product("Йогурт", 40, random.Next(1, 5)));
-            _products.Add(new Product("Сметана", 50, random.Next(1, 5)));
-            _products.Add(new Product("Творог", 80, random.Next(1, 5)));
-            _products.Add(new Product("Печенье", 100, random.Next(1, 5)));
-            _products.Add(new Product("Шоколад", 80, random.Next(1, 5)));
-            _products.Add(new Product("Чай", 100, random.Next(1, 5)));
-            _products.Add(new Product("Колбаса", 200, random.Next(1, 5)));
-            _products.Add(new Product("Сыр", 150, random.Next(1, 5)));
-            _products.Add(new Product("Сельдь", 100, random.Next(1, 5)));
-            _products.Add(new Product("Батончик", 60, random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Молоко", 60), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Хлеб", 35), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Тушенка", 120), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Яйца", 50), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Йогурт", 40), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Сметана", 50), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Творог", 80), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Печенье", 100), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Шоколад", 80), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Чай", 100), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Колбаса", 200), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Сыр", 150), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Сельдь", 100), random.Next(1, 5)));
+            _products.Add(new Stack(new Product("Батончик", 60), random.Next(1, 5)));
         }
 
         public void ShowInfo()
         {
             Console.WriteLine("Товары в наличии:");
 
-            foreach (var product in _products)
+            foreach (var stack in _products)
             {
-                Console.WriteLine(product.Number + " - " + product.Name + " - цена " + product.Price + " рублей, количество - " + product.CountProduct + " шт.");
+                Console.WriteLine(stack.ID + " - " + stack.Product.Name + " - цена " + stack.Product.Price + " рублей, количество - " + stack.Count + " шт.");
             }
         }
 
@@ -154,12 +195,18 @@ namespace homeWork6_6
             Console.WriteLine("Ваши деньги " + buyer.Money + " - рублей");
             Console.WriteLine("Что вы хотите купить?");
             int userInput = UserUtilities.ReadInt();
+            Stack stack = GetStack(userInput);
 
-            if (buyer.CheckSolvency(_products[userInput - 1]))
+            if (stack == null)
             {
-                buyer.AddItem(_products[userInput - 1]);
+                return;
+            }
+
+            if (buyer.IsSolvency(stack))
+            {
+                buyer.AddItem(stack.Product);
                 buyer.GiveMoney();
-                _products[userInput - 1].ChangeQuantity();
+                stack.Remove(1);
                 Console.WriteLine("Вы купили товар!");
             }
         }
@@ -167,24 +214,13 @@ namespace homeWork6_6
 
     class Product
     {
-        private static int _number = 0;
         public string Name { get; private set; }
         public int Price { get; private set; }
-        public int Number { get; private set; }
-        public int CountProduct { get; private set; }
 
-        public Product(string name, int price, int count)
+        public Product(string name, int price)
         {
-            _number++;
             Name = name;
             Price = price;
-            Number = _number;
-            CountProduct = count;
-        }
-
-        public void ChangeQuantity()
-        {
-            CountProduct--;
         }
     }
 
