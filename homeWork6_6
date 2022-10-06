@@ -131,7 +131,7 @@ namespace homeWork6_6
             ID = _countID;
         }
 
-        public bool Remove(int count)
+        public bool Reduce(int count)
         {
             if (Count - count < 0)
             {
@@ -149,18 +149,6 @@ namespace homeWork6_6
     {
         private List<Stack> _products = new List<Stack>();
         private Random _random = new Random();
-
-        private Stack GetStack(int ID)
-        {
-            foreach (var stack in _products)
-            {
-                if (stack.ID == ID)
-                {
-                    return stack;
-                }
-            }
-            return null;
-        }
 
         public void FillStore()
         {
@@ -206,9 +194,21 @@ namespace homeWork6_6
             {
                 buyer.AddItem(stack.Product);
                 buyer.GiveMoney();
-                stack.Remove(1);
+                stack.Reduce(1);
                 Console.WriteLine("Вы купили товар!");
             }
+        }
+
+        private Stack GetStack(int ID)
+        {
+            foreach (var stack in _products)
+            {
+                if (stack.ID == ID)
+                {
+                    return stack;
+                }
+            }
+            return null;
         }
     }
 
