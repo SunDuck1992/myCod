@@ -63,22 +63,22 @@ namespace homeWork6_6
         private Random _random = new Random();
         private List<Product> _inventory = new List<Product>();
         private int _moneyToPay;
-        private int minMoney = 200;
-        private int maxMoney = 1000;
+        private int _minMoney = 200;
+        private int _maxMoney = 1000;
         public int Money { get; private set; }
 
         public Buyer()
         {
-            Money = _random.Next(minMoney, maxMoney);
+            Money = _random.Next(_minMoney, _maxMoney);
         }
 
         public void ShowInventory()
         {
             Console.WriteLine("Ваши покупки:");
 
-            foreach (var item in _inventory)
+            foreach (var product in _inventory)
             {
-                Console.WriteLine(item.Name);
+                Console.WriteLine(product.Name);
             }
         }
 
@@ -150,7 +150,7 @@ namespace homeWork6_6
         private List<Stack> _products = new List<Stack>();
         private Random _random = new Random();
 
-        Stack GetStack(int ID)
+        private Stack GetStack(int ID)
         {
             foreach (var stack in _products)
             {
