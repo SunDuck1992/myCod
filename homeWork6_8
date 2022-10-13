@@ -8,7 +8,6 @@ namespace homeWork6_8
 {
     class Program
     {
-        public static readonly Random random = new Random();
         static void Main(string[] args)
         {
             Arena arena = new Arena();
@@ -37,10 +36,10 @@ namespace homeWork6_8
 
         public Arena()
         {
-            _fighters.Add(new Warrior("Воин", 300, 5, 25, 50));
-            _fighters.Add(new Barbarian("Варвар", 200, 0, 30, 30));
+            _fighters.Add(new Warrior("Воин", 300, 5, 25, 40));
+            _fighters.Add(new Barbarian("Варвар", 200, 0, 30, 35));
             _fighters.Add(new Paladin("Паладин", 250, 10, 20, 30));
-            _fighters.Add(new Mage("Маг", 220, 3, 30, 40));
+            _fighters.Add(new Mage("Маг", 220, 3, 35, 40));
             _fighters.Add(new Archer("Лучник", 250, 5, 30, 35));
         }
 
@@ -51,8 +50,8 @@ namespace homeWork6_8
                 Console.WriteLine();
                 _firstFighter.ShowAllStats();
                 _secondFighter.ShowAllStats();
-                _firstFighter.TakeDamage(_secondFighter.GenerateDamage(_secondFighter));
                 _secondFighter.TakeDamage(_firstFighter.GenerateDamage(_firstFighter));
+                _firstFighter.TakeDamage(_secondFighter.GenerateDamage(_secondFighter));
                 Console.ReadKey();
             }
         }
@@ -134,10 +133,10 @@ namespace homeWork6_8
 
     class Fighter
     {
-        public static readonly Random random = new Random();
+        private static readonly Random _random = new Random();
         protected const int MinPercent = 1;
         protected const int MaxPercent = 101;
-        protected int _damage;
+        protected int Tempdamage;
         public string Name { get; protected set; }
         public int Health { get; protected set; }
         public int Armor { get; protected set; }
@@ -170,8 +169,8 @@ namespace homeWork6_8
 
         public virtual int GenerateDamage(Fighter fighter)
         {
-            _damage = 0;
-            int tempNumber = random.Next(MinPercent, MaxPercent);
+            Tempdamage = 0;
+            int tempNumber = _random.Next(MinPercent, MaxPercent);
 
             if (tempNumber <= ChanceExtraDamage)
             {
@@ -179,10 +178,10 @@ namespace homeWork6_8
             }
             else
             {
-                _damage = Damage;
-                Console.WriteLine(fighter.Name + " наносит " + _damage + " урона");
+                Tempdamage = Damage;
+                Console.WriteLine(fighter.Name + " наносит " + Tempdamage + " урона");
             }
-            return _damage;
+            return Tempdamage;
         }
 
         protected virtual void SpecialAttack() { }
@@ -195,8 +194,8 @@ namespace homeWork6_8
 
         protected override void SpecialAttack()
         {
-            _damage = Damage + (Damage / IncreaseDamage);
-            Console.WriteLine("Воин делает серию ударов и наносит - " + _damage + " урона!");
+            Tempdamage = Damage + (Damage / IncreaseDamage);
+            Console.WriteLine("Воин делает серию ударов и наносит - " + Tempdamage + " урона!");
         }
     }
 
@@ -207,22 +206,22 @@ namespace homeWork6_8
 
         protected override void SpecialAttack()
         {
-            _damage = Damage * IncreaseDamage;
-            Console.WriteLine("Варвар испытывает жажду крови и наносит - " + _damage + " урона!");
+            Tempdamage = Damage * IncreaseDamage;
+            Console.WriteLine("Варвар испытывает жажду крови и наносит - " + Tempdamage + " урона!");
         }
     }
 
     class Paladin : Fighter
     {
         private const int ExtraHealth = 20;
-        private const int IncreaseDamage = 5;
+        private const int IncreaseDamage = 2;
         public Paladin(string name, int health, int armor, int damage, int chanceExtraDamage) : base(name, health, armor, damage, chanceExtraDamage) { }
 
         protected override void SpecialAttack()
         {
-            _damage = Damage + (Damage / IncreaseDamage);
+            Tempdamage = Damage + (Damage / IncreaseDamage);
             Health += ExtraHealth;
-            Console.WriteLine("Паладин совершает молитву и делает мощный удар на - " + _damage + " урона! A также восстанавливает - " + ExtraHealth + " здоровья!");
+            Console.WriteLine("Паладин совершает молитву и делает мощный удар на - " + Tempdamage + " урона! A также восстанавливает - " + ExtraHealth + " здоровья!");
         }
     }
 
@@ -233,8 +232,8 @@ namespace homeWork6_8
 
         protected override void SpecialAttack()
         {
-            _damage = Damage + (Damage / IncreaseDamage);
-            Console.WriteLine("Маг призывает ледяную бурю и наносит - " + _damage + " урона!");
+            Tempdamage = Damage + (Damage / IncreaseDamage);
+            Console.WriteLine("Маг призывает ледяную бурю и наносит - " + Tempdamage + " урона!");
         }
     }
 
@@ -245,8 +244,8 @@ namespace homeWork6_8
 
         protected override void SpecialAttack()
         {
-            _damage = Damage + (Damage / IncreaseDamage);
-            Console.WriteLine("Лучник выпускает заряженную энергией стрелу и наносит - " + _damage + " урона!");
+            Tempdamage = Damage + (Damage / IncreaseDamage);
+            Console.WriteLine("Лучник выпускает заряженную энергией стрелу и наносит - " + Tempdamage + " урона!");
         }
     }
 }
