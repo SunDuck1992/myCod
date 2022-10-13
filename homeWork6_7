@@ -9,7 +9,8 @@ namespace homeWork6_7
     class Program
     {
         private const string StartProgramm = "1";
-        private const string ExitProgramm = "2";
+        private const string ShowAllTrain = "2";
+        private const string ExitProgramm = "3";
         static void Main(string[] args)
         {
             Console.WriteLine("Это программа создает маршрут для движения поезда,\nпродает билеты, оптимально заполняет вагоны и отправляет состав в путь!");
@@ -20,13 +21,17 @@ namespace homeWork6_7
             while (isWork)
             {
                 Console.WriteLine("Меню программы:");
-                Console.WriteLine("Запустить программу - " + StartProgramm + "\nВыход - " + ExitProgramm);
+                Console.WriteLine("Подготовить поезд к отправке - " + StartProgramm + "\nПоказать все поезда - " + ShowAllTrain + "\nВыход - " + ExitProgramm);
                 string message = Console.ReadLine();
 
                 switch (message)
                 {
                     case StartProgramm:
                         station.Work();
+                        break;
+
+                    case ShowAllTrain:
+                        station.ShowDatabase();
                         break;
 
                     case ExitProgramm:
@@ -41,62 +46,103 @@ namespace homeWork6_7
         }
     }
 
-    class Direction
+    class Database
     {
         public string PointA { get; private set; }
         public string PointB { get; private set; }
 
-        public Direction(string pointA, string pointB)
+        public Database(string pointA, string pointB)
         {
             PointA = pointA;
             PointB = pointB;
         }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("Станция отправления - " + PointA + ", станция прибытия - " + PointB + " - отправлен");
+        }
     }
 
-    class Passengers
+    class Passenger
     {
         private Random _random = new Random();
-        public int People { get; private set; }
+        private int _people;
 
         public int GetPeople()
         {
             int minCount = 150;
             int maxCount = 350;
             int countPeople = _random.Next(minCount, maxCount);
-            People = countPeople;
-            return People;
+            _people = countPeople;
+            return _people;
         }
     }
 
     class Station
     {
-        private List<Direction> _directions = new List<Direction>();
-        private Random _random = new Random();
+        private List<Database> _database = new List<Database>();
         private Train _train = new Train();
-        private Passengers _passengers = new Passengers();
+        private Passenger _passenger = new Passenger();
 
         public void Work()
         {
-            if (TryCreationDirection())
+            if (_train.TryCreationDirection())
             {
                 SellTickets();
+                FillDatabase();
 
                 if (_train.Create())
                 {
                     Console.WriteLine("Поезд отправляется в путь! Счастливого пути!");
-                    RemoveDirection();
                     Console.ReadKey();
                     Console.Clear();
                 }
             }
         }
 
-        private void RemoveDirection()
+        public void ShowDatabase()
         {
-            _directions.Clear();
+            if (_database.Count > 0)
+            {
+                for (int i = 0; i < _database.Count; i++)
+                {
+                    Console.Write(i + 1 + " ");
+                    _database[i].ShowInfo();
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("База данных пока пуста! Отправьте поезд!");
+            }
+            Console.ReadKey();
+            Console.Clear();
         }
 
-        private bool TryCreationDirection()
+        private int SellTickets()
+        {
+            int countTickets = _passenger.GetPeople();
+            Console.WriteLine("Станция отправления - " + _train.Station1 + ", станция прибытия - " + _train.Station2 + " - в продаже");
+            Console.WriteLine();
+            Console.WriteLine("Было продано - " + countTickets + " билетов");
+            return countTickets;
+        }
+
+        private void FillDatabase()
+        {
+            Database database = new Database(_train.Station1, _train.Station2);
+            _database.Add(database);
+            Console.WriteLine();
+        }
+    }
+
+    class Train
+    {
+        private Wagon _wagon = new Wagon();
+        public string Station1 { get; private set; }
+        public string Station2 { get; private set; }
+
+        public bool TryCreationDirection()
         {
             string pointA;
             string pointB;
@@ -113,33 +159,30 @@ namespace homeWork6_7
             }
             else
             {
-                _directions.Add(new Direction(pointA, pointB));
+                Station1 = pointA;
+                Station2 = pointB;
                 Console.WriteLine("Направление создано успешно");
                 return true;
             }
         }
 
-        private void ShowDirection()
+        public bool Create()
         {
-            foreach (var points in _directions)
+            if (_wagon.TrySetCapacityWagons() == true)
             {
-                Console.WriteLine("Станция отправления - " + points.PointA + ", станция прибытия - " + points.PointB);
+                if (_wagon.TryCreateWagons() == true)
+                {
+                    Console.WriteLine("\nСостав сформирован! Вместимость вагонов - " + _wagon.CapacityWagons + ", количество вагонов - " + _wagon.CountWagons);
+                    return true;
+                }
             }
-        }
-
-        private int SellTickets()
-        {
-            Console.WriteLine("\nПродажа билетов на открытое направление:");
-            ShowDirection();
-            int countTickets = _passengers.GetPeople();
-            Console.WriteLine("Было продано - " + countTickets + " билетов");
-            return countTickets;
+            return false;
         }
     }
 
-    class Train
+    class Wagon
     {
-        private Passengers _passengers = new Passengers();
+        private Passenger _passenger = new Passenger();
         private int _minimumCountWagons = 5;
         private int _maximumCountWagons = 20;
         private int _minimumCapacity = 20;
@@ -147,46 +190,37 @@ namespace homeWork6_7
         public int CountWagons { get; private set; }
         public int CapacityWagons { get; private set; }
 
-        public bool Create()
+        public bool TrySetCapacityWagons()
         {
-            if (IsSetCapacityWagons() == true)
+            Console.WriteLine("\nКонфигуратор вместимости вагона:");
+            Console.WriteLine("Вы можете сами задать вместимость вагонов.");
+            Console.WriteLine("Минимальная вместимость вагона - " + _minimumCapacity + ", максимальная - " + _maximumCapacity);
+            bool isWork = true;
+
+            while (isWork)
             {
-                if (IsCreateWagons() == true)
+                Console.WriteLine("Введите желаемую вместимость:");
+                int userCapacity = UserUtilities.ReadPositiveInt();
+
+                if (userCapacity < _minimumCapacity || userCapacity > _maximumCapacity)
                 {
-                    Console.WriteLine("\nСостав сформирован! Вместимость вагонов - " + CapacityWagons + ", количество вагонов - " + CountWagons);
-                    return true;
+                    Console.WriteLine("Вы ввели не допустимое кол - во мест!");
                 }
-                return false;
+                else
+                {
+                    Console.WriteLine("Конфигурация вместимости создана!");
+                    CapacityWagons = userCapacity;
+                    return true; ;
+                }
             }
             return false;
         }
 
-        private bool IsSetCapacityWagons()
-        {
-            Console.WriteLine("\nКонфигуратор вместимости вагона:");
-            Console.WriteLine("Вы можете сами задать вместимость вагонов.");
-            Console.WriteLine("Минимальная вместимость вагона - " + _minimumCapacity + ", мксимальная - " + _maximumCapacity);
-            Console.WriteLine("Введите желаемую вместимость:");
-            int userCapacity = UserUtilities.ReadInt();
-
-            if (userCapacity < _minimumCapacity || userCapacity > _maximumCapacity)
-            {
-                Console.WriteLine("Вы ввели не допустимое кол - во мест!");
-                return false;
-            }
-            else
-            {
-                Console.WriteLine("Конфигурация вместимости создана!");
-                CapacityWagons = userCapacity;
-                return true;
-            }
-        }
-
-        private bool IsCreateWagons()
+        public bool TryCreateWagons()
         {
             Console.WriteLine("\nКонфигуратор количества вагонов:");
             Console.WriteLine("Минимальное кол - во вагонов - " + _minimumCountWagons + ", максимальное - " + _maximumCountWagons);
-            int countPeople = _passengers.GetPeople();
+            int countPeople = _passenger.GetPeople();
             int countWagons = countPeople / CapacityWagons;
 
             if (countPeople % CapacityWagons > 0)
@@ -196,7 +230,7 @@ namespace homeWork6_7
 
             if (countWagons < _minimumCountWagons || countWagons > _maximumCountWagons)
             {
-                Console.WriteLine("Не возможно создать такое кол - во  вагонов!");
+                Console.WriteLine("Не возможно создать такое кол - во  вагонов! Слишком мало пассажиров!");
                 return false;
             }
             else
@@ -210,7 +244,7 @@ namespace homeWork6_7
 
     static class UserUtilities
     {
-        public static int ReadInt()
+        public static int ReadPositiveInt()
         {
             int resalt = 0;
             bool isWork = true;
