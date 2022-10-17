@@ -133,10 +133,10 @@ namespace homeWork6_8
 
     class Fighter
     {
-        private static readonly Random _random = new Random();
         protected const int MinPercent = 1;
         protected const int MaxPercent = 101;
         protected int Tempdamage;
+        private static readonly Random _random = new Random();
         public string Name { get; protected set; }
         public int Health { get; protected set; }
         public int Armor { get; protected set; }
