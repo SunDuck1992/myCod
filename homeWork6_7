@@ -46,12 +46,12 @@ namespace homeWork6_7
         }
     }
 
-    class Database
+    class Direction
     {
         public string PointA { get; private set; }
         public string PointB { get; private set; }
 
-        public Database(string pointA, string pointB)
+        public Direction(string pointA, string pointB)
         {
             PointA = pointA;
             PointB = pointB;
@@ -80,9 +80,9 @@ namespace homeWork6_7
 
     class Station
     {
-        private List<Database> _database = new List<Database>();
+        private List<Direction> _direction = new List<Direction>();
         private Train _train = new Train();
-        private Passenger _passenger = new Passenger();
+        private Passenger _passenger = new Passenger();  
 
         public void Work()
         {
@@ -94,6 +94,7 @@ namespace homeWork6_7
                 if (_train.Create())
                 {
                     Console.WriteLine("Поезд отправляется в путь! Счастливого пути!");
+                    Console.WriteLine("Для продолжения работы нажмите любую клавишу");
                     Console.ReadKey();
                     Console.Clear();
                 }
@@ -102,19 +103,20 @@ namespace homeWork6_7
 
         public void ShowDatabase()
         {
-            if (_database.Count > 0)
+            if (_direction.Count > 0)
             {
-                for (int i = 0; i < _database.Count; i++)
+                for (int i = 0; i < _direction.Count; i++)
                 {
                     Console.Write(i + 1 + " ");
-                    _database[i].ShowInfo();
-                    Console.ReadKey();
+                    _direction[i].ShowInfo();
                 }
             }
             else
             {
                 Console.WriteLine("База данных пока пуста! Отправьте поезд!");
             }
+            Console.WriteLine();
+            Console.WriteLine("Для продолжения работы нажмите любую клавишу");
             Console.ReadKey();
             Console.Clear();
         }
@@ -122,7 +124,7 @@ namespace homeWork6_7
         private int SellTickets()
         {
             int countTickets = _passenger.GetPeople();
-            Console.WriteLine("Станция отправления - " + _train.Station1 + ", станция прибытия - " + _train.Station2 + " - в продаже");
+            Console.WriteLine("Станция отправления - " + _train.StationA + ", станция прибытия - " + _train.StationB + " - в продаже");
             Console.WriteLine();
             Console.WriteLine("Было продано - " + countTickets + " билетов");
             return countTickets;
@@ -130,8 +132,8 @@ namespace homeWork6_7
 
         private void FillDatabase()
         {
-            Database database = new Database(_train.Station1, _train.Station2);
-            _database.Add(database);
+            Direction direction = new Direction(_train.StationA, _train.StationB);
+            _direction.Add(direction);
             Console.WriteLine();
         }
     }
@@ -139,15 +141,14 @@ namespace homeWork6_7
     class Train
     {
         private Wagon _wagon = new Wagon();
-        public string Station1 { get; private set; }
-        public string Station2 { get; private set; }
+        public string StationA { get; private set; }
+        public string StationB { get; private set; }
 
         public bool TryCreationDirection()
         {
             string pointA;
             string pointB;
-            Console.WriteLine("Создание нового направления");
-            Console.WriteLine("\nВведите станцию отправления:");
+            Console.WriteLine("Создание нового направления! Введите станцию отправления:");
             pointA = Console.ReadLine();
             Console.WriteLine("Введите станцию конца маршрута:");
             pointB = Console.ReadLine();
@@ -159,8 +160,8 @@ namespace homeWork6_7
             }
             else
             {
-                Station1 = pointA;
-                Station2 = pointB;
+                StationA = pointA;
+                StationB = pointB;
                 Console.WriteLine("Направление создано успешно");
                 return true;
             }
@@ -261,7 +262,7 @@ namespace homeWork6_7
                 }
                 else
                 {
-                    Console.WriteLine("Не корректный ввод. Введите число!");
+                    Console.WriteLine("Не корректный ввод. Введите положительное число!");
                 }
             }
             return resalt;
