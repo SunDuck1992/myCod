@@ -60,6 +60,7 @@ namespace homeWork6_9
         private static Random _random = new Random();
         private Queue<Client> _clients = new Queue<Client>();
         private List<Product> _products = new List<Product>();
+        private int _moneyStore = 0;
 
         public void CreateQueueClients()
         {
@@ -78,7 +79,11 @@ namespace homeWork6_9
         {
             while (_clients.Count > 0)
             {
-                _clients.Dequeue().PurchaseProduct();
+                Client firstInQueue = _clients.Dequeue();
+                firstInQueue.PurchaseProducts();
+                _moneyStore += firstInQueue.CostAllProducts;
+                Console.WriteLine("Прибыль магазина - " + _moneyStore);
+                Console.ReadKey();
             }
             Console.WriteLine("Все клиенты обслужены!");
         }
@@ -139,9 +144,21 @@ namespace homeWork6_9
 
     class Client
     {
-        private List<Product> _inventory = new List<Product>();
         private static Random _random = new Random();
+        private List<Product> _inventory = new List<Product>();
         private int _money;
+        public int CostAllProducts
+        {
+            get
+            {
+                int cost = 0;
+                foreach (var product in _inventory)
+                {
+                    cost += product.Price;
+                }
+                return cost;
+            }
+        }
 
         public Client(int money, List<Product> inventory)
         {
@@ -159,23 +176,23 @@ namespace homeWork6_9
             }
         }
 
-        public void PurchaseProduct()
+        public void PurchaseProducts()
         {
-            int costAllProducts = GetBasketCost();
             ShowInventory();
-            Console.WriteLine("Сумма к оплате за покупки составляет - " + costAllProducts + ", у клиента - " + _money);
+            Console.WriteLine("Сумма к оплате за покупки составляет - " + CostAllProducts + ", у клиента - " + _money);
 
-            if (costAllProducts <= _money)
+            if (CostAllProducts <= _money)
             {
-                Console.WriteLine("Клиент оплатил покупку и покинул магазин!");
+                Console.WriteLine("Клиент оплатил покупку на сумму " + CostAllProducts + " и покинул магазин!");
+                _money -= CostAllProducts;
             }
             else
             {
-                Console.WriteLine("У клиента не достаточно денег, часть продуктов придется оставить в магазине!");
+                Console.WriteLine("У клиента не достаточно денег, часть продуктов придется оставить в магазине:");
                 RemoveUnnecessaryProducts();
+                Console.WriteLine("После чего оплатил продукты на сумму " + CostAllProducts + " и покинул магазин!");
+                _money -= CostAllProducts;
             }
-            Console.ReadKey();
-            Console.Clear();
         }
 
         private void RemoveUnnecessaryProducts()
@@ -184,7 +201,6 @@ namespace homeWork6_9
             {
                 RemoveProduct();
             }
-            Console.WriteLine("После чего оплатил продукты и покинул магазин!");
         }
 
         private void RemoveProduct()
@@ -195,7 +211,7 @@ namespace homeWork6_9
             _inventory.Remove(productToRemove);
         }
 
-        private int GetBasketCost()
+        public int GetBasketCost()
         {
             int moneyToPay = 0;
 
