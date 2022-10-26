@@ -31,7 +31,7 @@ namespace homeWork6_7
                         break;
 
                     case ShowAllTrain:
-                        station.ShowDatabase();
+                        station.ShowDirection();
                         break;
 
                     case ExitProgramm:
@@ -48,48 +48,50 @@ namespace homeWork6_7
 
     class Direction
     {
-        public string PointA { get; private set; }
-        public string PointB { get; private set; }
+        public string DeparturePoint { get; private set; }
+        public string DestinationPoint { get; private set; }
 
-        public Direction(string pointA, string pointB)
+        public Direction(string departurePoint, string destinationPoint)
         {
-            PointA = pointA;
-            PointB = pointB;
+            DeparturePoint = departurePoint;
+            DestinationPoint = destinationPoint;
         }
 
         public void ShowInfo()
         {
-            Console.WriteLine("Станция отправления - " + PointA + ", станция прибытия - " + PointB + " - отправлен");
+            Console.WriteLine("Станция отправления - " + DeparturePoint + ", станция прибытия - " + DestinationPoint + " - отправлен");
         }
     }
 
-    class Passenger
+    class StationManager
     {
         private Random _random = new Random();
-        private int _people;
+        private int _countPeople;
 
         public int GetPeople()
         {
             int minCount = 150;
             int maxCount = 350;
             int countPeople = _random.Next(minCount, maxCount);
-            _people = countPeople;
-            return _people;
+            _countPeople = countPeople;
+            return _countPeople;
         }
     }
 
     class Station
     {
-        private List<Direction> _direction = new List<Direction>();
+        private List<Direction> _directions = new List<Direction>();
         private Train _train = new Train();
-        private Passenger _passenger = new Passenger();  
+        private StationManager _passengers = new StationManager();
+        public string DeparturePoint { get; private set; }
+        public string DestinationPoint { get; private set; }
 
         public void Work()
         {
-            if (_train.TryCreationDirection())
+            if (TryCreationDirection())
             {
                 SellTickets();
-                FillDatabase();
+                FillDirection();
 
                 if (_train.Create())
                 {
@@ -101,14 +103,14 @@ namespace homeWork6_7
             }
         }
 
-        public void ShowDatabase()
+        public void ShowDirection()
         {
-            if (_direction.Count > 0)
+            if (_directions.Count > 0)
             {
-                for (int i = 0; i < _direction.Count; i++)
+                for (int i = 0; i < _directions.Count; i++)
                 {
                     Console.Write(i + 1 + " ");
-                    _direction[i].ShowInfo();
+                    _directions[i].ShowInfo();
                 }
             }
             else
@@ -120,29 +122,6 @@ namespace homeWork6_7
             Console.ReadKey();
             Console.Clear();
         }
-
-        private int SellTickets()
-        {
-            int countTickets = _passenger.GetPeople();
-            Console.WriteLine("Станция отправления - " + _train.StationA + ", станция прибытия - " + _train.StationB + " - в продаже");
-            Console.WriteLine();
-            Console.WriteLine("Было продано - " + countTickets + " билетов");
-            return countTickets;
-        }
-
-        private void FillDatabase()
-        {
-            Direction direction = new Direction(_train.StationA, _train.StationB);
-            _direction.Add(direction);
-            Console.WriteLine();
-        }
-    }
-
-    class Train
-    {
-        private Wagon _wagon = new Wagon();
-        public string StationA { get; private set; }
-        public string StationB { get; private set; }
 
         public bool TryCreationDirection()
         {
@@ -160,20 +139,41 @@ namespace homeWork6_7
             }
             else
             {
-                StationA = pointA;
-                StationB = pointB;
+                DeparturePoint = pointA;
+                DestinationPoint = pointB;
                 Console.WriteLine("Направление создано успешно");
                 return true;
             }
         }
 
+        private int SellTickets()
+        {
+            int countTickets = _passengers.GetPeople();
+            Console.WriteLine("Станция отправления - " + DeparturePoint + ", станция прибытия - " + DestinationPoint + " - в продаже");
+            Console.WriteLine();
+            Console.WriteLine("Было продано - " + countTickets + " билетов");
+            return countTickets;
+        }
+
+        private void FillDirection()
+        {
+            Direction direction = new Direction(DeparturePoint, DestinationPoint);
+            _directions.Add(direction);
+            Console.WriteLine();
+        }
+    }
+
+    class Train
+    {
+        private Wagon _wagons = new Wagon();
+
         public bool Create()
         {
-            if (_wagon.TrySetCapacityWagons() == true)
+            if (_wagons.TrySetCapacityWagons() == true)
             {
-                if (_wagon.TryCreateWagons() == true)
+                if (_wagons.TryCreateWagons() == true)
                 {
-                    Console.WriteLine("\nСостав сформирован! Вместимость вагонов - " + _wagon.CapacityWagons + ", количество вагонов - " + _wagon.CountWagons);
+                    Console.WriteLine("\nСостав сформирован! Вместимость вагонов - " + _wagons.CapacityWagons + ", количество вагонов - " + _wagons.CountWagons);
                     return true;
                 }
             }
@@ -183,7 +183,7 @@ namespace homeWork6_7
 
     class Wagon
     {
-        private Passenger _passenger = new Passenger();
+        private StationManager _passengers = new StationManager();
         private int _minimumCountWagons = 5;
         private int _maximumCountWagons = 20;
         private int _minimumCapacity = 20;
@@ -221,7 +221,7 @@ namespace homeWork6_7
         {
             Console.WriteLine("\nКонфигуратор количества вагонов:");
             Console.WriteLine("Минимальное кол - во вагонов - " + _minimumCountWagons + ", максимальное - " + _maximumCountWagons);
-            int countPeople = _passenger.GetPeople();
+            int countPeople = _passengers.GetPeople();
             int countWagons = countPeople / CapacityWagons;
 
             if (countPeople % CapacityWagons > 0)
@@ -253,9 +253,9 @@ namespace homeWork6_7
             while (isWork)
             {
                 string userInput = Console.ReadLine();
-                bool success = int.TryParse(userInput, out int inputNumber);
+                bool isSuccess = int.TryParse(userInput, out int inputNumber);
 
-                if (inputNumber >= 0 && success == true)
+                if (inputNumber >= 0 && isSuccess == true)
                 {
                     resalt = inputNumber;
                     isWork = false;
