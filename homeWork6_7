@@ -55,7 +55,7 @@ namespace homeWork6_7
         {
             int minCount = 150;
             int maxCount = 350;
-            CountPeople = _random.Next(minCount, maxCount);          
+            CountPeople = _random.Next(minCount, maxCount);
             return CountPeople;
         }
     }
@@ -80,6 +80,15 @@ namespace homeWork6_7
             Console.WriteLine("Для продолжения работы нажмите любую клавишу");
             Console.ReadKey();
             Console.Clear();
+        }
+
+        public void ShowAllTrains()
+        {
+            for (int i = 0; i < _trains.Count; i++)
+            {
+                _trains[i].Showinfo();
+            }
+            Console.WriteLine();
         }
 
         private void CreateDirection()
@@ -115,14 +124,6 @@ namespace homeWork6_7
             _trains.Add(new Train(DeparturePoint, DestinationPoint, _wagon.CountWagons, _wagon.CapacityWagons));
         }
 
-        public void ShowAllTrains()
-        {
-            for (int i = 0; i < _trains.Count; i++)
-            {
-                _trains[i].Showinfo();
-            }
-            Console.WriteLine();
-        }
     }
 
     class Train
