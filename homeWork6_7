@@ -8,7 +8,7 @@ namespace homeWork6_7
 {
     class Program
     {
-        private const string CommandCreateAndSendTrain = "1";
+        private const string CommandSendTrain = "1";
         private const string CommandShowAllTrain = "2";
         private const string CommandExit = "3";
         static void Main(string[] args)
@@ -21,12 +21,12 @@ namespace homeWork6_7
             while (isWork)
             {
                 Console.WriteLine("Меню программы:");
-                Console.WriteLine("Создать и отправить поезд - " + CommandCreateAndSendTrain + "\nПоказать все поезда - " + CommandShowAllTrain + "\nВыход - " + CommandExit);
+                Console.WriteLine("Создать и отправить поезд - " + CommandSendTrain + "\nПоказать все поезда - " + CommandShowAllTrain + "\nВыход - " + CommandExit);
                 string message = Console.ReadLine();
 
                 switch (message)
                 {
-                    case CommandCreateAndSendTrain:
+                    case CommandSendTrain:
                         station.SendTrain();
                         break;
 
@@ -49,14 +49,12 @@ namespace homeWork6_7
     class StationManager
     {
         private Random _random = new Random();
-        public int CountPeople { get; private set; }
 
         public int SellTickets()
         {
             int minCount = 150;
             int maxCount = 350;
-            CountPeople = _random.Next(minCount, maxCount);
-            return CountPeople;
+            return _random.Next(minCount, maxCount);
         }
     }
 
@@ -64,17 +62,14 @@ namespace homeWork6_7
     {
         private StationManager _stationManager = new StationManager();
         private List<Train> _trains = new List<Train>();
-        private Wagon _wagon = new Wagon();
-        public string DeparturePoint { get; private set; }
-        public string DestinationPoint { get; private set; }
+        private string _departurePoint;
+        private string _destinationPoint;
+        private int _countPassengers;
+        private int _capacityWagon;
+        private int _countWagons;
 
         public void SendTrain()
-        {
-            CreateDirection();
-            _stationManager.SellTickets();
-            Console.WriteLine("Было продано - " + _stationManager.CountPeople + " билетов.");
-            _wagon.SetCapacityWagons();
-            _wagon.CreateWagons(_stationManager);
+        {            
             CreateTrain();
             Console.WriteLine("Поезд отправляется в путь! Счастливого пути!");
             Console.WriteLine("Для продолжения работы нажмите любую клавишу");
@@ -84,11 +79,16 @@ namespace homeWork6_7
 
         public void ShowAllTrains()
         {
+            Console.Clear();
+
             for (int i = 0; i < _trains.Count; i++)
             {
                 _trains[i].Showinfo();
+                Console.WriteLine();
             }
-            Console.WriteLine();
+            Console.WriteLine("Для возвращения в меню нажмите любую клавишу.");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         private void CreateDirection()
@@ -103,7 +103,7 @@ namespace homeWork6_7
                 Console.WriteLine("Введите станцию конца маршрута:");
                 string pointB = Console.ReadLine();
 
-                if (pointA == null || pointB == null)
+                if (String.IsNullOrEmpty(pointA) || String.IsNullOrEmpty(pointB))
                 {
                     Console.WriteLine("Введены не корректные данные!");
                     Console.WriteLine("Введите станции заного. Для продолжения нажмите любую клавишу.");
@@ -111,8 +111,8 @@ namespace homeWork6_7
                 }
                 else
                 {
-                    DeparturePoint = pointA;
-                    DestinationPoint = pointB;
+                    _departurePoint = pointA;
+                    _destinationPoint = pointB;
                     Console.WriteLine("Направление создано успешно");
                     isWork = false;
                 }
@@ -121,7 +121,29 @@ namespace homeWork6_7
 
         private void CreateTrain()
         {
-            _trains.Add(new Train(DeparturePoint, DestinationPoint, _wagon.CountWagons, _wagon.CapacityWagons));
+            Wagon wagon = new Wagon();
+            CreateDirection();
+            _countPassengers = _stationManager.SellTickets();
+            Console.WriteLine("Было продано - " + _countPassengers + " билетов.");
+            _capacityWagon = wagon.SetCapacityWagons();
+            _countWagons = CreateWagons();
+            _trains.Add(new Train(_departurePoint, _destinationPoint, _countWagons, _capacityWagon, _countPassengers));
+        }
+
+        private int CreateWagons()
+        {
+            Console.WriteLine("\nКонфигуратор количества вагонов:");
+            Console.WriteLine("Программа сама посчитает неоходимое кол - во вагонов для перевозки всех пассажиров");
+            Console.WriteLine("Для продожения нажмите любую клавишу.");
+            Console.ReadKey();
+            int countWagons = _countPassengers / _capacityWagon;
+
+            if (_countPassengers % _capacityWagon > 0)
+            {
+                countWagons++;
+            }
+            Console.WriteLine("В " + countWagons + " вагонов поместятся все пассажиры.");
+            return countWagons;
         }
 
     }
@@ -132,18 +154,20 @@ namespace homeWork6_7
         public string DestinationPoint { get; private set; }
         public int CountWagons { get; private set; }
         public int CapacityWagon { get; private set; }
+        public int CountPassengers { get; private set; }
 
-        public Train(string departurePoint, string destinationPoint, int countWagons, int capacityWagon)
+        public Train(string departurePoint, string destinationPoint, int countWagons, int capacityWagon, int countPassengers)
         {
             DeparturePoint = departurePoint;
             DestinationPoint = destinationPoint;
             CountWagons = countWagons;
             CapacityWagon = capacityWagon;
+            CountPassengers = countPassengers;
         }
 
         public void Showinfo()
         {
-            Console.WriteLine("Станция отправления - " + DeparturePoint + ", станция прибытия - " + DestinationPoint + "|| кол - во вагонов - " + CountWagons + ", кол - во мест в вагоне " + CapacityWagon);
+            Console.WriteLine("Станция отправления - " + DeparturePoint + ", станция прибытия - " + DestinationPoint + " || кол - во вагонов - " + CountWagons + ",\nкол - во мест в вагоне " + CapacityWagon + ", кол - во пассажиров - " + CountPassengers);
         }
     }
 
@@ -151,10 +175,8 @@ namespace homeWork6_7
     {
         private int _minimumCapacity = 20;
         private int _maximumCapacity = 36;
-        public int CountWagons { get; private set; }
-        public int CapacityWagons { get; private set; }
 
-        public void SetCapacityWagons()
+        public int SetCapacityWagons()
         {
             Console.WriteLine("\nКонфигуратор вместимости вагона:");
             Console.WriteLine("Вы можете сами задать вместимость вагонов.");
@@ -175,27 +197,10 @@ namespace homeWork6_7
                 else
                 {
                     Console.WriteLine("Конфигурация вместимости создана!");
-                    CapacityWagons = userCapacity;
-                    isWork = false;
+                    return userCapacity;
                 }
             }
-        }
-
-        public void CreateWagons(StationManager stationManager)
-        {
-            Console.WriteLine("\nКонфигуратор количества вагонов:");
-            Console.WriteLine("Программа сама посчитает неоходимое кол - во вагонов для перевозки всех пассажиров");
-            Console.WriteLine("Для продожения нажмите любую клавишу.");
-            Console.ReadKey();
-            int countPeople = stationManager.CountPeople;
-            int countWagons = countPeople / CapacityWagons;
-
-            if (countPeople % CapacityWagons > 0)
-            {
-                countWagons++;
-            }
-            Console.WriteLine("В " + countWagons + " вагонов поместятся все пассажиры.");
-            CountWagons = countWagons;
+            return 0;
         }
     }
 
