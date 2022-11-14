@@ -95,8 +95,6 @@ namespace homeWork6_8
             }
         }
 
-
-
         private Fighter ChooseFighter()
         {
             bool isWork = true;
