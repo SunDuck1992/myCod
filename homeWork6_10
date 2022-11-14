@@ -178,7 +178,7 @@ namespace homeWork6_10._1
             return TempDamage;
         }
 
-        public virtual void UsePower() { }
+        protected virtual void UsePower() { }
     }
 
     class Knight : Warrior
@@ -190,12 +190,6 @@ namespace homeWork6_10._1
         private int _armor = 10;
 
         public Knight(string name, int damage, int health) : base(name, damage, health) { }
-
-        public override void UsePower()
-        {
-            TempDamage = Damage + _increaseDamage;
-            Console.WriteLine("Рыцарь заряжает свой меч энергией и наносит - " + TempDamage + " урона");
-        }
 
         public override void TakeDamage(int damage)
         {
@@ -211,6 +205,12 @@ namespace homeWork6_10._1
                 base.TakeDamage(damage);
             }
         }
+
+        protected override void UsePower()
+        {
+            TempDamage = Damage + _increaseDamage;
+            Console.WriteLine("Рыцарь заряжает свой меч энергией и наносит - " + TempDamage + " урона");
+        }
     }
 
     class Priest : Warrior
@@ -221,14 +221,6 @@ namespace homeWork6_10._1
         private int _mana = 5;
 
         public Priest(string name, int damage, int health) : base(name, damage, health) { }
-
-        public override void UsePower()
-        {
-            TempDamage = Damage + _increaseDamage;
-            Health += _increasehealth;
-            Console.WriteLine("Жрец призывает силу света и  наносит - " + TempDamage + " урона, а также восстанавливает себе " + _increasehealth + " здоровья");
-            _mana -= _costOfTheSpell;
-        }
 
         public override int Attack(Warrior warrior)
         {
@@ -246,6 +238,14 @@ namespace homeWork6_10._1
             }
             return TempDamage;
         }
+
+        protected override void UsePower()
+        {
+            TempDamage = Damage + _increaseDamage;
+            Health += _increasehealth;
+            Console.WriteLine("Жрец призывает силу света и  наносит - " + TempDamage + " урона, а также восстанавливает себе " + _increasehealth + " здоровья");
+            _mana -= _costOfTheSpell;
+        }
     }
 
     class Mage : Warrior
@@ -255,13 +255,6 @@ namespace homeWork6_10._1
         private int _maxPowerPoint = 3;
 
         public Mage(string name, int damage, int health) : base(name, damage, health) { }
-
-        public override void UsePower()
-        {
-            TempDamage = Damage * _increaseDamage;
-            Console.WriteLine("Маг накапливает 3 сферы силы и вызывает огненный смерч нанося - " + TempDamage + " урона");
-            _pointOfPower = 0;
-        }
 
         public override int Attack(Warrior warrior)
         {
@@ -278,6 +271,13 @@ namespace homeWork6_10._1
                 _pointOfPower++;
             }
             return TempDamage;
+        }
+
+        protected override void UsePower()
+        {
+            TempDamage = Damage * _increaseDamage;
+            Console.WriteLine("Маг накапливает 3 сферы силы и вызывает огненный смерч нанося - " + TempDamage + " урона");
+            _pointOfPower = 0;
         }
     }
 }
