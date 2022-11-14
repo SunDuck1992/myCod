@@ -142,6 +142,7 @@ namespace homeWork6_10._1
     {
         protected static readonly Random _random = new Random();
         protected int TempDamage;
+
         public string Name { get; protected set; }
         public int Damage { get; protected set; }
         public int Health { get; protected set; }
@@ -187,6 +188,7 @@ namespace homeWork6_10._1
         private int _maxPercent = 101;
         private int _chanceToBlock = 40;
         private int _armor = 10;
+
         public Knight(string name, int damage, int health) : base(name, damage, health) { }
 
         public override void UsePower()
@@ -217,6 +219,7 @@ namespace homeWork6_10._1
         private int _increasehealth = 15;
         private int _costOfTheSpell = 20;
         private int _mana = 5;
+
         public Priest(string name, int damage, int health) : base(name, damage, health) { }
 
         public override void UsePower()
@@ -250,6 +253,7 @@ namespace homeWork6_10._1
         private int _increaseDamage = 2;
         private int _pointOfPower = 0;
         private int _maxPowerPoint = 3;
+
         public Mage(string name, int damage, int health) : base(name, damage, health) { }
 
         public override void UsePower()
