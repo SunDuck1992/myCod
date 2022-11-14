@@ -1,0 +1,279 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork6_10._1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Field field = new Field();
+            Console.WriteLine("Моделирование битвы между взводами двух стран. Синий и красный взвод.");
+            Console.WriteLine();
+            field.Battle();
+            field.ShowBattleResulr();
+        }
+    }
+
+    class Field
+    {
+        private Platoon _countryRedPlatoon = new Platoon();
+        private Platoon _countryBluePlatoon = new Platoon();
+        private Warrior _firstWarrior;
+        private Warrior _secondWarrior;
+
+        public void Battle()
+        {
+            while (_countryRedPlatoon.GetCountWarriors() > 0 && _countryBluePlatoon.GetCountWarriors() > 0)
+            {
+                _firstWarrior = _countryRedPlatoon.GetWarriorFromPlatoon();
+                _secondWarrior = _countryBluePlatoon.GetWarriorFromPlatoon();
+                Console.WriteLine("Взвод красной страны:");
+                _countryRedPlatoon.ShowPlatoon();
+                Console.WriteLine();
+                Console.WriteLine("Взвод синей страны:");
+                _countryBluePlatoon.ShowPlatoon();
+                Console.WriteLine();
+                _firstWarrior.TakeDamage(_secondWarrior.Attack(_secondWarrior));
+                _secondWarrior.TakeDamage(_firstWarrior.Attack(_firstWarrior));
+                RemoveWarrior();
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+
+        public void ShowBattleResulr()
+        {
+            if (_countryRedPlatoon.GetCountWarriors() == 0 && _countryBluePlatoon.GetCountWarriors() == 0)
+            {
+                Console.WriteLine("Ничья! Все погибли!");
+            }
+            else if (_countryRedPlatoon.GetCountWarriors() > 0 && _countryBluePlatoon.GetCountWarriors() == 0)
+            {
+                Console.WriteLine("Красный взвод победил!");
+            }
+            else if (_countryRedPlatoon.GetCountWarriors() == 0 && _countryBluePlatoon.GetCountWarriors() > 0)
+            {
+                Console.WriteLine("Синий взвод победил!");
+            }
+        }
+
+        private void RemoveWarrior()
+        {
+            if (_firstWarrior.Health <= 0)
+            {
+                _countryRedPlatoon.RemoveWarriorsOfPlatoon(_firstWarrior);
+            }
+
+            if (_secondWarrior.Health <= 0)
+            {
+                _countryBluePlatoon.RemoveWarriorsOfPlatoon(_secondWarrior);
+            }
+        }
+    }
+
+    class Platoon
+    {
+        private static readonly Random _random = new Random();
+        private List<Warrior> _warriors = new List<Warrior>();
+        private int _countWarriors = 10;
+
+        public Platoon()
+        {
+            CreateNewPlatoon(_countWarriors, _warriors);
+        }
+
+        public void RemoveWarriorsOfPlatoon(Warrior warrior)
+        {
+            _warriors.Remove(warrior);
+        }
+
+        public int GetCountWarriors()
+        {
+            return _warriors.Count;
+        }
+
+        public Warrior GetWarriorFromPlatoon()
+        {
+            return _warriors[_random.Next(0, _warriors.Count)];
+        }
+
+        public void ShowPlatoon()
+        {
+            foreach (var warrior in _warriors)
+            {
+                Console.WriteLine(warrior.Name + " - HP " + warrior.Health + " - Урон " + warrior.Damage);
+            }
+        }
+
+        public void CreateNewPlatoon(int countNumber, List<Warrior> warriors)
+        {
+            for (int i = 0; i < countNumber; i++)
+            {
+                warriors.Add(IdentifyWarrior());
+            }
+        }
+
+        private Warrior IdentifyWarrior()
+        {
+            int minNumberClassWarrior = 0;
+            int maxNumberClassWarrior = 3;
+            int numberClassWarrior = _random.Next(minNumberClassWarrior, maxNumberClassWarrior);
+
+            if (numberClassWarrior == 0)
+            {
+                return new Knight("Рыцарь", 20, 150);
+            }
+            else if (numberClassWarrior == 1)
+            {
+                return new Priest("Жрец", 25, 110);
+            }
+            else
+            {
+                return new Mage("Маг", 30, 80);
+            }
+        }
+    }
+
+    class Warrior
+    {
+        protected static readonly Random _random = new Random();
+        protected int TempDamage;
+        public string Name { get; protected set; }
+        public int Damage { get; protected set; }
+        public int Health { get; protected set; }
+
+        public Warrior(string name, int damage, int health)
+        {
+            Name = name;
+            Damage = damage;
+            Health = health;
+        }
+
+        public virtual void TakeDamage(int damage)
+        {
+            Health -= damage;
+        }
+
+        public virtual int Attack(Warrior warrior)
+        {
+            TempDamage = 0;
+            int maxPercent = 101;
+            int chanceExtraDamage = 30;
+            int tempNumber = _random.Next(maxPercent);
+
+            if (tempNumber <= chanceExtraDamage)
+            {
+                UsePower();
+            }
+            else
+            {
+                TempDamage = Damage;
+                Console.WriteLine(warrior.Name + " наносит - " + TempDamage + " урона");
+            }
+            return TempDamage;
+        }
+
+        public virtual void UsePower() { }
+    }
+
+    class Knight : Warrior
+    {
+        private int _increaseDamage = 10;
+        private int _minPercent = 0;
+        private int _maxPercent = 101;
+        private int _chanceToBlock = 40;
+        private int _armor = 10;
+        public Knight(string name, int damage, int health) : base(name, damage, health) { }
+
+        public override void UsePower()
+        {
+            TempDamage = Damage + _increaseDamage;
+            Console.WriteLine("Рыцарь заряжает свой меч энергией и наносит - " + TempDamage + " урона");
+        }
+
+        public override void TakeDamage(int damage)
+        {
+            int tempNumber = _random.Next(_minPercent, _maxPercent);
+
+            if (_chanceToBlock <= tempNumber)
+            {
+                Health -= damage - _armor;
+                Console.WriteLine("Рыцарь закрывается щитом и уменьшает урона на - " + _armor);
+            }
+            else
+            {
+                base.TakeDamage(damage);
+            }
+        }
+    }
+
+    class Priest : Warrior
+    {
+        private int _increaseDamage = 5;
+        private int _increasehealth = 15;
+        private int _costOfTheSpell = 20;
+        private int _mana = 5;
+        public Priest(string name, int damage, int health) : base(name, damage, health) { }
+
+        public override void UsePower()
+        {
+            TempDamage = Damage + _increaseDamage;
+            Health += _increasehealth;
+            Console.WriteLine("Жрец призывает силу света и  наносит - " + TempDamage + " урона, а также восстанавливает себе " + _increasehealth + " здоровья");
+            _mana -= _costOfTheSpell;
+        }
+
+        public override int Attack(Warrior warrior)
+        {
+            TempDamage = 0;
+
+            if (_mana >= _costOfTheSpell)
+            {
+                UsePower();
+            }
+            else
+            {
+                TempDamage = Damage;
+                Console.WriteLine(warrior.Name + " наносит - " + TempDamage + " урона");
+                _mana += 5;
+            }
+            return TempDamage;
+        }
+    }
+
+    class Mage : Warrior
+    {
+        private int _increaseDamage = 2;
+        private int _pointOfPower = 0;
+        private int _maxPowerPoint = 3;
+        public Mage(string name, int damage, int health) : base(name, damage, health) { }
+
+        public override void UsePower()
+        {
+            TempDamage = Damage * _increaseDamage;
+            Console.WriteLine("Маг накапливает 3 сферы силы и вызывает огненный смерч нанося - " + TempDamage + " урона");
+            _pointOfPower = 0;
+        }
+
+        public override int Attack(Warrior warrior)
+        {
+            TempDamage = 0;
+
+            if (_pointOfPower == _maxPowerPoint)
+            {
+                UsePower();
+            }
+            else
+            {
+                TempDamage = Damage;
+                Console.WriteLine(warrior.Name + " наносит - " + TempDamage + " урона");
+                _pointOfPower++;
+            }
+            return TempDamage;
+        }
+    }
+}
