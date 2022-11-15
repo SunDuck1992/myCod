@@ -140,7 +140,7 @@ namespace homeWork6_10._1
 
     class Warrior
     {
-        protected static readonly Random _random = new Random();
+        protected static readonly Random Random = new Random();
         protected int TempDamage;
 
         public string Name { get; protected set; }
@@ -164,7 +164,7 @@ namespace homeWork6_10._1
             TempDamage = 0;
             int maxPercent = 101;
             int chanceExtraDamage = 30;
-            int tempNumber = _random.Next(maxPercent);
+            int tempNumber = Random.Next(maxPercent);
 
             if (tempNumber <= chanceExtraDamage)
             {
@@ -193,7 +193,7 @@ namespace homeWork6_10._1
 
         public override void TakeDamage(int damage)
         {
-            int tempNumber = _random.Next(_minPercent, _maxPercent);
+            int tempNumber = Random.Next(_minPercent, _maxPercent);
 
             if (_chanceToBlock <= tempNumber)
             {
