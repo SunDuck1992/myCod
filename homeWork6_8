@@ -134,7 +134,7 @@ namespace homeWork6_8
 
     class Fighter
     {
-        protected static readonly Random _random = new Random();
+        protected static readonly Random Random = new Random();
         protected int MinPercent = 1;
         protected int MaxPercent = 101;
         protected int Tempdamage;
@@ -167,7 +167,7 @@ namespace homeWork6_8
         public virtual int Attack(Fighter fighter)
         {
             Tempdamage = 0;
-            int tempNumber = _random.Next(MinPercent, MaxPercent);
+            int tempNumber = Random.Next(MinPercent, MaxPercent);
 
             if (tempNumber <= ChanceExtraPower)
             {
@@ -194,7 +194,7 @@ namespace homeWork6_8
 
         public override void TakeDamage(int damage)
         {
-            int tempNumber = _random.Next(MinPercent, MaxPercent);
+            int tempNumber = Random.Next(MinPercent, MaxPercent);
 
             if (tempNumber <= _chanceToBlock)
             {
@@ -225,7 +225,7 @@ namespace homeWork6_8
         public override int Attack(Fighter fighter)
         {
             Tempdamage = 0;
-            int tempNumber = _random.Next(MinPercent, MaxPercent);
+            int tempNumber = Random.Next(MinPercent, MaxPercent);
 
             if (tempNumber <= ChanceExtraPower)
             {
@@ -304,7 +304,7 @@ namespace homeWork6_8
 
         public override void TakeDamage(int damage)
         {
-            int tempNumber = _random.Next(MinPercent, MaxPercent);
+            int tempNumber = Random.Next(MinPercent, MaxPercent);
 
             if (tempNumber <= _chanceToDodge)
             {
