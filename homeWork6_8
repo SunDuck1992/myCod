@@ -137,7 +137,7 @@ namespace homeWork6_8
         protected static readonly Random Random = new Random();
         protected int MinPercent = 1;
         protected int MaxPercent = 101;
-        protected int Tempdamage;
+        protected int TempDamage;
 
         public string Name { get; protected set; }
         public int Health { get; protected set; }
@@ -166,7 +166,7 @@ namespace homeWork6_8
 
         public virtual int Attack(Fighter fighter)
         {
-            Tempdamage = 0;
+            TempDamage = 0;
             int tempNumber = Random.Next(MinPercent, MaxPercent);
 
             if (tempNumber <= ChanceExtraPower)
@@ -175,10 +175,10 @@ namespace homeWork6_8
             }
             else
             {
-                Tempdamage = Damage;
-                Console.WriteLine(fighter.Name + " наносит " + Tempdamage + " урона");
+                TempDamage = Damage;
+                Console.WriteLine(fighter.Name + " наносит " + TempDamage + " урона");
             }
-            return Tempdamage;
+            return TempDamage;
         }
 
         protected virtual void UsePower() { }
@@ -210,8 +210,8 @@ namespace homeWork6_8
 
         protected override void UsePower()
         {
-            Tempdamage = Damage + (Damage / _damageIncrease);
-            Console.WriteLine("Воин делает серию ударов и наносит - " + Tempdamage + " урона!");
+            TempDamage = Damage + (Damage / _damageIncrease);
+            Console.WriteLine("Воин делает серию ударов и наносит - " + TempDamage + " урона!");
         }
     }
 
@@ -224,7 +224,7 @@ namespace homeWork6_8
 
         public override int Attack(Fighter fighter)
         {
-            Tempdamage = 0;
+            TempDamage = 0;
             int tempNumber = Random.Next(MinPercent, MaxPercent);
 
             if (tempNumber <= ChanceExtraPower)
@@ -234,16 +234,16 @@ namespace homeWork6_8
             else
             {
                 Damage += _increaseDamage;
-                Tempdamage = Damage;
-                Console.WriteLine(fighter.Name + " приходит в ярость и наносит " + Tempdamage + " урона");
+                TempDamage = Damage;
+                Console.WriteLine(fighter.Name + " приходит в ярость и наносит " + TempDamage + " урона");
             }
-            return Tempdamage;
+            return TempDamage;
         }
 
         protected override void UsePower()
         {
-            Tempdamage = Damage * _doubleDamage;
-            Console.WriteLine("Варвар испытывает жажду крови и наносит двойной урон - " + Tempdamage);
+            TempDamage = Damage * _doubleDamage;
+            Console.WriteLine("Варвар испытывает жажду крови и наносит двойной урон - " + TempDamage);
         }
     }
 
@@ -256,9 +256,9 @@ namespace homeWork6_8
 
         protected override void UsePower()
         {
-            Tempdamage = Damage + (Damage / _increaseDamage);
+            TempDamage = Damage + (Damage / _increaseDamage);
             Health += _extraHealth;
-            Console.WriteLine("Паладин совершает молитву и делает мощный удар на - " + Tempdamage + " урона! A также восстанавливает - " + _extraHealth + " здоровья!");
+            Console.WriteLine("Паладин совершает молитву и делает мощный удар на - " + TempDamage + " урона! A также восстанавливает - " + _extraHealth + " здоровья!");
         }
     }
 
@@ -272,7 +272,7 @@ namespace homeWork6_8
 
         public override int Attack(Fighter fighter)
         {
-            Tempdamage = 0;
+            TempDamage = 0;
 
             if (_powerPoints == _maxCountPowerPoints)
             {
@@ -281,17 +281,17 @@ namespace homeWork6_8
             }
             else
             {
-                Tempdamage = Damage;
+                TempDamage = Damage;
                 _powerPoints++;
-                Console.WriteLine(fighter.Name + " наносит " + Tempdamage + " урона");
+                Console.WriteLine(fighter.Name + " наносит " + TempDamage + " урона");
             }
-            return Tempdamage;
+            return TempDamage;
         }
 
         protected override void UsePower()
         {
-            Tempdamage = Damage + _increaseDamage;
-            Console.WriteLine("Маг призывает ледяную бурю и наносит - " + Tempdamage + " урона!");
+            TempDamage = Damage + _increaseDamage;
+            Console.WriteLine("Маг призывает ледяную бурю и наносит - " + TempDamage + " урона!");
         }
     }
 
@@ -320,8 +320,8 @@ namespace homeWork6_8
 
         protected override void UsePower()
         {
-            Tempdamage = Damage + _increaseDamage;
-            Console.WriteLine("Лучник выпускает отравленную ядом стрелу и наносит - " + Tempdamage + " урона!");
+            TempDamage = Damage + _increaseDamage;
+            Console.WriteLine("Лучник выпускает отравленную ядом стрелу и наносит - " + TempDamage + " урона!");
         }
     }
 
