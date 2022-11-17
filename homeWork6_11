@@ -111,6 +111,7 @@ namespace homeWork6_11
                 {
                     fish = _fish[i];
                     _fish.Remove(fish);
+                    i--;
                 }
             }
         }
