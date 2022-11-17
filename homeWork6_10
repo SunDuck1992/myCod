@@ -29,13 +29,13 @@ namespace homeWork6_10._1
         {
             while (_countryRedPlatoon.GetCountWarriors() > 0 && _countryBluePlatoon.GetCountWarriors() > 0)
             {
-                _firstWarrior = _countryRedPlatoon.GetWarriorFromPlatoon();
-                _secondWarrior = _countryBluePlatoon.GetWarriorFromPlatoon();
+                _firstWarrior = _countryRedPlatoon.GetWarrior();
+                _secondWarrior = _countryBluePlatoon.GetWarrior();
                 Console.WriteLine("Взвод красной страны:");
-                _countryRedPlatoon.ShowPlatoon();
+                _countryRedPlatoon.ShowInfo();
                 Console.WriteLine();
                 Console.WriteLine("Взвод синей страны:");
-                _countryBluePlatoon.ShowPlatoon();
+                _countryBluePlatoon.ShowInfo();
                 Console.WriteLine();
                 _firstWarrior.TakeDamage(_secondWarrior.Attack(_secondWarrior));
                 _secondWarrior.TakeDamage(_firstWarrior.Attack(_firstWarrior));
@@ -65,12 +65,12 @@ namespace homeWork6_10._1
         {
             if (_firstWarrior.Health <= 0)
             {
-                _countryRedPlatoon.RemoveWarriorsOfPlatoon(_firstWarrior);
+                _countryRedPlatoon.RemoveWarrior(_firstWarrior);
             }
 
             if (_secondWarrior.Health <= 0)
             {
-                _countryBluePlatoon.RemoveWarriorsOfPlatoon(_secondWarrior);
+                _countryBluePlatoon.RemoveWarrior(_secondWarrior);
             }
         }
     }
@@ -83,10 +83,10 @@ namespace homeWork6_10._1
 
         public Platoon()
         {
-            CreateNewPlatoon(_countWarriors, _warriors);
+            Fill(_countWarriors, _warriors);
         }
 
-        public void RemoveWarriorsOfPlatoon(Warrior warrior)
+        public void RemoveWarrior(Warrior warrior)
         {
             _warriors.Remove(warrior);
         }
@@ -96,12 +96,12 @@ namespace homeWork6_10._1
             return _warriors.Count;
         }
 
-        public Warrior GetWarriorFromPlatoon()
+        public Warrior GetWarrior()
         {
             return _warriors[_random.Next(0, _warriors.Count)];
         }
 
-        public void ShowPlatoon()
+        public void ShowInfo()
         {
             foreach (var warrior in _warriors)
             {
@@ -109,7 +109,7 @@ namespace homeWork6_10._1
             }
         }
 
-        public void CreateNewPlatoon(int countNumber, List<Warrior> warriors)
+        public void Fill(int countNumber, List<Warrior> warriors)
         {
             for (int i = 0; i < countNumber; i++)
             {
@@ -162,9 +162,10 @@ namespace homeWork6_10._1
         public virtual int Attack(Warrior warrior)
         {
             TempDamage = 0;
+            int minPercent = 0;
             int maxPercent = 101;
             int chanceExtraDamage = 30;
-            int tempNumber = Random.Next(maxPercent);
+            int tempNumber = Random.Next(minPercent, maxPercent);
 
             if (tempNumber <= chanceExtraDamage)
             {
@@ -218,6 +219,7 @@ namespace homeWork6_10._1
         private int _increaseDamage = 5;
         private int _increasehealth = 15;
         private int _costOfTheSpell = 20;
+        private int _increaseMana = 5;
         private int _mana = 5;
 
         public Priest(string name, int damage, int health) : base(name, damage, health) { }
@@ -234,7 +236,7 @@ namespace homeWork6_10._1
             {
                 TempDamage = Damage;
                 Console.WriteLine(warrior.Name + " наносит - " + TempDamage + " урона");
-                _mana += 5;
+                _mana += _increaseMana;
             }
             return TempDamage;
         }
