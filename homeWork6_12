@@ -1,0 +1,199 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork6_12
+{
+    class Program
+    {
+        private const string CommandShowLions = "1";
+        private const string CommandShowGiraffes = "2";
+        private const string CommandShowBears = "3";
+        private const string CommandShowRabbits = "4";
+        private const string CommandShowHippopotamuses = "5";
+        private const string CommandExit = "6";
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Мы рады приветствовать вас в нашем зоопарке. У нас есть различные вольеры с животными.\nИ вы можете подойти к ним поближе, чтобы познакомиться с их обитателями.");
+            Console.WriteLine();
+            Zoo zoo = new Zoo();
+            bool isWork = true;
+
+            zoo.Fill();
+
+            while (isWork)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Указатель зоопарка:");
+                Console.WriteLine("Вольер со львами - " + CommandShowLions + "\nВольер с жирафами - " + CommandShowGiraffes + "\nВольер с медведями - " + CommandShowBears + "\nВольер с кроликами - " + CommandShowRabbits + "\nВольер с бегемотами - " + CommandShowHippopotamuses + "\nПокинуть зоопарк - " + CommandExit);
+                Console.WriteLine("Введите цифру, к какому вольеру вы бы хотели подойти:");
+                string message = Console.ReadLine();
+
+                switch (message)
+                {
+                    case CommandShowLions:
+                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
+                        break;
+
+                    case CommandShowGiraffes:
+                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
+                        break;
+
+                    case CommandShowBears:
+                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
+                        break;
+
+                    case CommandShowRabbits:
+                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
+                        break;
+
+                    case CommandShowHippopotamuses:
+                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
+                        break;
+
+                    case CommandExit:
+                        isWork = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Введена не существующая команда. Повторите ввод.");
+                        break;
+                }
+            }
+        }
+    }
+
+    class Zoo
+    {
+        private List<Animal> _animals = new List<Animal>();      
+
+        public void ShowAnimals(int message)
+        {
+            _animals[message].ShowInfo();
+            _animals[message].AnimalVoice();
+            Console.WriteLine();
+            Console.WriteLine("Для продолжения нажмите любую клавишу.");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        public void Fill()
+        {
+            _animals.Add(new Lion("Львы"));
+            _animals.Add(new Giraffe("Жирафы"));
+            _animals.Add(new Bear("Медведи"));
+            _animals.Add(new Rabbit("Кролики"));
+            _animals.Add(new Hippopotamus("Бегемоты"));
+        }
+    }
+
+    class Animal
+    {
+        protected static readonly Random Random = new Random();
+        private int _minCountAnimals = 3;
+        private int _maxCountAnimals = 7;
+
+        public string Name { get; private set; }
+        public int CountMale { get; private set; }
+        public int CountFemale { get; private set; }
+        public int NumberIndividuals { get; private set; }
+
+        public Animal(string name)
+        {
+            Name = name;
+            CountMale = Random.Next(_minCountAnimals, _maxCountAnimals);
+            CountFemale = Random.Next(_minCountAnimals, _maxCountAnimals);
+            NumberIndividuals = CountMale + CountFemale;
+        }
+
+        public virtual void ShowInfo()
+        {
+            Console.WriteLine("В этом вольере содержатся " + Name + ", количество особей - " + NumberIndividuals + ", количество самцов - " + CountMale + ", количество самок - " + CountFemale);
+        }
+
+        public virtual void AnimalVoice() { }       
+    }
+
+    class Lion : Animal
+    {
+        public Lion(string name) : base(name) { }
+
+        public override void ShowInfo()
+        {
+            base.ShowInfo();
+            Console.WriteLine("Самые большие кошки на планете. Опасные и грозные хищники.");
+        }
+
+        public override void AnimalVoice()
+        {
+            Console.WriteLine("Грозно рычит... Аааааррррррр!");
+        }
+
+    }
+
+    class Giraffe : Animal
+    {
+        public Giraffe(string name) : base(name) { }
+
+        public override void ShowInfo()
+        {
+            base.ShowInfo();
+            Console.WriteLine("Очень необычные животные с самой длинной шеей. Они пьют воду не сгибая ноги, в силу своей физиологии.\nИмеют 7 шейных позвонков.");
+        }
+
+        public override void AnimalVoice()
+        {
+            Console.WriteLine("Длинный протяжный Аааааааа... Что - то очень странное!");
+        }
+    }
+
+    class Bear : Animal
+    {
+        public Bear(string name) : base(name) { }
+
+        public override void ShowInfo()
+        {
+            base.ShowInfo();
+            Console.WriteLine("Имеют острый нюх. Быстро бегают на коротких дистанциях и могут залезть на дерево.\nВзрослые особи могут достигать до 500 кг веса. На зиму впадают в спячку.");
+        }
+
+        public override void AnimalVoice()
+        {
+            Console.WriteLine("Мммррррррраааа... Наверное последний звук, который вы услышите, если встретите его обладателя в диком лесу.");
+        }
+    }
+
+    class Rabbit : Animal
+    {
+        public Rabbit(string name) : base(name) { }
+
+        public override void ShowInfo()
+        {
+            base.ShowInfo();
+            Console.WriteLine("Очень милые создания. Питаются растительной пищей. Разводят на еду, а также в качестве домашних животных.  ");
+        }
+
+        public override void AnimalVoice()
+        {
+            Console.WriteLine("Очень мило урчат... Такие заечкиии!");
+        }
+    }
+
+    class Hippopotamus : Animal
+    {
+        public Hippopotamus(string name) : base(name) { }
+
+        public override void ShowInfo()
+        {
+            base.ShowInfo();
+            Console.WriteLine("Большие травоядные звери. С виду не особо опасные. Но защищая свое потомство, будут биться насмерть.\nМного времени любят проводить в воде.");
+        }
+
+        public override void AnimalVoice()
+        {
+            Console.WriteLine("Грозно похрюкивает... Иногда дико ревет, особенно когда летит в замес!");
+        }
+    }
+}
