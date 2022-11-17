@@ -72,7 +72,7 @@ namespace homeWork6_12
         public void ShowAnimals(int message)
         {
             _animals[message].ShowInfo();
-            _animals[message].AnimalVoice();
+            _animals[message].Voice();
             Console.WriteLine();
             Console.WriteLine("Для продолжения нажмите любую клавишу.");
             Console.ReadKey();
@@ -113,7 +113,7 @@ namespace homeWork6_12
             Console.WriteLine("В этом вольере содержатся " + Name + ", количество особей - " + NumberIndividuals + ", количество самцов - " + CountMale + ", количество самок - " + CountFemale);
         }
 
-        public virtual void AnimalVoice() { }       
+        public virtual void Voice() { }       
     }
 
     class Lion : Animal
@@ -126,7 +126,7 @@ namespace homeWork6_12
             Console.WriteLine("Самые большие кошки на планете. Опасные и грозные хищники.");
         }
 
-        public override void AnimalVoice()
+        public override void Voice()
         {
             Console.WriteLine("Грозно рычит... Аааааррррррр!");
         }
@@ -143,7 +143,7 @@ namespace homeWork6_12
             Console.WriteLine("Очень необычные животные с самой длинной шеей. Они пьют воду не сгибая ноги, в силу своей физиологии.\nИмеют 7 шейных позвонков.");
         }
 
-        public override void AnimalVoice()
+        public override void Voice()
         {
             Console.WriteLine("Длинный протяжный Аааааааа... Что - то очень странное!");
         }
@@ -159,7 +159,7 @@ namespace homeWork6_12
             Console.WriteLine("Имеют острый нюх. Быстро бегают на коротких дистанциях и могут залезть на дерево.\nВзрослые особи могут достигать до 500 кг веса. На зиму впадают в спячку.");
         }
 
-        public override void AnimalVoice()
+        public override void Voice()
         {
             Console.WriteLine("Мммррррррраааа... Наверное последний звук, который вы услышите, если встретите его обладателя в диком лесу.");
         }
@@ -175,7 +175,7 @@ namespace homeWork6_12
             Console.WriteLine("Очень милые создания. Питаются растительной пищей. Разводят на еду, а также в качестве домашних животных.  ");
         }
 
-        public override void AnimalVoice()
+        public override void Voice()
         {
             Console.WriteLine("Очень мило урчат... Такие заечкиии!");
         }
@@ -191,7 +191,7 @@ namespace homeWork6_12
             Console.WriteLine("Большие травоядные звери. С виду не особо опасные. Но защищая свое потомство, будут биться насмерть.\nМного времени любят проводить в воде.");
         }
 
-        public override void AnimalVoice()
+        public override void Voice()
         {
             Console.WriteLine("Грозно похрюкивает... Иногда дико ревет, особенно когда летит в замес!");
         }
