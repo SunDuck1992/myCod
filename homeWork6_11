@@ -138,7 +138,6 @@ namespace homeWork6_11
             allFishes.Add(new Fish("Брабус", 15));
             allFishes.Add(new Fish("Гуппи", 5));
             allFishes.Add(new Fish("Сом", 25));
-
             return allFishes[_random.Next(0, allFishes.Count)];
         }
     }
