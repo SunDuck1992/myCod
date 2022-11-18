@@ -37,8 +37,8 @@ namespace homeWork6_10._1
                 Console.WriteLine("Взвод синей страны:");
                 _countryBluePlatoon.ShowInfo();
                 Console.WriteLine();
-                _firstWarrior.TakeDamage(_secondWarrior.Attack(_secondWarrior));
-                _secondWarrior.TakeDamage(_firstWarrior.Attack(_firstWarrior));
+                _firstWarrior.TakeDamage(_secondWarrior.Attack());
+                _secondWarrior.TakeDamage(_firstWarrior.Attack());
                 RemoveWarrior();
                 Console.ReadKey();
                 Console.Clear();
@@ -159,7 +159,7 @@ namespace homeWork6_10._1
             Health -= damage;
         }
 
-        public virtual int Attack(Warrior warrior)
+        public virtual int Attack()
         {
             TempDamage = 0;
             int minPercent = 0;
@@ -174,7 +174,7 @@ namespace homeWork6_10._1
             else
             {
                 TempDamage = Damage;
-                Console.WriteLine(warrior.Name + " наносит - " + TempDamage + " урона");
+                Console.WriteLine(Name + " наносит - " + TempDamage + " урона");
             }
             return TempDamage;
         }
@@ -199,7 +199,7 @@ namespace homeWork6_10._1
             if (_chanceToBlock <= tempNumber)
             {
                 Health -= damage - _armor;
-                Console.WriteLine("Рыцарь закрывается щитом и уменьшает урона на - " + _armor);
+                Console.WriteLine(Name + " закрывается щитом и уменьшает урона на - " + _armor);
             }
             else
             {
@@ -224,7 +224,7 @@ namespace homeWork6_10._1
 
         public Priest(string name, int damage, int health) : base(name, damage, health) { }
 
-        public override int Attack(Warrior warrior)
+        public override int Attack()
         {
             TempDamage = 0;
 
@@ -235,7 +235,7 @@ namespace homeWork6_10._1
             else
             {
                 TempDamage = Damage;
-                Console.WriteLine(warrior.Name + " наносит - " + TempDamage + " урона");
+                Console.WriteLine(Name + " наносит - " + TempDamage + " урона");
                 _mana += _increaseMana;
             }
             return TempDamage;
@@ -245,7 +245,7 @@ namespace homeWork6_10._1
         {
             TempDamage = Damage + _increaseDamage;
             Health += _increasehealth;
-            Console.WriteLine("Жрец призывает силу света и  наносит - " + TempDamage + " урона, а также восстанавливает себе " + _increasehealth + " здоровья");
+            Console.WriteLine(Name + " призывает силу света и  наносит - " + TempDamage + " урона, а также восстанавливает себе " + _increasehealth + " здоровья");
             _mana -= _costOfTheSpell;
         }
     }
@@ -258,7 +258,7 @@ namespace homeWork6_10._1
 
         public Mage(string name, int damage, int health) : base(name, damage, health) { }
 
-        public override int Attack(Warrior warrior)
+        public override int Attack()
         {
             TempDamage = 0;
 
@@ -269,7 +269,7 @@ namespace homeWork6_10._1
             else
             {
                 TempDamage = Damage;
-                Console.WriteLine(warrior.Name + " наносит - " + TempDamage + " урона");
+                Console.WriteLine(Name + " наносит - " + TempDamage + " урона");
                 _pointOfPower++;
             }
             return TempDamage;
@@ -278,7 +278,7 @@ namespace homeWork6_10._1
         protected override void UsePower()
         {
             TempDamage = Damage * _increaseDamage;
-            Console.WriteLine("Маг накапливает 3 сферы силы и вызывает огненный смерч нанося - " + TempDamage + " урона");
+            Console.WriteLine(Name + " накапливает 3 сферы силы и вызывает огненный смерч нанося - " + TempDamage + " урона");
             _pointOfPower = 0;
         }
     }
