@@ -11,20 +11,12 @@ namespace homeWork6_8
         static void Main(string[] args)
         {
             Arena arena = new Arena();
-            bool isWork = true;
-
-            while (isWork)
-            {
-                if (arena.TryCreateBattle())
-                {
-                    Console.WriteLine("Для начала боя нажмите любую кнопку!");
-                    Console.ReadKey();
-                    Console.Clear();
-                    arena.Battle();
-                    arena.ShowBattleResult();
-                    isWork = false;
-                }
-            }
+            arena.PrepareToBattle();
+            Console.WriteLine("Для начала боя нажмите любую кнопку!");
+            Console.ReadKey();
+            Console.Clear();
+            arena.Battle();
+            arena.ShowBattleResult();
         }
     }
 
@@ -49,14 +41,14 @@ namespace homeWork6_8
             {
                 _firstFighter.ShowAllStats();
                 _secondFighter.ShowAllStats();
-                _secondFighter.TakeDamage(_firstFighter.Attack(_firstFighter));
-                _firstFighter.TakeDamage(_secondFighter.Attack(_secondFighter));
+                _secondFighter.TakeDamage(_firstFighter.Attack());
+                _firstFighter.TakeDamage(_secondFighter.Attack());
                 Console.WriteLine();
                 Console.ReadKey();
             }
         }
 
-        public bool TryCreateBattle()
+        public void PrepareToBattle()
         {
             ShowFighters();
             Console.WriteLine();
@@ -66,17 +58,6 @@ namespace homeWork6_8
             ShowFighters();
             Console.WriteLine("Второй боец:");
             _secondFighter = ChooseFighter();
-
-            if (_firstFighter == null || _secondFighter == null)
-            {
-                Console.WriteLine("Ошибка выбора бойца!");
-                return false;
-            }
-            else
-            {
-                Console.WriteLine("Бойцы выбраны и готовы к бою!");
-                return true;
-            }
         }
 
         public void ShowBattleResult()
@@ -137,7 +118,6 @@ namespace homeWork6_8
         protected static readonly Random Random = new Random();
         protected int MinPercent = 1;
         protected int MaxPercent = 101;
-        protected int TempDamage;
 
         public string Name { get; protected set; }
         public int Health { get; protected set; }
@@ -164,24 +144,12 @@ namespace homeWork6_8
             Console.WriteLine(Name + ", Урон: " + Damage + ", Здоровье: " + Health + ", Броня: " + Armor);
         }
 
-        public virtual int Attack(Fighter fighter)
+        public virtual int Attack()
         {
-            TempDamage = 0;
-            int tempNumber = Random.Next(MinPercent, MaxPercent);
-
-            if (tempNumber <= ChanceExtraPower)
-            {
-                UsePower();
-            }
-            else
-            {
-                TempDamage = Damage;
-                Console.WriteLine(fighter.Name + " наносит " + TempDamage + " урона");
-            }
-            return TempDamage;
+            int tempDamage = Damage;
+            Console.WriteLine(Name + " наносит " + tempDamage + " урона");
+            return tempDamage;
         }
-
-        protected virtual void UsePower() { }
     }
 
     class Warrior : Fighter
@@ -199,7 +167,7 @@ namespace homeWork6_8
             if (tempNumber <= _chanceToBlock)
             {
                 int tempArmor = Armor + _armorIncrease;
-                Console.WriteLine("Воин успевает прикрыться щитом и увеличивает свою броню на " + _armorIncrease);
+                Console.WriteLine(Name + " успевает прикрыться щитом и увеличивает свою броню на " + _armorIncrease);
                 Health -= damage - tempArmor;
             }
             else
@@ -208,10 +176,21 @@ namespace homeWork6_8
             }
         }
 
-        protected override void UsePower()
+        public override int Attack()
         {
-            TempDamage = Damage + (Damage / _damageIncrease);
-            Console.WriteLine("Воин делает серию ударов и наносит - " + TempDamage + " урона!");
+            int tempDamage;
+            int tempNumber = Random.Next(MinPercent, MaxPercent);
+
+            if (tempNumber <= ChanceExtraPower)
+            {
+                tempDamage = Damage + (Damage / _damageIncrease);
+                Console.WriteLine(Name + " делает серию ударов и наносит - " + tempDamage + " урона!");
+            }
+            else
+            {
+                return base.Attack();
+            }
+            return tempDamage;
         }
     }
 
@@ -222,28 +201,23 @@ namespace homeWork6_8
 
         public Barbarian(string name, int health, int armor, int damage, int chanceExtraPower) : base(name, health, armor, damage, chanceExtraPower) { }
 
-        public override int Attack(Fighter fighter)
+        public override int Attack()
         {
-            TempDamage = 0;
+            int tempDamage;
             int tempNumber = Random.Next(MinPercent, MaxPercent);
 
             if (tempNumber <= ChanceExtraPower)
             {
-                UsePower();
+                tempDamage = Damage * _doubleDamage;
+                Console.WriteLine(Name + " испытывает жажду крови и наносит двойной урон - " + tempDamage);
             }
             else
             {
                 Damage += _increaseDamage;
-                TempDamage = Damage;
-                Console.WriteLine(fighter.Name + " приходит в ярость и наносит " + TempDamage + " урона");
+                tempDamage = Damage;
+                Console.WriteLine(Name + " приходит в ярость и наносит " + tempDamage + " урона");
             }
-            return TempDamage;
-        }
-
-        protected override void UsePower()
-        {
-            TempDamage = Damage * _doubleDamage;
-            Console.WriteLine("Варвар испытывает жажду крови и наносит двойной урон - " + TempDamage);
+            return tempDamage;
         }
     }
 
@@ -254,11 +228,22 @@ namespace homeWork6_8
 
         public Paladin(string name, int health, int armor, int damage, int chanceExtraPower) : base(name, health, armor, damage, chanceExtraPower) { }
 
-        protected override void UsePower()
+        public override int Attack()
         {
-            TempDamage = Damage + (Damage / _increaseDamage);
-            Health += _extraHealth;
-            Console.WriteLine("Паладин совершает молитву и делает мощный удар на - " + TempDamage + " урона! A также восстанавливает - " + _extraHealth + " здоровья!");
+            int tempDamage;
+            int tempNumber = Random.Next(MinPercent, MaxPercent);
+
+            if (tempNumber <= ChanceExtraPower)
+            {
+                tempDamage = Damage + (Damage / _increaseDamage);
+                Health += _extraHealth;
+                Console.WriteLine(Name + " совершает молитву и делает мощный удар на - " + tempDamage + " урона! A также восстанавливает - " + _extraHealth + " здоровья!");
+            }
+            else
+            {
+                return base.Attack();
+            }
+            return tempDamage;
         }
     }
 
@@ -270,28 +255,23 @@ namespace homeWork6_8
 
         public Mage(string name, int health, int armor, int damage, int chanceExtraPower) : base(name, health, armor, damage, chanceExtraPower) { }
 
-        public override int Attack(Fighter fighter)
+        public override int Attack()
         {
-            TempDamage = 0;
+            int tempDamage;
 
             if (_powerPoints == _maxCountPowerPoints)
             {
-                UsePower();
+                tempDamage = Damage + _increaseDamage;
+                Console.WriteLine(Name + " призывает ледяную бурю и наносит - " + tempDamage + " урона!");
                 _powerPoints = 0;
             }
             else
             {
-                TempDamage = Damage;
+                tempDamage = Damage;
                 _powerPoints++;
-                Console.WriteLine(fighter.Name + " наносит " + TempDamage + " урона");
+                Console.WriteLine(Name + " наносит " + tempDamage + " урона");
             }
-            return TempDamage;
-        }
-
-        protected override void UsePower()
-        {
-            TempDamage = Damage + _increaseDamage;
-            Console.WriteLine("Маг призывает ледяную бурю и наносит - " + TempDamage + " урона!");
+            return tempDamage;
         }
     }
 
@@ -309,7 +289,7 @@ namespace homeWork6_8
             if (tempNumber <= _chanceToDodge)
             {
                 int tempDamage = 0;
-                Console.WriteLine("Лучник уклоняется от атаки и не получает урона");
+                Console.WriteLine(Name + " уклоняется от атаки и не получает урона");
                 Health -= tempDamage;
             }
             else
@@ -318,10 +298,21 @@ namespace homeWork6_8
             }
         }
 
-        protected override void UsePower()
+        public override int Attack()
         {
-            TempDamage = Damage + _increaseDamage;
-            Console.WriteLine("Лучник выпускает отравленную ядом стрелу и наносит - " + TempDamage + " урона!");
+            int tempDamage;
+            int tempNumber = Random.Next(MinPercent, MaxPercent);
+
+            if (tempNumber <= ChanceExtraPower)
+            {
+                tempDamage = Damage + _increaseDamage;
+                Console.WriteLine(Name + " выпускает отравленную ядом стрелу и наносит - " + tempDamage + " урона!");
+            }
+            else
+            {
+                return base.Attack();
+            }
+            return tempDamage;
         }
     }
 
