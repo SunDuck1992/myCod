@@ -118,7 +118,7 @@ namespace homeWork6_11
         {
             foreach (var fish in _fishes)
             {
-                fish.Skip();
+                fish.GrowOld();
             }
         }
 
@@ -145,7 +145,7 @@ namespace homeWork6_11
     class Fish
     {
         public string Name { get; private set; }
-        public int Age { get; private set; } 
+        public int Age { get; private set; }
         public int LifeTime { get; private set; }
 
         public Fish(string name, int lifeTime)
@@ -160,7 +160,7 @@ namespace homeWork6_11
             Console.WriteLine(Name + " возраст - " + Age + ", максимальный возраст - " + LifeTime + " лет");
         }
 
-        public void Skip()
+        public void GrowOld()
         {
             Age++;
         }
