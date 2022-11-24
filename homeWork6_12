@@ -14,6 +14,7 @@ namespace homeWork6_12
         private const string CommandShowRabbits = "4";
         private const string CommandShowHippopotamuses = "5";
         private const string CommandExit = "6";
+
         static void Main(string[] args)
         {
             Console.WriteLine("Мы рады приветствовать вас в нашем зоопарке. У нас есть различные вольеры с животными.\nИ вы можете подойти к ним поближе, чтобы познакомиться с их обитателями.");
@@ -67,7 +68,7 @@ namespace homeWork6_12
 
     class Zoo
     {
-        private List<Animal> _animals = new List<Animal>();      
+        private List<Aviary> _animals = new List<Aviary>();
 
         public void ShowAnimals(int message)
         {
@@ -89,20 +90,20 @@ namespace homeWork6_12
         }
     }
 
-    class Animal
+    class Aviary
     {
         protected static readonly Random Random = new Random();
         private int _minCountAnimals = 3;
         private int _maxCountAnimals = 7;
 
-        public string Name { get; private set; }
+        public string AnimalName { get; private set; }
         public int CountMale { get; private set; }
         public int CountFemale { get; private set; }
         public int NumberIndividuals { get; private set; }
 
-        public Animal(string name)
+        public Aviary(string name)
         {
-            Name = name;
+            AnimalName = name;
             CountMale = Random.Next(_minCountAnimals, _maxCountAnimals);
             CountFemale = Random.Next(_minCountAnimals, _maxCountAnimals);
             NumberIndividuals = CountMale + CountFemale;
@@ -110,13 +111,13 @@ namespace homeWork6_12
 
         public virtual void ShowInfo()
         {
-            Console.WriteLine("В этом вольере содержатся " + Name + ", количество особей - " + NumberIndividuals + ", количество самцов - " + CountMale + ", количество самок - " + CountFemale);
+            Console.WriteLine("В этом вольере содержатся " + AnimalName + ", количество особей - " + NumberIndividuals + ", количество самцов - " + CountMale + ", количество самок - " + CountFemale);
         }
 
-        public virtual void Voice() { }       
+        public virtual void Voice() { }
     }
 
-    class Lion : Animal
+    class Lion : Aviary
     {
         public Lion(string name) : base(name) { }
 
@@ -130,10 +131,9 @@ namespace homeWork6_12
         {
             Console.WriteLine("Грозно рычит... Аааааррррррр!");
         }
-
     }
 
-    class Giraffe : Animal
+    class Giraffe : Aviary
     {
         public Giraffe(string name) : base(name) { }
 
@@ -149,7 +149,7 @@ namespace homeWork6_12
         }
     }
 
-    class Bear : Animal
+    class Bear : Aviary
     {
         public Bear(string name) : base(name) { }
 
@@ -165,7 +165,7 @@ namespace homeWork6_12
         }
     }
 
-    class Rabbit : Animal
+    class Rabbit : Aviary
     {
         public Rabbit(string name) : base(name) { }
 
@@ -181,7 +181,7 @@ namespace homeWork6_12
         }
     }
 
-    class Hippopotamus : Animal
+    class Hippopotamus : Aviary
     {
         public Hippopotamus(string name) : base(name) { }
 
