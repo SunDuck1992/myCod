@@ -1,0 +1,85 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork7_2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("В стране Арстоцка произошла амнистия. Всех заключенных по статье Антиправительственная следует освободить!\n");
+            JudicalCommission judicalCommission = new JudicalCommission();
+
+            judicalCommission.Fill();
+            judicalCommission.ShowAll();
+            Console.WriteLine();
+            Console.WriteLine("Для проведения амнистии нажмите на любую клавишу");
+            Console.ReadKey();
+            Console.WriteLine();
+            judicalCommission.FilteredCrime();
+            judicalCommission.ShowRemainPrisoners();
+            Console.WriteLine("Остальные ушли домой)");
+        }
+    }
+
+    class Criminal
+    {
+        public string Name { get; private set; }
+        public string ArticleOfConclusion { get; private set; }
+
+        public Criminal(string name, string articleOfConclusion)
+        {
+            Name = name;
+            ArticleOfConclusion = articleOfConclusion;
+        }
+    }
+
+    class JudicalCommission
+    {
+        private List<Criminal> _criminals = new List<Criminal>();
+        private List<Criminal> _filteredCriminals = new List<Criminal>();
+
+        public void Fill()
+        {
+            _criminals.Add(new Criminal("Арсул Башмек Башмекович", "Антиправительственное"));
+            _criminals.Add(new Criminal("Сарган Кашпок Бешкеков", "Административное"));
+            _criminals.Add(new Criminal("Галио Голован Сергеевич", "Уголовное"));
+            _criminals.Add(new Criminal("Ашан Магнитович Ашали", "Антиправительственное"));
+            _criminals.Add(new Criminal("Дарт Масул Носатович", "Уголовное"));
+            _criminals.Add(new Criminal("Петр Белозубов", "Антиправительственное"));
+            _criminals.Add(new Criminal("Джошуа Джекеразвилли", "Административное"));
+            _criminals.Add(new Criminal("Арджан Эльбрусович", "Уголовное"));
+        }
+
+        public void ShowAll()
+        {
+            Console.WriteLine("Список всех преступников:");
+
+            for (int i = 0; i < _criminals.Count; i++)
+            {
+                Console.WriteLine(_criminals[i].Name + ", статья - " + _criminals[i].ArticleOfConclusion);
+            }
+        }
+
+        public void FilteredCrime()
+        {
+            string crime = "Антиправительственное";
+            _filteredCriminals = (from Criminal criminals in _criminals
+                                  where criminals.ArticleOfConclusion != crime
+                                  select criminals).ToList();
+        }
+
+        public void ShowRemainPrisoners()
+        {
+            Console.WriteLine("Список оставшихся преступников:");
+
+            for (int i = 0; i < _filteredCriminals.Count; i++)
+            {
+                Console.WriteLine(_filteredCriminals[i].Name + ", статья - " + _filteredCriminals[i].ArticleOfConclusion);
+            }
+        }
+    }
+}
