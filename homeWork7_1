@@ -1,0 +1,148 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork7_1
+{
+    class Program
+    {
+        private const string CommandShowAllCriminals = "1";
+        private const string CommandSelectByParametres = "2";
+        private const string CommandExit = "3";
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Эта программа проверит картотеку досье преступников по введенным параметрам\nи выведет список преступников, находящихся на свобоже в данный момент.");
+            Console.WriteLine();
+            Detective detective = new Detective();
+            bool isWork = true;
+
+            detective.Fill();
+
+            while (isWork)
+            {
+                Console.WriteLine("Меню программы:");
+                Console.WriteLine(CommandShowAllCriminals + " - Показать всех преступников в базе\n" + CommandSelectByParametres + " - выбрать преступников по параметрам\n" + CommandExit + " - выход из программы");
+                string message = Console.ReadLine();
+
+                switch (message)
+                {
+                    case CommandShowAllCriminals:
+                        detective.ShowAll();
+                        break;
+
+                    case CommandSelectByParametres:
+                        detective.SelectCriminals();
+                        break;
+
+                    case CommandExit:                       
+                        isWork = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Такой команды нет! Повторите ввод!");
+                        break;
+                }
+                Console.WriteLine();
+                Console.WriteLine("Для продолжения нажмите любую клавишу");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+
+    class CriminalPeople
+    {
+        public string Name { get; private set; }
+        public string Nationality { get; private set; }
+        public int Weight { get; private set; }
+        public int Height { get; private set; }
+        public bool IsPrisoner { get; private set; }
+        
+        public CriminalPeople(string name, string nationality, int weight, int height, bool isPrisoner)
+        {
+            Name = name;
+            Nationality = nationality;
+            Weight = weight;
+            Height = height;
+            IsPrisoner = isPrisoner;
+        }
+    }
+
+    class Detective
+    {
+        private List<CriminalPeople> _criminals = new List<CriminalPeople>();
+        private List<CriminalPeople> _filtredCriminals = new List<CriminalPeople>();
+
+        public void Fill()
+        {
+            _criminals.Add(new CriminalPeople("Салифов Надыр", "Азербайджанец", 60, 175, true));
+            _criminals.Add(new CriminalPeople("Алиев Заур", "Азербайджанец", 70, 185, false));
+            _criminals.Add(new CriminalPeople("Джаниев Ровшан", "Азербайджанец", 80, 190, false));
+            _criminals.Add(new CriminalPeople("Сулейманов Вагиф", "Азербайджанец", 60, 175, false));
+            _criminals.Add(new CriminalPeople("Алиев Бахыш", "Азербайджанец", 70, 185, true));
+            _criminals.Add(new CriminalPeople("Алиев Нариман", "Азербайджанец", 80, 190, true));
+            _criminals.Add(new CriminalPeople("Асперов Джейхун", "Азербайджанец", 60, 175, true));
+            _criminals.Add(new CriminalPeople("Гейдаров Али", "Азербайджанец", 80, 190, false));
+            _criminals.Add(new CriminalPeople("Абрамян Ара", "Армянин", 60, 175, true));
+            _criminals.Add(new CriminalPeople("Алекян Баграт", "Армянин", 70, 185, false));
+            _criminals.Add(new CriminalPeople("Варжапетян Артур", "Армянин", 80, 190, false));
+            _criminals.Add(new CriminalPeople("Енгибарян Роберт", "Армянин", 60, 175, false));
+            _criminals.Add(new CriminalPeople("Кагиян Симон", "Армянин", 70, 185, true));
+            _criminals.Add(new CriminalPeople("Микаелян Карен", "Армянин", 80, 190, false));
+            _criminals.Add(new CriminalPeople("Палакян Валерик", "Армянин", 60, 175, false));
+            _criminals.Add(new CriminalPeople("Саакян Хорен", "Армянин", 80, 190, false));
+            _criminals.Add(new CriminalPeople("Бабушкин Владимир", "Русский", 60, 175, true));
+            _criminals.Add(new CriminalPeople("Бузулуцкий Василий", "Русский", 70, 185, true));
+            _criminals.Add(new CriminalPeople("Кочев Александр", "Русский", 80, 190, true));
+            _criminals.Add(new CriminalPeople("Иваньков Вячеслав", "Русский", 60, 175, false));
+            _criminals.Add(new CriminalPeople("Шишканов Олег", "Русский", 70, 185, false));
+            _criminals.Add(new CriminalPeople("Тюрин Владимир", "Русский", 80, 190, true));
+            _criminals.Add(new CriminalPeople("Христофоров Василий", "Русский", 60, 175, false));
+            _criminals.Add(new CriminalPeople("Бойцов Сергей", "Русский", 80, 190, false));
+        }
+
+        public void ShowAll()
+        {
+            Console.WriteLine("Все преступники в базе:");
+
+            for (int i = 0; i < _criminals.Count; i++)
+            {
+                Console.WriteLine(_criminals[i].Name + ", национальность - " + _criminals[i].Nationality + ", вес - " + _criminals[i].Weight + ", рост - " + _criminals[i].Height + ", заключен - " + _criminals[i].IsPrisoner);
+            }
+        }
+
+        public void SelectCriminals()
+        {
+            Console.WriteLine("Введите национальность преступников:");
+            string nationality = Console.ReadLine();
+            Console.WriteLine("Введите вес преступников:");
+            int weight = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите рост преступников:");
+            int height = Convert.ToInt32(Console.ReadLine());
+
+            _filtredCriminals = (from CriminalPeople criminalPeoples in _criminals
+                                 where criminalPeoples.Nationality.ToUpper() == nationality.ToUpper()
+                                 where criminalPeoples.Weight == weight
+                                 where criminalPeoples.Height == height
+                                 where criminalPeoples.IsPrisoner == false
+                                 select criminalPeoples).ToList();
+
+            Console.WriteLine("Преступники попадающие под заданные параметры:");
+
+            if (_filtredCriminals.Count > 0)
+            {
+                for (int i = 0; i < _filtredCriminals.Count; i++)
+                {
+                    Console.WriteLine(_filtredCriminals[i].Name + ", национальность - " + _filtredCriminals[i].Nationality + ", вес - " + _filtredCriminals[i].Weight + ", рост - " + _filtredCriminals[i].Height + ", заключен - " + _filtredCriminals[i].IsPrisoner);
+                }
+            }
+            else
+            {
+                Console.WriteLine("По таким параметрам преступники не найдены!");
+            }           
+        }
+    }
+}
