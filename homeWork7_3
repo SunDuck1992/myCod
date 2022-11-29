@@ -1,0 +1,146 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork7_3._1
+{
+    class Program
+    {
+        private const string CommandShowAll = "1";
+        private const string CommandSortForInitials = "2";
+        private const string CommandSortForAge = "3";
+        private const string CommandSortForDesease = "4";
+        private const string CommandExit = "5";
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Программа дает возможность отсортировать и показать больных по различным критериям.");
+            bool isWork = true;
+            Hospital hospital = new Hospital();
+
+            hospital.Fill();
+
+            while (isWork)
+            {
+                Console.WriteLine(CommandShowAll + " - Показать всех пациентов\n" + CommandSortForInitials + " - Сортировать по ФИО\n" + CommandSortForAge + " - Сортировать по возрасту\n" + CommandSortForDesease + " - Найти пациентов по болезни\n" + CommandExit + " - Выход из программы\n");
+                Console.WriteLine("Введите команду:");
+                string message = Console.ReadLine();
+
+                switch (message)
+                {
+                    case CommandShowAll:
+                        hospital.Show();
+                        break;
+
+                    case CommandSortForInitials:
+                        hospital.SortForInitials();
+                        break;
+
+                    case CommandSortForAge:
+                        hospital.SortForAge();
+                        break;
+
+                    case CommandSortForDesease:
+                        hospital.SortForDesease();
+                        break;
+
+                    case CommandExit:
+                        isWork = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Не верный ввод! Повторите!");
+                        break;
+                }
+                Console.WriteLine();
+                Console.WriteLine("Для продолжения работы нажмите любую клавишу");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+
+    class Hospital
+    {
+        private List<Sick> _sicks = new List<Sick>();
+
+        public void Fill()
+        {
+            _sicks.Add(new Sick("Петров Петр Петрович", 40, "Ангина"));
+            _sicks.Add(new Sick("Иван Иванов Иванович", 25, "Ковид"));
+            _sicks.Add(new Sick("Сидоров Сидр Сидорович", 20, "Ковид"));
+            _sicks.Add(new Sick("Александров Александр Александрович", 53, "Перелом"));
+            _sicks.Add(new Sick("Громыхал Громыхало Громыхалыч", 65, "Ковид"));
+            _sicks.Add(new Sick("Распутинов Распутин Распутинович", 30, "Перелом"));
+            _sicks.Add(new Sick("Александрова Екатерина Ильинична", 28, "Ангина"));
+            _sicks.Add(new Sick("Алиев Денис Витальевич", 32, "Ожог"));
+            _sicks.Add(new Sick("Ильин Александ Валерьевич", 33, "Ковид"));
+            _sicks.Add(new Sick("Дмитриевич Ирина Евгеньевна", 45, "Ангина"));
+        }
+
+        public void Show()
+        {
+            for (int i = 0; i < _sicks.Count; i++)
+            {
+                Console.Write(i + 1 + " - ");
+                _sicks[i].ShowInfo();
+            }
+        }
+
+        public void SortForInitials()
+        {
+            var result = _sicks.OrderBy(_sicks => _sicks.Name).ToList();
+            Console.WriteLine("Список пациентов отсортированных по фамилии:");
+
+            ShowFiltered(result);
+        }
+
+        public void SortForAge()
+        {
+            var result = _sicks.OrderBy(_sicks => _sicks.Age).ToList();
+            Console.WriteLine("Список пациентов отсортированных по возрасту:");
+
+            ShowFiltered(result);
+        }
+
+        public void SortForDesease()
+        {
+            Console.WriteLine("Введите заболевание:");
+            string desease = Console.ReadLine();
+            var result = _sicks.Where(_sicks => _sicks.Desease.ToUpper() == desease.ToUpper()).ToList();
+            Console.WriteLine("Список пациентов с данным заболеванием:");
+
+            ShowFiltered(result);
+        }
+
+        private void ShowFiltered(List<Sick> result)
+        {
+            for (int i = 0; i < result.Count; i++)
+            {
+                Console.Write(i + 1 + " - ");
+                result[i].ShowInfo();
+            }
+        }
+    }
+
+    class Sick
+    {
+        public string Name { get; private set; }
+        public int Age { get; private set; }
+        public string Desease { get; private set; }
+
+        public Sick(string name, int age, string desease)
+        {
+            Name = name;
+            Age = age;
+            Desease = desease;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("ФИО - " + Name + ", возраст - " + Age + ", заболевание - " + Desease);
+        }
+    }
+}
