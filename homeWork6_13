@@ -41,10 +41,10 @@ namespace homeWork6_13._1
 
         public AutoPartsStorage(Detail detail)
         {
-            int _minCount = 1;
-            int _maxCount = 5;
+            int minCount = 1;
+            int maxCount = 5;
             Detail = detail;
-            Count = _random.Next(_minCount, _maxCount);
+            Count = _random.Next(minCount, maxCount);
         }
 
         public void ReduceCount()
