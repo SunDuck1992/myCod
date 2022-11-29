@@ -20,7 +20,7 @@ namespace homeWork7_2
             Console.ReadKey();
             Console.WriteLine();
             judicalCommission.FilteredCrime();
-            judicalCommission.ShowRemainPrisoners();
+            judicalCommission.ShowAll();
             Console.WriteLine("Остальные ушли домой)");
         }
     }
@@ -40,7 +40,6 @@ namespace homeWork7_2
     class JudicalCommission
     {
         private List<Criminal> _criminals = new List<Criminal>();
-        private List<Criminal> _filteredCriminals = new List<Criminal>();
 
         public void Fill()
         {
@@ -67,18 +66,19 @@ namespace homeWork7_2
         public void FilteredCrime()
         {
             string crime = "Антиправительственное";
-            _filteredCriminals = (from Criminal criminals in _criminals
-                                  where criminals.ArticleOfConclusion != crime
+            var filteredCriminals = (from Criminal criminals in _criminals
+                                  where criminals.ArticleOfConclusion == crime
                                   select criminals).ToList();
-        }
 
-        public void ShowRemainPrisoners()
-        {
-            Console.WriteLine("Список оставшихся преступников:");
-
-            for (int i = 0; i < _filteredCriminals.Count; i++)
+            for(int i = 0; i < _criminals.Count; i++)
             {
-                Console.WriteLine(_filteredCriminals[i].Name + ", статья - " + _filteredCriminals[i].ArticleOfConclusion);
+                for(int j = 0; j < filteredCriminals.Count; j++)
+                {
+                    if(_criminals[i] == filteredCriminals[j])
+                    {
+                        _criminals.RemoveAt(i);
+                    }
+                }
             }
         }
     }
