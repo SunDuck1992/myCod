@@ -32,17 +32,17 @@ namespace homeWork6_13._1
         }
     }
 
-    class Warehouse
+    class  AutoPartsStorage
     {
-        private static readonly Random _random = new Random();
-        private int _minCount = 1;
-        private int _maxCount = 5;
+        private static readonly Random _random = new Random();       
 
         public int Count { get; private set; }
         public Detail Detail { get; private set; }
 
-        public Warehouse(Detail detail)
+        public AutoPartsStorage(Detail detail)
         {
+            int _minCount = 1;
+            int _maxCount = 5;
             Detail = detail;
             Count = _random.Next(_minCount, _maxCount);
         }
@@ -66,7 +66,7 @@ namespace homeWork6_13._1
     class CarService
     {
         private static readonly Random _random = new Random();
-        private List<Warehouse> _details = new List<Warehouse>();
+        private List<AutoPartsStorage> _details = new List<AutoPartsStorage>();
         private List<Car> _brokenCars = new List<Car>();
         private int _penaltyCoefficient = 3;
 
@@ -74,16 +74,16 @@ namespace homeWork6_13._1
 
         public void FillDetails()
         {
-            _details.Add(new Warehouse(new Detail("Фара", 1500, 300)));
-            _details.Add(new Warehouse(new Detail("Лобовое стекло", 3000, 1000)));
-            _details.Add(new Warehouse(new Detail("Боковое стекло", 1200, 700)));
-            _details.Add(new Warehouse(new Detail("Свечи зажигания", 2000, 200)));
-            _details.Add(new Warehouse(new Detail("Масляный фильтр", 500, 200)));
-            _details.Add(new Warehouse(new Detail("Топливный насос", 3000, 1200)));
-            _details.Add(new Warehouse(new Detail("Глушитель", 3500, 1500)));
-            _details.Add(new Warehouse(new Detail("Амортизатор", 800, 500)));
-            _details.Add(new Warehouse(new Detail("Рычаг подвески", 1700, 1100)));
-            _details.Add(new Warehouse(new Detail("Аккумулятор", 2500, 400)));
+            _details.Add(new AutoPartsStorage(new Detail("Фара", 1500, 300)));
+            _details.Add(new AutoPartsStorage(new Detail("Лобовое стекло", 3000, 1000)));
+            _details.Add(new AutoPartsStorage(new Detail("Боковое стекло", 1200, 700)));
+            _details.Add(new AutoPartsStorage(new Detail("Свечи зажигания", 2000, 200)));
+            _details.Add(new AutoPartsStorage(new Detail("Масляный фильтр", 500, 200)));
+            _details.Add(new AutoPartsStorage(new Detail("Топливный насос", 3000, 1200)));
+            _details.Add(new AutoPartsStorage(new Detail("Глушитель", 3500, 1500)));
+            _details.Add(new AutoPartsStorage(new Detail("Амортизатор", 800, 500)));
+            _details.Add(new AutoPartsStorage(new Detail("Рычаг подвески", 1700, 1100)));
+            _details.Add(new AutoPartsStorage(new Detail("Аккумулятор", 2500, 400)));
         }
 
         public void CreateQueueCars()
