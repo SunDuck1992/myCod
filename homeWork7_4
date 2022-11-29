@@ -1,0 +1,107 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork7_4
+{
+    class Program
+    {      
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Это база данных по игрокам сервера. Она выведет всех игроков. А потом топ - 3 по уровню и рангу.\n");
+            DataBase dataBase = new DataBase();
+
+            dataBase.Fill();
+            dataBase.ShowAll();
+            dataBase.SortForLevel();
+            dataBase.SortForRank();
+        }
+    }
+
+    class DataBase
+    {
+        private List<Player> _players = new List<Player>();
+
+        public void Fill()
+        {
+            _players.Add(new Player("Alex", 10, 120));
+            _players.Add(new Player("TrollHead", 50, 900));
+            _players.Add(new Player("SunDuck", 28, 450));
+            _players.Add(new Player("Kek", 22, 430));
+            _players.Add(new Player("Lol", 35, 500));
+            _players.Add(new Player("Strimer", 41, 750));
+            _players.Add(new Player("Bublik", 15, 218));
+            _players.Add(new Player("Tom", 38, 830));
+            _players.Add(new Player("Veygar", 43, 810));
+            _players.Add(new Player("Billi", 15, 170));
+            _players.Add(new Player("Bro", 47, 820));
+            _players.Add(new Player("Butcher", 22, 850));
+            _players.Add(new Player("Biba", 36, 870));
+        }
+
+        public void ShowAll()
+        {
+            Console.WriteLine("Список всех игроков:");
+
+            for(int i = 0; i < _players.Count; i++)
+            {
+                _players[i].ShowInfo();
+            }
+            Console.WriteLine();
+            Console.WriteLine("Для продолжения нажмите любую клавишу");
+            Console.WriteLine();
+            Console.ReadKey();
+        }
+
+        public void SortForLevel()
+        {
+            Console.WriteLine("Топ - 3 игроков с самым высоким уровнем:");
+            var filteredPlayers = _players.OrderByDescending(_players => _players.Level).ToList();
+            filteredPlayers = filteredPlayers.Take(3).ToList();
+
+            ShowFiltered(filteredPlayers);
+        }
+
+        public void SortForRank()
+        {
+            Console.WriteLine("Топ - 3 игроков с самым высоким рангом:");
+            var filteredPlayers = _players.OrderByDescending(_players => _players.Rank).ToList();
+            filteredPlayers = filteredPlayers.Take(3).ToList();
+
+            ShowFiltered(filteredPlayers);
+        }
+
+        private void ShowFiltered(List<Player> players)
+        {
+            for(int i = 0; i < players.Count; i++)
+            {
+                players[i].ShowInfo();
+            }
+            Console.WriteLine();
+            Console.WriteLine("Для продолжения нажмите любую клавишу");
+            Console.WriteLine();
+            Console.ReadKey();
+        }
+    }
+
+    class Player
+    {
+        public string Name { get; private set; }
+        public int Level { get; private set; }
+        public int Rank { get; private set; }
+
+        public Player(string name, int level, int rank)
+        {
+            Name = name;
+            Level = level;
+            Rank = rank;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("Никнейм - " + Name + ", уровень - " + Level + ", ранг - " + Rank);
+        }
+    }
+}
