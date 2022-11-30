@@ -30,15 +30,6 @@ namespace homeWork7_6
             Fill();
         }
 
-        public void Fill()
-        {
-            _soldiers.Add(new Soldier("Иван", "АК-47", "рядовой", 6));
-            _soldiers.Add(new Soldier("Петр", "Винтовка", "сержант", 6));
-            _soldiers.Add(new Soldier("Александр", "РПГ", "старший сержант", 4));
-            _soldiers.Add(new Soldier("Константин", "АК-12", "прапорщик", 11));
-            _soldiers.Add(new Soldier("Владимир", "Снайперская винтовка", "лейтенант", 9));
-        }
-
         public void ShowAll()
         {
             Console.WriteLine("Полный список данных солдат:");
@@ -64,6 +55,15 @@ namespace homeWork7_6
             {
                 Console.WriteLine("Имя - " + soldier.name + ", звание - " + soldier.title);
             }
+        }
+
+        private void Fill()
+        {
+            _soldiers.Add(new Soldier("Иван", "АК-47", "рядовой", 6));
+            _soldiers.Add(new Soldier("Петр", "Винтовка", "сержант", 6));
+            _soldiers.Add(new Soldier("Александр", "РПГ", "старший сержант", 4));
+            _soldiers.Add(new Soldier("Константин", "АК-12", "прапорщик", 11));
+            _soldiers.Add(new Soldier("Владимир", "Снайперская винтовка", "лейтенант", 9));
         }
     }
 
