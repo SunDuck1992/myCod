@@ -27,18 +27,6 @@ namespace homeWork7_5
             Fill();           
         }
 
-        public void Fill()
-        {
-            _stews.Add(new Stew("Говядина тушеная - высший сорт", 2019, 3));
-            _stews.Add(new Stew("Свиняка тушеная", 2020, 1));
-            _stews.Add(new Stew("Говядина тушеная с гречей", 2019, 3));
-            _stews.Add(new Stew("Говядина с бараниной класса Б", 2018, 4));
-            _stews.Add(new Stew("Рога и копыта", 2019, 2));
-            _stews.Add(new Stew("Свиная шкура, она же Завтрак туриста", 2019, 3));
-            _stews.Add(new Stew("Курица и утка", 2018, 4));
-            _stews.Add(new Stew("Шкура да кости", 2017, 3));
-        }
-
         public void ShowAll()
         {
             Console.WriteLine("Вся продукция на складе:");
@@ -63,6 +51,18 @@ namespace homeWork7_5
             {
                 filteredProducts[i].ShowInfo();
             }
+        }
+
+        private void Fill()
+        {
+            _stews.Add(new Stew("Говядина тушеная - высший сорт", 2019, 3));
+            _stews.Add(new Stew("Свиняка тушеная", 2020, 1));
+            _stews.Add(new Stew("Говядина тушеная с гречей", 2019, 3));
+            _stews.Add(new Stew("Говядина с бараниной класса Б", 2018, 4));
+            _stews.Add(new Stew("Рога и копыта", 2019, 2));
+            _stews.Add(new Stew("Свиная шкура, она же Завтрак туриста", 2019, 3));
+            _stews.Add(new Stew("Курица и утка", 2018, 4));
+            _stews.Add(new Stew("Шкура да кости", 2017, 3));
         }
     }
 
