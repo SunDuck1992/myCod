@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork7_5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Это склад тушенки. У нас есть разные партии этого прекрасного продукта.\nПрограмма определит не пора ли еще выкинуть половину нашего запаса на свалку, на радость местным бомжам...\n ");
+            Warehouse warehouse = new Warehouse();
+
+            warehouse.ShowAll();
+            warehouse.SelectAndShowExpiredProducts();
+        }
+    }
+
+    class Warehouse
+    {
+        private List<Stew> _stews = new List<Stew>();
+
+        public Warehouse()
+        {
+            Fill();           
+        }
+
+        public void Fill()
+        {
+            _stews.Add(new Stew("Говядина тушеная - высший сорт", 2019, 3));
+            _stews.Add(new Stew("Свиняка тушеная", 2020, 1));
+            _stews.Add(new Stew("Говядина тушеная с гречей", 2019, 3));
+            _stews.Add(new Stew("Говядина с бараниной класса Б", 2018, 4));
+            _stews.Add(new Stew("Рога и копыта", 2019, 2));
+            _stews.Add(new Stew("Свиная шкура, она же Завтрак туриста", 2019, 3));
+            _stews.Add(new Stew("Курица и утка", 2018, 4));
+            _stews.Add(new Stew("Шкура да кости", 2017, 3));
+        }
+
+        public void ShowAll()
+        {
+            Console.WriteLine("Вся продукция на складе:");
+
+            for(int i = 0; i < _stews.Count; i++)
+            {
+                _stews[i].ShowInfo();
+            }
+
+            Console.WriteLine("Для продолжения нажмите любую клавишу");
+            Console.ReadKey();
+        }
+
+        public void SelectAndShowExpiredProducts()
+        {
+            int toDayYear = DateTime.Today.Year;
+            var filteredProducts = _stews.Where(_stews => (_stews.YearOfProduction + _stews.ExpirationDate) < toDayYear).ToList();
+            Console.WriteLine();
+            Console.WriteLine("Эти партии тушенку придется выкинуть на свалку:");
+
+            for(int i = 0; i < filteredProducts.Count; i++)
+            {
+                filteredProducts[i].ShowInfo();
+            }
+        }
+    }
+
+    class Stew
+    {
+        public string Name { get; private set; }
+        public int YearOfProduction { get; private set; }
+        public int ExpirationDate { get; private set; }
+
+        public Stew(string name, int yearOfProduction, int expirationDate)
+        {
+            Name = name;
+            YearOfProduction = yearOfProduction;
+            ExpirationDate = expirationDate;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("Название - " + Name + ", год производства - " + YearOfProduction + ", срок годности - " + ExpirationDate);
+        }
+    }
+}
