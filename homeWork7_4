@@ -10,13 +10,14 @@ namespace homeWork7_4
     {      
         static void Main(string[] args)
         {
-            Console.WriteLine("Это база данных по игрокам сервера. Она выведет всех игроков. А потом топ - 3 по уровню и рангу.\n");
+            Console.WriteLine("Это база данных по игрокам сервера. Она выведет всех игроков. А потом топ игроков - по уровню и рангу.\n");
             DataBase dataBase = new DataBase();
+            int bestPlayers = 3;
 
             dataBase.Fill();
             dataBase.ShowAll();
-            dataBase.SortForLevel();
-            dataBase.SortForRank();
+            dataBase.SortForLevel(bestPlayers);
+            dataBase.SortForRank(bestPlayers);
         }
     }
 
@@ -49,26 +50,25 @@ namespace homeWork7_4
             {
                 _players[i].ShowInfo();
             }
+
             Console.WriteLine();
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.WriteLine();
             Console.ReadKey();
         }
 
-        public void SortForLevel()
-        {
-            Console.WriteLine("Топ - 3 игроков с самым высоким уровнем:");
-            var filteredPlayers = _players.OrderByDescending(_players => _players.Level).ToList();
-            filteredPlayers = filteredPlayers.Take(3).ToList();
+        public void SortForLevel(int bestPlayers)
+        {           
+            Console.WriteLine("Топ - игроков с самым высоким уровнем:");
+            var filteredPlayers = _players.OrderByDescending(_players => _players.Level).Take(bestPlayers).ToList();
 
             ShowFiltered(filteredPlayers);
         }
 
-        public void SortForRank()
+        public void SortForRank(int bestPlayers)
         {
-            Console.WriteLine("Топ - 3 игроков с самым высоким рангом:");
-            var filteredPlayers = _players.OrderByDescending(_players => _players.Rank).ToList();
-            filteredPlayers = filteredPlayers.Take(3).ToList();
+            Console.WriteLine("Топ - игроков с самым высоким рангом:");
+            var filteredPlayers = _players.OrderByDescending(_players => _players.Rank).Take(bestPlayers).ToList();
 
             ShowFiltered(filteredPlayers);
         }
@@ -79,6 +79,7 @@ namespace homeWork7_4
             {
                 players[i].ShowInfo();
             }
+
             Console.WriteLine();
             Console.WriteLine("Для продолжения нажмите любую клавишу");
             Console.WriteLine();
