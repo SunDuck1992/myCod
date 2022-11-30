@@ -1,0 +1,97 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork7_7
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("У командира есть 2 взвода солдат. Пришел приказ перевести всех солдат с фамилией на букву Б из 1 взвода во 2.\n");
+            Commander commander = new Commander();
+
+            commander.ShowAll();
+            Console.WriteLine("\nДля продолжения нажмите любую клавишу\n");
+            Console.ReadKey();
+            commander.TransferSoldiers();
+        }
+    }
+
+    class Commander
+    {
+        private List<Soldier> _firstSquad = new List<Soldier>();
+        private List<Soldier> _secondSquad = new List<Soldier>();
+
+        public Commander()
+        {
+            FillFirstSquad();
+            FillSecondSquad();
+        }
+
+        public void TransferSoldiers()
+        {
+            string letter = "Б";
+            var filterSoldiers = _firstSquad.Where(_firstSquad => _firstSquad.Name.ToUpper().StartsWith(letter)).Union(_secondSquad);
+            Console.WriteLine("Объединенный список солдат после перевода:");
+
+            foreach(var soldier in filterSoldiers)
+            {
+                Console.WriteLine("ФИО - " + soldier.Name + ", звание - " + soldier.Title);
+            }
+        }
+
+        public void ShowAll()
+        {
+            Console.WriteLine("Первый взвод:\n");
+            ShowSquad(_firstSquad);
+            Console.WriteLine("\nВторой взвод:\n");
+            ShowSquad(_secondSquad);
+        }
+
+        private void ShowSquad(List<Soldier> soldiers)
+        {
+            for(int i = 0; i < soldiers.Count; i++)
+            {
+                soldiers[i].ShowInfo();
+            }
+        }
+
+        private void FillFirstSquad()
+        {
+            _firstSquad.Add(new Soldier("Баранов Илья", "Сержант"));
+            _firstSquad.Add(new Soldier("Сидоров Сергей", "Рядовой"));
+            _firstSquad.Add(new Soldier("Балабанов Андрей", "Рядовой"));
+            _firstSquad.Add(new Soldier("Кучков Никита", "Сержант"));
+            _firstSquad.Add(new Soldier("Климов Василий", "Прапорщик"));
+        }
+
+        private void FillSecondSquad()
+        {
+            _secondSquad.Add(new Soldier("Петров Иван", "Рядовой"));
+            _secondSquad.Add(new Soldier("Дятлов Алексей", "сержант"));
+            _secondSquad.Add(new Soldier("Петренко Роман", "Лейтенант"));
+            _secondSquad.Add(new Soldier("Шпак Эдуард", "Рядовой"));
+            _secondSquad.Add(new Soldier("Кичиков Максим", "Рядовой"));
+        }
+    }
+
+    class Soldier
+    {
+        public string Name { get; private set; }
+        public string Title { get; private set; }
+
+        public Soldier(string name, string title)
+        {
+            Name = name;
+            Title = title;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("ФИО - " + Name + ", звание - " + Title);
+        }
+    }
+}
