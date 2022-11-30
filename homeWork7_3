@@ -11,7 +11,7 @@ namespace homeWork7_3._1
         private const string CommandShowAll = "1";
         private const string CommandSortForInitials = "2";
         private const string CommandSortForAge = "3";
-        private const string CommandSortForDesease = "4";
+        private const string CommandShowForDesease = "4";
         private const string CommandExit = "5";
 
         static void Main(string[] args)
@@ -24,7 +24,7 @@ namespace homeWork7_3._1
 
             while (isWork)
             {
-                Console.WriteLine(CommandShowAll + " - Показать всех пациентов\n" + CommandSortForInitials + " - Сортировать по ФИО\n" + CommandSortForAge + " - Сортировать по возрасту\n" + CommandSortForDesease + " - Найти пациентов по болезни\n" + CommandExit + " - Выход из программы\n");
+                Console.WriteLine(CommandShowAll + " - Показать всех пациентов\n" + CommandSortForInitials + " - Сортировать по ФИО\n" + CommandSortForAge + " - Сортировать по возрасту\n" + CommandShowForDesease + " - Найти пациентов по болезни\n" + CommandExit + " - Выход из программы\n");
                 Console.WriteLine("Введите команду:");
                 string message = Console.ReadLine();
 
@@ -35,15 +35,15 @@ namespace homeWork7_3._1
                         break;
 
                     case CommandSortForInitials:
-                        hospital.SortForInitials();
+                        hospital.SortAndShowForInitials();
                         break;
 
                     case CommandSortForAge:
-                        hospital.SortForAge();
+                        hospital.SortAndShowForAge();
                         break;
 
-                    case CommandSortForDesease:
-                        hospital.SortForDesease();
+                    case CommandShowForDesease:
+                        hospital.ShowForDesease();
                         break;
 
                     case CommandExit:
@@ -89,7 +89,7 @@ namespace homeWork7_3._1
             }
         }
 
-        public void SortForInitials()
+        public void SortAndShowForInitials()
         {
             var result = _sicks.OrderBy(_sicks => _sicks.Name).ToList();
             Console.WriteLine("Список пациентов отсортированных по фамилии:");
@@ -97,7 +97,7 @@ namespace homeWork7_3._1
             ShowFiltered(result);
         }
 
-        public void SortForAge()
+        public void SortAndShowForAge()
         {
             var result = _sicks.OrderBy(_sicks => _sicks.Age).ToList();
             Console.WriteLine("Список пациентов отсортированных по возрасту:");
@@ -105,7 +105,7 @@ namespace homeWork7_3._1
             ShowFiltered(result);
         }
 
-        public void SortForDesease()
+        public void ShowForDesease()
         {
             Console.WriteLine("Введите заболевание:");
             string desease = Console.ReadLine();
