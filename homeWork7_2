@@ -66,20 +66,7 @@ namespace homeWork7_2
         public void FilteredCrime()
         {
             string crime = "Антиправительственное";
-            var filteredCriminals = (from Criminal criminals in _criminals
-                                  where criminals.ArticleOfConclusion == crime
-                                  select criminals).ToList();
-
-            for(int i = 0; i < _criminals.Count; i++)
-            {
-                for(int j = 0; j < filteredCriminals.Count; j++)
-                {
-                    if(_criminals[i] == filteredCriminals[j])
-                    {
-                        _criminals.RemoveAt(i);
-                    }
-                }
-            }
+            _criminals.RemoveAll(_criminals => _criminals.ArticleOfConclusion == crime);
         }
     }
 }
