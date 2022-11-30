@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace homeWork7_6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Существует класс солдата. У него есть Имя, его вооружение, звание и срок службы.\nНаписать запрос с помощью которого получить Имя солдата и его звание.\n");
+            Data data = new Data();
+
+            data.ShowAll();
+            Console.WriteLine();
+            Console.WriteLine("Для продолжения нажмите любую клавишу");
+            Console.ReadKey();
+            data.Filter();
+        }
+    }
+
+    class Data
+    {
+        private List<Soldier> _soldiers = new List<Soldier>();
+
+        public Data()
+        {
+            Fill();
+        }
+
+        public void Fill()
+        {
+            _soldiers.Add(new Soldier("Иван", "АК-47", "рядовой", 6));
+            _soldiers.Add(new Soldier("Петр", "Винтовка", "сержант", 6));
+            _soldiers.Add(new Soldier("Александр", "РПГ", "старший сержант", 4));
+            _soldiers.Add(new Soldier("Константин", "АК-12", "прапорщик", 11));
+            _soldiers.Add(new Soldier("Владимир", "Снайперская винтовка", "лейтенант", 9));
+        }
+
+        public void ShowAll()
+        {
+            Console.WriteLine("Полный список данных солдат:");
+
+            for(int i = 0; i < _soldiers.Count; i++)
+            {
+                _soldiers[i].ShowInfo();
+            }
+        }
+
+        public void Filter()
+        {
+            var filtredList = from Soldier soldier in _soldiers
+                              select new
+                              {
+                                  name = soldier.Name,
+                                  title = soldier.Title
+                              };
+
+            Console.WriteLine("Отфильтрованный список данных:");
+
+            foreach(var soldier in filtredList)
+            {
+                Console.WriteLine("Имя - " + soldier.name + ", звание - " + soldier.title);
+            }
+        }
+    }
+
+    class Soldier
+    {
+        public string Name { get; private set; }
+        public string Weapon { get; private set; }
+        public string Title { get; private set;  }
+        public int ServiceLife { get; private set;  }
+
+        public Soldier(string name, string weapon, string title, int serviceLife)
+        {
+            Name = name;
+            Weapon = weapon;
+            Title = title;
+            ServiceLife = serviceLife;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("Имя - " + Name + ", оружие - " + Weapon + ", звание - " + Title + ", срок службы - " + ServiceLife);
+        }
+    }
+}
