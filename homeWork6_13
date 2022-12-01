@@ -12,9 +12,7 @@ namespace homeWork6_13._1
         {
             Console.WriteLine("Добро пожаловать в наш автосервис. Мы выявим вашу проблему и заменим неоходимые детали.\nВ случае их отсутствия вам будет выплачена компесация!\n");
             CarService carService = new CarService();
-            carService.FillDetails();
-            carService.CreateQueueCars();
-            carService.ServeClients();          
+            carService.ServeClients();
         }
     }
 
@@ -32,14 +30,14 @@ namespace homeWork6_13._1
         }
     }
 
-    class  AutoPartsStorage
+    class Cell
     {
-        private static readonly Random _random = new Random();       
+        private static readonly Random _random = new Random();
 
         public int Count { get; private set; }
         public Detail Detail { get; private set; }
 
-        public AutoPartsStorage(Detail detail)
+        public Cell(Detail detail)
         {
             int minCount = 1;
             int maxCount = 5;
@@ -53,40 +51,124 @@ namespace homeWork6_13._1
         }
     }
 
-    class Car 
+    class Car
     {
         public string Breakdown { get; private set; }
 
         public Car(string breakdown)
         {
-            Breakdown = breakdown;           
+            Breakdown = breakdown;
         }
     }
 
     class CarService
     {
         private static readonly Random _random = new Random();
-        private List<AutoPartsStorage> _details = new List<AutoPartsStorage>();
+        private List<Cell> _cells = new List<Cell>();
         private List<Car> _brokenCars = new List<Car>();
         private int _penaltyCoefficient = 3;
 
         public int Money { get; protected set; }
 
-        public void FillDetails()
+        public CarService()
         {
-            _details.Add(new AutoPartsStorage(new Detail("Фара", 1500, 300)));
-            _details.Add(new AutoPartsStorage(new Detail("Лобовое стекло", 3000, 1000)));
-            _details.Add(new AutoPartsStorage(new Detail("Боковое стекло", 1200, 700)));
-            _details.Add(new AutoPartsStorage(new Detail("Свечи зажигания", 2000, 200)));
-            _details.Add(new AutoPartsStorage(new Detail("Масляный фильтр", 500, 200)));
-            _details.Add(new AutoPartsStorage(new Detail("Топливный насос", 3000, 1200)));
-            _details.Add(new AutoPartsStorage(new Detail("Глушитель", 3500, 1500)));
-            _details.Add(new AutoPartsStorage(new Detail("Амортизатор", 800, 500)));
-            _details.Add(new AutoPartsStorage(new Detail("Рычаг подвески", 1700, 1100)));
-            _details.Add(new AutoPartsStorage(new Detail("Аккумулятор", 2500, 400)));
+            FillDetails();
+            CreateQueueCars();
         }
 
-        public void CreateQueueCars()
+        public void ServeClients()
+        {
+            while (_brokenCars.Count > 0)
+            {
+                Car car = GetCar();
+                Cell cell = GetDetailForRepair(car);
+                Console.WriteLine("На ремонт приехала новая машина, ее поломка - " + car.Breakdown + "\n");
+
+                ShowAllDetails();
+
+                Console.WriteLine();
+                Console.WriteLine("Чтобы приступить к ремонту нажмите любую клавишу");
+                Console.ReadKey();
+
+                if (isGetDetail(cell))
+                {
+                    Repair(cell);
+                }
+                else
+                {
+                    RefusalToRepair(cell);
+                }
+
+                Console.WriteLine("\nСчет автосервиса - " + Money);
+                Console.ReadKey();
+                Console.WriteLine();
+                Console.Clear();
+            }
+            Console.WriteLine("Конец рабочего дня. Все машины обслужены!");
+        }
+
+        private bool isGetDetail(Cell cell)
+        {
+            if(cell.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private Car GetCar()
+        {
+            Car car = _brokenCars[_random.Next(0, _brokenCars.Count)];
+            _brokenCars.Remove(car);
+            return car;
+        }
+
+        private void RefusalToRepair(Cell cell)
+        {
+            int fine = (cell.Detail.Price + cell.Detail.InstallationCost) / _penaltyCoefficient;
+            Console.WriteLine("\nДетали закончились\n");
+            Console.WriteLine("Придется выплатить клиенту компенсацию - " + fine + " рублей!");
+            Money -= fine;
+        }
+
+        private void Repair(Cell cell)
+        {           
+            cell.ReduceCount();
+
+            Money += cell.Detail.Price +cell.Detail.InstallationCost;
+            Console.WriteLine("\nМашина готова! Деталь заменена на новую.");
+        }
+
+        private Cell GetDetailForRepair(Car car)
+        {           
+            for (int i = 0; i < _cells.Count; i++)
+            {
+                if (car.Breakdown == _cells[i].Detail.Name)
+                {                    
+                    return _cells[i];
+                }               
+            }
+            return null;
+        }
+
+        private void FillDetails()
+        {
+            _cells.Add(new Cell(new Detail("Фара", 1500, 300)));
+            _cells.Add(new Cell(new Detail("Лобовое стекло", 3000, 1000)));
+            _cells.Add(new Cell(new Detail("Боковое стекло", 1200, 700)));
+            _cells.Add(new Cell(new Detail("Свечи зажигания", 2000, 200)));
+            _cells.Add(new Cell(new Detail("Масляный фильтр", 500, 200)));
+            _cells.Add(new Cell(new Detail("Топливный насос", 3000, 1200)));
+            _cells.Add(new Cell(new Detail("Глушитель", 3500, 1500)));
+            _cells.Add(new Cell(new Detail("Амортизатор", 800, 500)));
+            _cells.Add(new Cell(new Detail("Рычаг подвески", 1700, 1100)));
+            _cells.Add(new Cell(new Detail("Аккумулятор", 2500, 400)));
+        }
+
+        private void CreateQueueCars()
         {
             int minQueue = 15;
             int maxQueue = 20;
@@ -98,60 +180,21 @@ namespace homeWork6_13._1
             }
         }
 
-        public void ServeClients()
-        {
-            while (_brokenCars.Count > 0)
-            {
-                Car car = _brokenCars[_random.Next(0, _brokenCars.Count)];
-                _brokenCars.Remove(car);
-                Console.WriteLine("На ремонт приехала новая машина, ее поломка - " + car.Breakdown + "\n");
-                ShowAllDetails();
-
-                for (int i = 0; i < _details.Count; i++)
-                {
-                    if (car.Breakdown == _details[i].Detail.Name)
-                    {
-                        Console.WriteLine("Чтобы приступить к ремонту нажмите любую клавишу\n");
-                        Console.ReadKey();
-
-                        if (_details[i].Count > 0)
-                        {
-                            Console.WriteLine("Машина готова! Деталь заменена на новую.");
-                            _details[i].ReduceCount();
-                            Money += _details[i].Detail.Price + _details[i].Detail.InstallationCost;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Похоже на складе закончились необходимые детали!");
-                            int fine = (_details[i].Detail.Price + _details[i].Detail.InstallationCost) / _penaltyCoefficient;
-                            Console.WriteLine("Придется выплатить клиенту компенсацию - " + fine + " рублей!");
-                            Money -= fine;
-                        }
-                        Console.WriteLine("Счет автосервиса - " + Money);
-                        Console.ReadKey();
-                        Console.WriteLine();
-                        Console.Clear();
-                    }
-                }
-            }
-            Console.WriteLine("Конец рабочего дня. Все машины обслужены!");
-        }
-
         private void ShowAllDetails()
         {
             Console.WriteLine("Список доступных запчастей:");
 
-            foreach (var detail in _details)
+            foreach (var cell in _cells)
             {
-                Console.WriteLine(detail.Detail.Name + ", цена запчасти - " + detail.Detail.Price + ", цена установки - " + detail.Detail.InstallationCost + ", кол - во на складе " + detail.Count);
+                Console.WriteLine(cell.Detail.Name + ", цена запчасти - " + cell.Detail.Price + ", цена установки - " + cell.Detail.InstallationCost + ", кол - во на складе " + cell.Count);
             }
         }
 
         private string IdentifyBrokenDetail()
         {
             int minNumber = 0;
-            int maxNumber = _details.Count - 1;
-            string brokenDetail = _details[_random.Next(minNumber, maxNumber)].Detail.Name;
+            int maxNumber = _cells.Count - 1;
+            string brokenDetail = _cells[_random.Next(minNumber, maxNumber)].Detail.Name;
             return brokenDetail;
         }
     }
