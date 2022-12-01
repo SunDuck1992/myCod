@@ -12,11 +12,14 @@ namespace homeWork7_7
         {
             Console.WriteLine("У командира есть 2 взвода солдат. Пришел приказ перевести всех солдат с фамилией на букву Б из 1 взвода во 2.\n");
             Commander commander = new Commander();
+            string letter = "Б";
 
             commander.ShowAll();
             Console.WriteLine("\nДля продолжения нажмите любую клавишу\n");
             Console.ReadKey();
-            commander.TransferSoldiers();
+            commander.TransferSoldiers(letter);
+            Console.WriteLine("Объединенный список солдат после перевода:\n");
+            commander.ShowAll();
         }
     }
 
@@ -31,16 +34,11 @@ namespace homeWork7_7
             FillSecondSquad();
         }
 
-        public void TransferSoldiers()
+        public void TransferSoldiers(string letter)
         {
-            string letter = "Б";
-            var filterSoldiers = _firstSquad.Where(_firstSquad => _firstSquad.Name.ToUpper().StartsWith(letter)).Union(_secondSquad);
-            Console.WriteLine("Объединенный список солдат после перевода:");
-
-            foreach(var soldier in filterSoldiers)
-            {
-                Console.WriteLine("ФИО - " + soldier.Name + ", звание - " + soldier.Title);
-            }
+            var filterSoldiers = _firstSquad.Where(_firstSquad => _firstSquad.Name.ToUpper().StartsWith(letter));
+            _firstSquad = _firstSquad.Except(filterSoldiers).ToList();
+            _secondSquad = _secondSquad.Union(filterSoldiers).ToList();
         }
 
         public void ShowAll()
