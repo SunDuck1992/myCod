@@ -15,13 +15,13 @@ namespace homeWork7_2
             string crime = "Антиправительственное";
 
             judicalCommission.Fill();
-            judicalCommission.ShowAll();
+            judicalCommission.ShowAllCriminals();
             Console.WriteLine();
             Console.WriteLine("Для проведения амнистии нажмите на любую клавишу");
             Console.ReadKey();
             Console.WriteLine();
-            judicalCommission.Amnesty(crime);
-            judicalCommission.ShowAll();
+            judicalCommission.ToFree(crime);
+            judicalCommission.ShowAllCriminals();
             Console.WriteLine("Остальные ушли домой)");
         }
     }
@@ -54,7 +54,7 @@ namespace homeWork7_2
             _criminals.Add(new Criminal("Арджан Эльбрусович", "Уголовное"));
         }
 
-        public void ShowAll()
+        public void ShowAllCriminals()
         {
             Console.WriteLine("Список всех преступников:");
 
@@ -64,7 +64,7 @@ namespace homeWork7_2
             }
         }
 
-        public void Amnesty(string crime)
+        public void ToFree(string crime)
         {
             var filterPeoples = _criminals.Where(_criminals => _criminals.ArticleOfConclusion == crime);
             _criminals = _criminals.Except(filterPeoples).ToList();
