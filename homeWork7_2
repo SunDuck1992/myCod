@@ -12,6 +12,7 @@ namespace homeWork7_2
         {
             Console.WriteLine("В стране Арстоцка произошла амнистия. Всех заключенных по статье Антиправительственная следует освободить!\n");
             JudicalCommission judicalCommission = new JudicalCommission();
+            string crime = "Антиправительственное";
 
             judicalCommission.Fill();
             judicalCommission.ShowAll();
@@ -19,7 +20,7 @@ namespace homeWork7_2
             Console.WriteLine("Для проведения амнистии нажмите на любую клавишу");
             Console.ReadKey();
             Console.WriteLine();
-            judicalCommission.FilteredCrime();
+            judicalCommission.Amnesty(crime);
             judicalCommission.ShowAll();
             Console.WriteLine("Остальные ушли домой)");
         }
@@ -63,10 +64,10 @@ namespace homeWork7_2
             }
         }
 
-        public void FilteredCrime()
+        public void Amnesty(string crime)
         {
-            string crime = "Антиправительственное";
-            _criminals.RemoveAll(_criminals => _criminals.ArticleOfConclusion == crime);
+            var filterPeoples = _criminals.Where(_criminals => _criminals.ArticleOfConclusion == crime);
+            _criminals = _criminals.Except(filterPeoples).ToList();
         }
     }
 }
