@@ -80,7 +80,7 @@ namespace homeWork6_13._1
         {
             while (_brokenCars.Count > 0)
             {
-                Car car = GetCar();
+                Car car = TakeCar();
                 Cell cell = GetDetailForRepair(car);
                 Console.WriteLine("На ремонт приехала новая машина, ее поломка - " + car.Breakdown + "\n");
 
@@ -90,13 +90,13 @@ namespace homeWork6_13._1
                 Console.WriteLine("Чтобы приступить к ремонту нажмите любую клавишу");
                 Console.ReadKey();
 
-                if (isGetDetail(cell))
+                if (IsGetDetail(cell))
                 {
                     Repair(cell);
                 }
                 else
                 {
-                    RefusalToRepair(cell);
+                    RefuseToRepair(cell);
                 }
 
                 Console.WriteLine("\nСчет автосервиса - " + Money);
@@ -107,7 +107,7 @@ namespace homeWork6_13._1
             Console.WriteLine("Конец рабочего дня. Все машины обслужены!");
         }
 
-        private bool isGetDetail(Cell cell)
+        private bool IsGetDetail(Cell cell)
         {
             if(cell.Count > 0)
             {
@@ -119,14 +119,14 @@ namespace homeWork6_13._1
             }
         }
 
-        private Car GetCar()
+        private Car TakeCar()
         {
             Car car = _brokenCars[_random.Next(0, _brokenCars.Count)];
             _brokenCars.Remove(car);
             return car;
         }
 
-        private void RefusalToRepair(Cell cell)
+        private void RefuseToRepair(Cell cell)
         {
             int fine = (cell.Detail.Price + cell.Detail.InstallationCost) / _penaltyCoefficient;
             Console.WriteLine("\nДетали закончились\n");
