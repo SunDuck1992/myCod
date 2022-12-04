@@ -34,20 +34,21 @@ namespace homeWork6_13._1
     {
         private static readonly Random _random = new Random();
 
-        public int Count { get; private set; }
+        public int CountDetail { get; private set; }
         public Detail Detail { get; private set; }
-
+        public bool HaveDetail => CountDetail > 0;
+       
         public Cell(Detail detail)
         {
             int minCount = 1;
             int maxCount = 5;
             Detail = detail;
-            Count = _random.Next(minCount, maxCount);
+            CountDetail = _random.Next(minCount, maxCount);
         }
 
         public void ReduceCount()
         {
-            Count--;
+            CountDetail--;
         }
     }
 
@@ -90,7 +91,7 @@ namespace homeWork6_13._1
                 Console.WriteLine("Чтобы приступить к ремонту нажмите любую клавишу");
                 Console.ReadKey();
 
-                if (IsGetDetail(cell))
+                if (cell.HaveDetail)
                 {
                     Repair(cell);
                 }
@@ -106,19 +107,7 @@ namespace homeWork6_13._1
             }
             Console.WriteLine("Конец рабочего дня. Все машины обслужены!");
         }
-
-        private bool IsGetDetail(Cell cell)
-        {
-            if(cell.Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+       
         private Car TakeCar()
         {
             Car car = _brokenCars[_random.Next(0, _brokenCars.Count)];
@@ -186,7 +175,7 @@ namespace homeWork6_13._1
 
             foreach (var cell in _cells)
             {
-                Console.WriteLine(cell.Detail.Name + ", цена запчасти - " + cell.Detail.Price + ", цена установки - " + cell.Detail.InstallationCost + ", кол - во на складе " + cell.Count);
+                Console.WriteLine(cell.Detail.Name + ", цена запчасти - " + cell.Detail.Price + ", цена установки - " + cell.Detail.InstallationCost + ", кол - во на складе " + cell.CountDetail);
             }
         }
 
