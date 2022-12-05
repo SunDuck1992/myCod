@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Final_version_Zoo
+namespace homeWork6_12_zoo_last
 {
     class Program
     {
@@ -19,160 +19,184 @@ namespace Final_version_Zoo
         {
             Console.WriteLine("Мы рады приветствовать вас в нашем зоопарке. У нас есть различные вольеры с животными.\nИ вы можете подойти к ним поближе, чтобы познакомиться с их обитателями.\n");
             Zoo zoo = new Zoo();
-            bool isWork = true;
+            string message = "";
 
-            zoo.Fill();
+            zoo.FillZoo();
 
-            while (isWork)
+            while (message != "Exit")
             {
-                Console.WriteLine("Указатель зоопарка:");
-                Console.WriteLine("Вольер со львами - " + CommandShowLions + "\nВольер с жирафами - " + CommandShowGiraffes + "\nВольер с медведями - " + CommandShowBears + "\nВольер с кроликами - " + CommandShowRabbits + "\nВольер с бегемотами - " + CommandShowHippopotamuses + "\nПокинуть зоопарк - " + CommandExit);
-                Console.WriteLine("Введите цифру, к какому вольеру вы бы хотели подойти:");
-                string message = Console.ReadLine();
-
-                switch (message)
-                {
-                    case CommandShowLions:
-                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
-                        break;
-
-                    case CommandShowGiraffes:
-                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
-                        break;
-
-                    case CommandShowBears:
-                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
-                        break;
-
-                    case CommandShowRabbits:
-                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
-                        break;
-
-                    case CommandShowHippopotamuses:
-                        zoo.ShowAnimals(Convert.ToInt32(message) - 1);
-                        break;
-
-                    case CommandExit:
-                        isWork = false;
-                        break;
-
-                    default:
-                        Console.WriteLine("Введена не существующая команда. Повторите ввод.");
-                        break;
-                }
+                zoo.ShowAnimals();
+                Console.ReadKey();
             }
         }
     }
 
     class Zoo
     {
+        private static readonly Random _random = new Random();
         private List<Aviary> _aviaries = new List<Aviary>();
-
-        public void Fill()
+       
+        public void FillZoo()
         {
-            _aviaries.Add(new Aviary(new Lion("Львы")));
-            _aviaries.Add(new Aviary(new Giraffe("Жирафы")));
-            _aviaries.Add(new Aviary(new Bear("Медведи")));
-            _aviaries.Add(new Aviary(new Rabbit("Кролики")));
-            _aviaries.Add(new Aviary(new Hippopotamus("Бегемоты")));
+            _aviaries.Add(new Aviary(new Lion()));
+            _aviaries.Add(new Aviary(new Geraffe()));
+            _aviaries.Add(new Aviary(new Bear()));
+            _aviaries.Add(new Aviary(new Rabbit()));
+            _aviaries.Add(new Aviary(new Hippopotamus()));
         }
 
-        public void ShowAnimals(int message)
+        public void ShowAnimals()
         {
-            _aviaries[message].ShowInfo();
-            _aviaries[message].Animal.Voice();
-            Console.WriteLine();
-            Console.WriteLine("Для продолжения нажмите любую клавишу.");
-            Console.ReadKey();
-            Console.Clear();
+            _aviaries[0].ShowIndividuals();
+            _aviaries[0].ShowAviary();
+            Console.WriteLine(_aviaries[0].Animal.Voice);
         }
     }
 
     class Aviary
     {
         private static readonly Random _random = new Random();
-        private int _minCountAnimals = 1;
-        private int _maxCountAnimals = 7;
+        private List<Animal> _aviary = new List<Animal>();
 
         public Animal Animal { get; private set; }
-        public int CountMale { get; private set; }
-        public int CountFemale { get; private set; }
-        public int NumberIndividuals { get; private set; }
+        public int CountMale
+        {
+            get
+            {
+                int countMale = 0;
+
+                foreach (Animal animal in _aviary)
+                {
+                    if (animal.Gender == Gender.Male)
+                    {
+                        countMale++;
+                    }
+                }
+                return countMale;
+            }
+        }
+        public int CountFemale
+        {
+            get
+            {
+                int countFemale = 0;
+
+                foreach (Animal animal in _aviary)
+                {
+                    if (animal.Gender == Gender.Female)
+                    {
+                        countFemale++;
+                    }
+                }
+                return countFemale;
+            }
+        }
+        public int NumberIndividuals
+        {
+            get
+            {
+                return CountMale + CountFemale;
+            }
+        }
 
         public Aviary(Animal animal)
         {
             Animal = animal;
-            CountMale = _random.Next(_minCountAnimals, _maxCountAnimals);
-            CountFemale = _random.Next(_minCountAnimals, _maxCountAnimals);
-            NumberIndividuals = CountMale + CountFemale;
+            Fill(_aviary, animal);
         }
 
-        public void ShowInfo()
+        public void Fill(List<Animal> aviaries, Animal animal)
         {
-            Console.WriteLine("В этом вольере обитают:");
-            Console.WriteLine(Animal.Name + ", количество особей - " + NumberIndividuals + ", количество самцов - " + CountMale + ", количество самок - " + CountFemale);
+            int minCountAnimals = 4;
+            int maxCountAnimals = 12;
+            int countAnimals = _random.Next(minCountAnimals, maxCountAnimals);
+
+            for (int i = 0; i < countAnimals; i++)
+            {
+                aviaries.Add(animal);
+            }
+        }
+
+        public void ShowAviary()
+        {
+            foreach (var animal in _aviary)
+            {
+                Console.WriteLine("самцы - " + CountMale + " шт, самки - " + CountFemale + ", общее кол - во - " + NumberIndividuals + " шт.");
+            }
+        }
+        
+        public void ShowIndividuals()
+        {
+            foreach(var animal in _aviary)
+            {
+                Console.WriteLine(animal.Name + animal.Gender);
+            }
         }
     }
 
-    class Animal
+    enum Gender
     {
-        public string Name { get; private set; }
+        Male, Female
+    }
 
-        public Animal(string name)
+    abstract class Animal
+    {
+        private static readonly Random _random = new Random();
+        private int _minNumber = 0;
+        private int _maxNumber = 2;
+
+        public Gender Gender { get; protected set; }
+        public string Name { get; protected set; }
+        public string Voice { get; protected set; }
+
+        public Animal()
         {
-            Name = name;
-        }
-
-        public virtual void Voice() { }
+            Gender = (Gender)_random.Next(_minNumber, _maxNumber);          
+        }        
     }
 
     class Lion : Animal
     {
-        public Lion(string name) : base(name) { }
-
-        public override void Voice()
+        public Lion()
         {
-            Console.WriteLine("Грозно рычит... Аааааррррррр!");
+            Name = "Лев";
+            Voice = "Грозно рычит... Аааааррррррр!";
         }
     }
 
-    class Giraffe : Animal
+    class Geraffe : Animal
     {
-        public Giraffe(string name) : base(name) { }
-
-        public override void Voice()
+        public Geraffe()
         {
-            Console.WriteLine("Длинный протяжный Аааааааа... Что - то очень странное!");
+            Name = "Жираф";
+            Voice = "Длинный протяжный Аааааааа... Что - то очень странное!";
         }
     }
 
     class Bear : Animal
     {
-        public Bear(string name) : base(name) { }
-
-        public override void Voice()
+        public Bear()
         {
-            Console.WriteLine("Мммррррррраааа... Наверное последний звук, который вы услышите, если встретите его обладателя в диком лесу.");
+            Name = "Медведь";
+            Voice = "Мммррррррраааа... Наверное последний звук, который вы услышите, если встретите его обладателя в диком лесу.";
         }
     }
 
     class Rabbit : Animal
     {
-        public Rabbit(string name) : base(name) { }
-
-        public override void Voice()
+        public Rabbit()
         {
-            Console.WriteLine("Очень мило урчат... Такие заечкиии!");
+            Name = "Кролик";
+            Voice = "Очень мило урчат... Такие заечкиии!";
         }
     }
 
     class Hippopotamus : Animal
     {
-        public Hippopotamus(string name) : base(name) { }
-
-        public override void Voice()
+        public Hippopotamus()
         {
-            Console.WriteLine("Грозно похрюкивает... Иногда дико ревет, особенно когда летит в замес!");
+            Name = "Бегемот";
+            Voice = "Грозно похрюкивает... Иногда дико ревет, особенно когда летит в замес!";
         }
     }
 }
