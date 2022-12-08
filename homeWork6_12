@@ -148,7 +148,6 @@ namespace homeWork6_12_zoo_last
 
         public Aviary(string AnimalType)
         {
-
             Fill(_aviary, AnimalType);
         }
 
