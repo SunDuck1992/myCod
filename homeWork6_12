@@ -8,48 +8,79 @@ namespace homeWork6_12_zoo_last
 {
     class Program
     {
-        private const string CommandShowLions = "1";
-        private const string CommandShowGiraffes = "2";
-        private const string CommandShowBears = "3";
-        private const string CommandShowRabbits = "4";
-        private const string CommandShowHippopotamuses = "5";
-        private const string CommandExit = "6";
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Мы рады приветствовать вас в нашем зоопарке. У нас есть различные вольеры с животными.\nИ вы можете подойти к ним поближе, чтобы познакомиться с их обитателями.\n");
             Zoo zoo = new Zoo();
-            string message = "";
+            bool isWork = true;
 
-            zoo.FillZoo();
+            zoo.Fill();
 
-            while (message != "Exit")
+            Console.WriteLine("Мы рады приветствовать вас в нашем зоопарке. У нас есть " + zoo.GetCountAviaries() + " вольеров с разными обитателями.\nВы можете подойти поближе, чтобы познакомиться с ними!\n");
+
+            while (isWork)
             {
-                zoo.ShowAnimals();
-                Console.ReadKey();
+                Console.WriteLine("1 - Подойти к вольерам, 2 - выход");
+                string message = Console.ReadLine();
+
+                switch (message)
+                {
+                    case "1":
+                        zoo.ShowAviary();
+                        break;
+
+                    case "2":
+                        isWork = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Такой команды нет! Повторите ввод!");
+                        break;
+                }
             }
         }
     }
 
     class Zoo
     {
-        private static readonly Random _random = new Random();
         private List<Aviary> _aviaries = new List<Aviary>();
-       
-        public void FillZoo()
+
+        public int GetCountAviaries()
         {
-            _aviaries.Add(new Aviary(new Lion()));
-            _aviaries.Add(new Aviary(new Geraffe()));
-            _aviaries.Add(new Aviary(new Bear()));
-            _aviaries.Add(new Aviary(new Rabbit()));
-            _aviaries.Add(new Aviary(new Hippopotamus()));
+            return _aviaries.Count;
         }
 
-        public void ShowAnimals()
+        public void Fill()
         {
-            _aviaries[0].ShowIndividuals();
-            _aviaries[0].ShowAviary();
-            Console.WriteLine(_aviaries[0].Animal.Voice);
+            _aviaries.Add(new Aviary("Lion"));
+            _aviaries.Add(new Aviary("Geraffe"));
+            _aviaries.Add(new Aviary("Bear"));
+            _aviaries.Add(new Aviary("Rabbit"));
+            _aviaries.Add(new Aviary("Hippopotamus"));
+        }
+
+        public void ShowAviary()
+        {
+            Console.WriteLine("Введите номер вольера к которому хотите подойти:");
+            int message = Convert.ToInt32(Console.ReadLine()) - 1;
+
+            if (message < _aviaries.Count && message >= 0)
+            {
+                Console.WriteLine("В этом вольере находятся:\n");
+
+                ShowAnimals(message);
+
+                Console.WriteLine("\nДля продолжения нажмите любую клавишу");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+
+        private void ShowAnimals(int message)
+        {
+            _aviaries[message].ShowIndividuals();
+            _aviaries[message].ShowAviary();
+
+            Console.WriteLine(_aviaries[message].Voice);
         }
     }
 
@@ -58,7 +89,21 @@ namespace homeWork6_12_zoo_last
         private static readonly Random _random = new Random();
         private List<Animal> _aviary = new List<Animal>();
 
-        public Animal Animal { get; private set; }
+        public string Voice
+        {
+            get
+            {
+                if (_aviary.Count != 0)
+                {
+                    return _aviary[0].Voice;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+
         public int CountMale
         {
             get
@@ -75,6 +120,7 @@ namespace homeWork6_12_zoo_last
                 return countMale;
             }
         }
+
         public int CountFemale
         {
             get
@@ -91,6 +137,7 @@ namespace homeWork6_12_zoo_last
                 return countFemale;
             }
         }
+
         public int NumberIndividuals
         {
             get
@@ -99,13 +146,26 @@ namespace homeWork6_12_zoo_last
             }
         }
 
-        public Aviary(Animal animal)
+        public Aviary(string AnimalType)
         {
-            Animal = animal;
-            Fill(_aviary, animal);
+
+            Fill(_aviary, AnimalType);
         }
 
-        public void Fill(List<Animal> aviaries, Animal animal)
+        public void ShowAviary()
+        {
+            Console.WriteLine("самцы - " + CountMale + " шт, самки - " + CountFemale + ", общее кол - во - " + NumberIndividuals + " шт.\n");
+        }
+
+        public void ShowIndividuals()
+        {
+            foreach (var animal in _aviary)
+            {
+                Console.WriteLine(animal.Name + " - " + animal.Gender);
+            }
+        }
+
+        private void Fill(List<Animal> aviaries, string animalType)
         {
             int minCountAnimals = 4;
             int maxCountAnimals = 12;
@@ -113,23 +173,28 @@ namespace homeWork6_12_zoo_last
 
             for (int i = 0; i < countAnimals; i++)
             {
-                aviaries.Add(animal);
-            }
-        }
+                switch (animalType)
+                {
+                    case "Lion":
+                        aviaries.Add(new Lion());
+                        break;
 
-        public void ShowAviary()
-        {
-            foreach (var animal in _aviary)
-            {
-                Console.WriteLine("самцы - " + CountMale + " шт, самки - " + CountFemale + ", общее кол - во - " + NumberIndividuals + " шт.");
-            }
-        }
-        
-        public void ShowIndividuals()
-        {
-            foreach(var animal in _aviary)
-            {
-                Console.WriteLine(animal.Name + animal.Gender);
+                    case "Geraffe":
+                        aviaries.Add(new Geraffe());
+                        break;
+
+                    case "Bear":
+                        aviaries.Add(new Bear());
+                        break;
+
+                    case "Rabbit":
+                        aviaries.Add(new Rabbit());
+                        break;
+
+                    case "Hippopotamus":
+                        aviaries.Add(new Hippopotamus());
+                        break;
+                }
             }
         }
     }
@@ -145,14 +210,14 @@ namespace homeWork6_12_zoo_last
         private int _minNumber = 0;
         private int _maxNumber = 2;
 
-        public Gender Gender { get; protected set; }
         public string Name { get; protected set; }
         public string Voice { get; protected set; }
+        public Gender Gender { get; protected set; }
 
         public Animal()
         {
-            Gender = (Gender)_random.Next(_minNumber, _maxNumber);          
-        }        
+            Gender = (Gender)_random.Next(_minNumber, _maxNumber);
+        }
     }
 
     class Lion : Animal
