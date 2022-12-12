@@ -8,6 +8,9 @@ namespace homeWork6_12_zoo_last
 {
     class Program
     {
+        private const string CommandShowAviary = "1";
+        private const string CommandExit = "2";
+
         static void Main(string[] args)
         {
             Zoo zoo = new Zoo();
@@ -19,16 +22,16 @@ namespace homeWork6_12_zoo_last
 
             while (isWork)
             {
-                Console.WriteLine("1 - Подойти к вольерам, 2 - выход");
+                Console.WriteLine(CommandShowAviary + " - Подойти к вольерам\n" + CommandExit + " - выход");
                 string message = Console.ReadLine();
 
                 switch (message)
                 {
-                    case "1":
+                    case CommandShowAviary:
                         zoo.ShowAviary();
                         break;
 
-                    case "2":
+                    case CommandExit:
                         isWork = false;
                         break;
 
@@ -51,36 +54,40 @@ namespace homeWork6_12_zoo_last
 
         public void Fill()
         {
-            _aviaries.Add(new Aviary("Lion"));
-            _aviaries.Add(new Aviary("Geraffe"));
-            _aviaries.Add(new Aviary("Bear"));
-            _aviaries.Add(new Aviary("Rabbit"));
-            _aviaries.Add(new Aviary("Hippopotamus"));
+            _aviaries.Add(new Aviary(TypeAnimals.Lion));
+            _aviaries.Add(new Aviary(TypeAnimals.Geraffe));
+            _aviaries.Add(new Aviary(TypeAnimals.Bear));
+            _aviaries.Add(new Aviary(TypeAnimals.Rabbit));
+            _aviaries.Add(new Aviary(TypeAnimals.Hippopotamus));
         }
 
         public void ShowAviary()
         {
             Console.WriteLine("Введите номер вольера к которому хотите подойти:");
-            int message = Convert.ToInt32(Console.ReadLine()) - 1;
+            int number = Convert.ToInt32(Console.ReadLine()) - 1;
 
-            if (message < _aviaries.Count && message >= 0)
+            if (number < _aviaries.Count && number >= 0)
             {
                 Console.WriteLine("В этом вольере находятся:\n");
 
-                ShowAnimals(message);
+                ShowAnimals(number);
 
                 Console.WriteLine("\nДля продолжения нажмите любую клавишу");
                 Console.ReadKey();
                 Console.Clear();
             }
+            else
+            {
+                Console.WriteLine("Такого вольера нет!\n");
+            }
         }
 
-        private void ShowAnimals(int message)
+        private void ShowAnimals(int number)
         {
-            _aviaries[message].ShowIndividuals();
-            _aviaries[message].ShowAviary();
+            _aviaries[number].ShowIndividuals();
+            _aviaries[number].ShowAviary();
 
-            Console.WriteLine(_aviaries[message].Voice);
+            Console.WriteLine(_aviaries[number].Voice);
         }
     }
 
@@ -146,9 +153,9 @@ namespace homeWork6_12_zoo_last
             }
         }
 
-        public Aviary(string AnimalType)
+        public Aviary(TypeAnimals typeAnimals)
         {
-            Fill(_aviary, AnimalType);
+            Fill(_aviary, typeAnimals);
         }
 
         public void ShowAviary()
@@ -164,7 +171,7 @@ namespace homeWork6_12_zoo_last
             }
         }
 
-        private void Fill(List<Animal> aviaries, string animalType)
+        private void Fill(List<Animal> aviaries, TypeAnimals typeAnimals)
         {
             int minCountAnimals = 4;
             int maxCountAnimals = 12;
@@ -172,25 +179,25 @@ namespace homeWork6_12_zoo_last
 
             for (int i = 0; i < countAnimals; i++)
             {
-                switch (animalType)
+                switch (typeAnimals)
                 {
-                    case "Lion":
+                    case TypeAnimals.Lion:
                         aviaries.Add(new Lion());
                         break;
 
-                    case "Geraffe":
+                    case TypeAnimals.Geraffe:
                         aviaries.Add(new Geraffe());
                         break;
 
-                    case "Bear":
+                    case TypeAnimals.Bear:
                         aviaries.Add(new Bear());
                         break;
 
-                    case "Rabbit":
+                    case TypeAnimals.Rabbit:
                         aviaries.Add(new Rabbit());
                         break;
 
-                    case "Hippopotamus":
+                    case TypeAnimals.Hippopotamus:
                         aviaries.Add(new Hippopotamus());
                         break;
                 }
@@ -198,9 +205,19 @@ namespace homeWork6_12_zoo_last
         }
     }
 
-    enum Gender
+    public enum TypeAnimals
     {
-        Male, Female
+        Lion,
+        Geraffe,
+        Bear,
+        Rabbit,
+        Hippopotamus
+    }
+
+    public enum Gender
+    {
+        Male,
+        Female
     }
 
     abstract class Animal
